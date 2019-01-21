@@ -3,16 +3,31 @@ import { apiKeys, apiUri } from "./constants/constants";
 
 import "./App.css";
 
+class WordList extends Component {
+  render() {
+    const { wordList } = this.props;
+
+    if(wordList.length > 0){
+        return wordList.map(word => {
+          return (
+            <li className="list-group-item" key={word.meta.uuid}>{word.meta["app-shortdef"].def[0]}</li>
+          );
+        });
+    }else{
+        return [];
+    }
+  }
+}
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: ""
+      inputValue: "",
+      wordList: []
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.getDefinitionByWord = this.getDefinitionByWord.bind(this);
   }
 
   handleChange(e) {
@@ -23,29 +38,16 @@ class App extends Component {
     let word = this.state.inputValue;
 
     fetch(apiUri("learners", word, apiKeys.learnersKey))
-      .then(function(response) {
+      .then(response => {
         return response.json();
       })
-      // return fetch(url, {
-      //     method: "POST", // *GET, POST, PUT, DELETE, etc.
-      //     mode: "cors", // no-cors, cors, *same-origin
-      //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      //     credentials: "same-origin", // include, *same-origin, omit
-      //     headers: {
-      //         "Content-Type": "application/json",
-      //         // "Content-Type": "application/x-www-form-urlencoded",
-      //     },
-      //     redirect: "follow", // manual, *follow, error
-      //     referrer: "no-referrer", // no-referrer, *client
-      //     body: JSON.stringify(data), // body data type must match "Content-Type" header
-      // })
-      .then(function(myJson) {
-        console.log(JSON.stringify(myJson));
+      .then(myJson => {
+        return this.setState({ wordList: myJson });
       });
   }
 
   render() {
-    let { inputValue } = this.state;
+    let { inputValue, wordList } = this.state;
 
     return (
       <div className="container">
@@ -72,11 +74,7 @@ class App extends Component {
         <div className="row">
           <div className="col-md-8">
             <ul className="list-group">
-              <li className="list-group-item">Cras justo odio</li>
-              <li className="list-group-item">Dapibus ac facilisis in</li>
-              <li className="list-group-item">Morbi leo risus</li>
-              <li className="list-group-item">Porta ac consectetur ac</li>
-              <li className="list-group-item">Vestibulum at eros</li>
+              <WordList wordList={wordList} />
             </ul>
           </div>
         </div>
