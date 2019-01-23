@@ -5,16 +5,38 @@ import "./App.css";
 
 class WordList extends Component {
   render() {
-    const { wordList } = this.props;
+    const { wordList, entry } = this.props;
 
-    if(wordList.length > 0){
-        return wordList.map(word => {
-          return (
-            <li className="list-group-item" key={word.meta.uuid}>{word.meta["app-shortdef"].def[0]}</li>
-          );
-        });
-    }else{
-        return [];
+    if (wordList.length > 0) {
+      return wordList.map(word => {
+        let { uuid = "" } = word.meta;
+        let { hw = "", prs = {} } = word.hwi;
+        let { mw = "" } = prs[0] || {}; 
+        let { fl = "" } = word;
+        return (
+          <div className="card" key={uuid} style={{ marginBottom: "5px" }}>
+            <div className="card-body">
+              <div>
+                <span
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    textTransform: "lowercase"
+                  }}
+                >
+                  {entry}
+                </span>
+                - <em>{fl}</em>
+              </div>
+              <p>
+                {hw} | {mw}
+              </p>
+            </div>
+          </div>
+        );
+      });
+    } else {
+      return [];
     }
   }
 }
@@ -23,6 +45,7 @@ class App extends Component {
     super(props);
     this.state = {
       inputValue: "",
+      entry: "",
       wordList: []
     };
 
@@ -36,8 +59,9 @@ class App extends Component {
 
   handleClick(e) {
     let word = this.state.inputValue;
+    this.setState({ entry: word });
 
-    fetch(apiUri("learners", word, apiKeys.learnersKey))
+    fetch(apiUri("collegiate", word, apiKeys.dictionaryKey))
       .then(response => {
         return response.json();
       })
@@ -47,13 +71,13 @@ class App extends Component {
   }
 
   render() {
-    let { inputValue, wordList } = this.state;
+    let { inputValue, entry, wordList } = this.state;
 
     return (
       <div className="container">
         <br />
         <div className="row">
-          <div className=" offset-md-3 col-md-5">
+          <div className=" offset-md-3 col-md-5 offset-sm-3 col-sm-5">
             <div className="form-group">
               <input
                 className="form-control"
@@ -64,7 +88,7 @@ class App extends Component {
               />
             </div>
           </div>
-          <div className="col-md-1">
+          <div className="col-md-1 col-sm-1">
             <button className="btn btn-primary" onClick={this.handleClick}>
               Search
             </button>
@@ -73,9 +97,11 @@ class App extends Component {
         <hr />
         <div className="row">
           <div className="col-md-8">
-            <ul className="list-group">
-              <WordList wordList={wordList} />
-            </ul>
+            <div className="row">
+              <div className="col-md-12">
+                <WordList wordList={wordList} entry={entry} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
