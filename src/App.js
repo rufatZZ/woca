@@ -5,7 +5,7 @@ import "./App.css";
 
 const ShordefList = ({ shortdef }) => {
   return shortdef.map(sd => {
-    return <li>- {sd}</li>;
+    return <li key={sd}>- {sd}</li>;
   });
 };
 
@@ -73,7 +73,7 @@ class App extends Component {
   }
 
   handleCounter(){
-      this.setState({counter: this.state.counter++});
+      this.setState({counter: this.state.counter + 1});
   }
 
   handleChange(e) {
