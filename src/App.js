@@ -3,34 +3,51 @@ import { apiKeys, apiUri } from "./constants/constants";
 
 import "./App.css";
 
+const ShordefList = ({ shortdef }) => {
+  return shortdef.map(sd => {
+    return <li>- {sd}</li>;
+  });
+};
+
 class WordList extends Component {
   render() {
     const { wordList, entry } = this.props;
+    let count = 0;
 
     if (wordList.length > 0) {
       return wordList.map(word => {
         let { uuid = "" } = word.meta;
         let { hw = "", prs = {} } = word.hwi;
-        let { mw = "" } = prs[0] || {}; 
-        let { fl = "" } = word;
+        let { mw = "" } = prs[0] || {};
+        let { fl = "", shortdef = [] } = word;
+        count++;
         return (
           <div className="card" key={uuid} style={{ marginBottom: "5px" }}>
-            <div className="card-body">
-              <div>
-                <span
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                    textTransform: "lowercase"
-                  }}
-                >
-                  {entry}
-                </span>
-                - <em>{fl}</em>
+            <div className="card-body" style={{ padding: 0 }}>
+              <div className="alert alert-light">
+                <div>
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      textTransform: "lowercase"
+                    }}
+                  >
+                    <sup>{count}</sup>{entry}
+                  </span>
+                  - <em>{fl}</em>
+                </div>
+                <div>
+                  <p>
+                    {hw} | {mw}
+                  </p>
+                </div>
               </div>
-              <p>
-                {hw} | {mw}
-              </p>
+              <div className="alert alert-info">
+                <ul style={{listStyleType:'none', padding: 0}}>
+                  <ShordefList shortdef={shortdef} />
+                </ul>
+              </div>
             </div>
           </div>
         );
@@ -46,11 +63,17 @@ class App extends Component {
     this.state = {
       inputValue: "",
       entry: "",
-      wordList: []
+      wordList: [],
+      counter: 0
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCounter = this.handleCounter.bind(this);
+  }
+
+  handleCounter(){
+      this.setState({counter: this.state.counter++});
   }
 
   handleChange(e) {
@@ -77,7 +100,7 @@ class App extends Component {
       <div className="container">
         <br />
         <div className="row">
-          <div className=" offset-md-3 col-md-5 offset-sm-3 col-sm-5">
+          <div className=" offset-md-3 col-md-5 offset-sm-1 col-sm-7">
             <div className="form-group">
               <input
                 className="form-control"
@@ -96,12 +119,12 @@ class App extends Component {
         </div>
         <hr />
         <div className="row">
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-12">
+          <div className="offset-md-2 col-md-8">
+            {/* <div className="row"> */}
+              {/* <div className="col-md-12"> */}
                 <WordList wordList={wordList} entry={entry} />
-              </div>
-            </div>
+              {/* </div> */}
+            {/* </div> */}
           </div>
         </div>
       </div>
