@@ -13,42 +13,48 @@ class WordList extends Component {
 
     if (wordList.length > 0) {
       return wordList.map(word => {
-        let { uuid = "" } = word.meta;
-        let { hw = "", prs = {} } = word.hwi;
+        let { uuid = "" } = word.meta || {};
+        let { hw = "", prs = {} } = word.hwi || {};
         let { mw = "" } = prs[0] || {};
         let { fl = "", shortdef = [] } = word;
         count++;
-        return (
-          <div className="card" key={uuid} style={{ marginBottom: "5px" }}>
-            <div className="card-body" style={{ padding: 0 }}>
-              <div className="alert alert-light">
-                <div>
-                  <span
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      textTransform: "lowercase"
-                    }}
-                  >
-                    <sup>{count}</sup>
-                    {entry}
-                  </span>
-                  - <em>{fl}</em>
+        if (typeof word === "string") {
+            return(
+                <div key={word}><a href={`?entry=${word}`}>{word}</a></div>
+            )
+        } else {
+          return (
+            <div className="card" key={uuid} style={{ marginBottom: "5px" }}>
+              <div className="card-body" style={{ padding: 0 }}>
+                <div className="alert alert-light">
+                  <div>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        textTransform: "lowercase"
+                      }}
+                    >
+                      <sup>{count}</sup>
+                      {entry}
+                    </span>
+                    - <em>{fl}</em>
+                  </div>
+                  <div>
+                    <p>
+                      {hw} | {mw}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p>
-                    {hw} | {mw}
-                  </p>
+                <div className="alert alert-secondary">
+                  <ul style={{ listStyleType: "none", padding: 0 }}>
+                    <ShordefList shortdef={shortdef} />
+                  </ul>
                 </div>
-              </div>
-              <div className="alert alert-secondary">
-                <ul style={{ listStyleType: "none", padding: 0 }}>
-                  <ShordefList shortdef={shortdef} />
-                </ul>
               </div>
             </div>
-          </div>
-        );
+          );
+        }
       });
     } else {
       return [];
