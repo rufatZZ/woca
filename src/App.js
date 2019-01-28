@@ -14,6 +14,7 @@ class App extends Component {
     this.state = {
       entry: "",
       wordList: [],
+      errorType: 0,
       counter: 0,
       isSearching: false,
       isLoading: true,
@@ -26,33 +27,46 @@ class App extends Component {
   async handleSearch(word) {
     this.setState({ isLoading: true, isSearching: true, isInvalid: false });
     this.setState({ entry: word });
-    let wordListJSON = await getDefinitionByWord(word);
-    if (wordListJSON.length === 0) {
-      this.setState({
-        isEmpty: true,
-        isLoading: false,
-        isInvalid: false,
-        isSearching: false
-      });
-    } else {
-      const checkTypeOf = typeof wordListJSON[0];
-      if (checkTypeOf === "string") {
+    try {
+      let wordListJSON = await getDefinitionByWord(word);
+      if (wordListJSON.length === 0) {
         this.setState({
-          wordList: wordListJSON,
-          isEmpty: false,
-          isLoading: false,
-          isInvalid: true,
-          isSearching: false
-        });
-      } else {
-        this.setState({
-          wordList: wordListJSON,
-          isEmpty: false,
+          isEmpty: true,
+          errorType: 0,
           isLoading: false,
           isInvalid: false,
           isSearching: false
         });
+      } else {
+        const checkTypeOf = typeof wordListJSON[0];
+        if (checkTypeOf === "string") {
+          this.setState({
+            wordList: wordListJSON,
+            isEmpty: false,
+            errorType: 0,
+            isLoading: false,
+            isInvalid: true,
+            isSearching: false
+          });
+        } else {
+          this.setState({
+            wordList: wordListJSON,
+            isEmpty: false,
+            errorType: 0,
+            isLoading: false,
+            isInvalid: false,
+            isSearching: false
+          });
+        }
       }
+    } catch (error) {
+      this.setState({
+        isEmpty: true,
+        errorType: 1,
+        isLoading: false,
+        isInvalid: false,
+        isSearching: false
+      });
     }
   }
 
@@ -63,6 +77,7 @@ class App extends Component {
       isLoading,
       isSearching,
       isEmpty,
+      errorType,
       isInvalid
     } = this.state;
 
@@ -78,12 +93,12 @@ class App extends Component {
         <div className="row">
           <div className="offset-md-2 col-md-8">
             {displayLoading && <Loading />}
-            {displayError && <Error />}
+            {displayError && <Error type={errorType} />}
             {displayInvalidEntry && <InvalidEntry entry={entry} />}
             {displayResults && <WordList wordList={wordList} entry={entry} />}
           </div>
         </div>
-        <br/>
+        <br />
       </div>
     );
   }
