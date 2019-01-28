@@ -2,6 +2,9 @@ import React, { Component } from "react";
 //components
 import Searchbar from "./components/Searchbar";
 import WordList from "./components/WordList";
+import InvalidEntry from "./components/InvalidEntry";
+import Loading from "./components/_common/Loading/Loading";
+import Error from "./components/_common/Error/Error";
 //actions
 import { getDefinitionByWord } from "./actions/actions";
 
@@ -63,41 +66,24 @@ class App extends Component {
       isInvalid
     } = this.state;
 
+    const displayLoading = isLoading && isSearching;
+    const displayError = !isLoading && !isSearching && isEmpty;
+    const displayInvalidEntry = !displayLoading && !isEmpty && isInvalid;
+    const displayResults = !displayLoading && !isEmpty;
+
     return (
       <div className="container">
         <Searchbar onSearchEntry={this.handleSearch} />
         <hr />
         <div className="row">
           <div className="offset-md-2 col-md-8">
-            {isLoading && isSearching && (
-              <div className="alert alert-primary text-center">
-                <h5>Loading...</h5>
-              </div>
-            )}
-            {!isLoading && !isSearching && isEmpty && (
-              <div className="alert alert-danger text-center">
-                <h4>Words fail us</h4>
-                <p>
-                  Sorry, the word you’re looking for can’t be found in the
-                  dictionary.
-                </p>
-              </div>
-            )}
-            {!isLoading && !isSearching && !isEmpty && isInvalid && (
-              <div className="alert alert-warning text-center">
-                <h4>"{entry}"</h4>
-                <p>
-                  The word you've entered isn't in the dictionary. Click on a
-                  spelling suggestion below or try again using the search bar
-                  above.
-                </p>
-              </div>
-            )}
-            {!isLoading && !isSearching && !isEmpty && (
-              <WordList wordList={wordList} entry={entry} />
-            )}
+            {displayLoading && <Loading />}
+            {displayError && <Error />}
+            {displayInvalidEntry && <InvalidEntry entry={entry} />}
+            {displayResults && <WordList wordList={wordList} entry={entry} />}
           </div>
         </div>
+        <br/>
       </div>
     );
   }

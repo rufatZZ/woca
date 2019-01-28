@@ -19,9 +19,18 @@ class WordList extends Component {
         let { fl = "", shortdef = [] } = word;
         count++;
         if (typeof word === "string") {
-            return(
-                <div key={word}><a href={`?entry=${word}`}>{word}</a></div>
-            )
+          return (
+            <div key={word}>
+              {" "}
+              <a
+                className="list-group-item"
+                style={{ marginBottom: "5px" }}
+                href={`?entry=${word}`}
+              >
+                {word}
+              </a>
+            </div>
+          );
         } else {
           return (
             <div className="card" key={uuid} style={{ marginBottom: "5px" }}>
