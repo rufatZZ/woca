@@ -24,20 +24,20 @@ export class Searchbar extends Component {
   render() {
     let { inputValue } = this.state;
     return (
-      <div className="row mt-3">
-        <div className="offset-md-3 col-md-5 offset-sm-1 col-sm-7">
-          <div className="form-group">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Enter the word"
-              value={inputValue}
-              onChange={this.handleChange}
-            />
+      <div className="row">
+        <div className="col-md-10 col-sm-10">
+            <div className="form-group">
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                placeholder="Enter the word"
+                value={inputValue}
+                onChange={this.handleChange}
+              />
           </div>
         </div>
         <div className="col-md-1 col-sm-1">
-          <button className="btn btn-primary" onClick={this.handleClick}>
+          <button className="btn btn-primary btn-lg" onClick={this.handleClick}>
             Search
           </button>
         </div>
