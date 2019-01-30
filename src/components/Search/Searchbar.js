@@ -12,13 +12,6 @@ export class Searchbar extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    let urlEntry = nextProps.urlEntry;
-    this.setState({ inputValue: urlEntry });
-
-  }
-
   handleChange(e) {
     this.setState({ inputValue: e.target.value });
   }

@@ -13,7 +13,6 @@ class Search extends Component {
     super(props);
     this.state = {
       entry: "",
-      urlEntry: "",
       wordList: [],
       errorType: 0,
       counter: 0,
@@ -27,8 +26,14 @@ class Search extends Component {
 
   componentWillReceiveProps(nextProps){
     let getEntry = nextProps.match.params.word;
-    this.setState({urlEntry: getEntry});
     this.handleSearch(getEntry);
+  }
+
+  componentDidMount(){
+    let getEntry = this.props.match.params.word;
+    if(getEntry !== undefined){
+      this.handleSearch(getEntry);
+    }
   }
 
   async handleSearch(word) {
@@ -80,7 +85,6 @@ class Search extends Component {
   render() {
     let {
       entry,
-      urlEntry,
       wordList,
       isLoading,
       isSearching,
@@ -96,7 +100,7 @@ class Search extends Component {
 
     return (
       <div>
-        <Searchbar onSearchEntry={this.handleSearch} urlEntry={urlEntry} />
+        <Searchbar onSearchEntry={this.handleSearch} />
         <hr />
         <div className="row">
           <div className="col-sm-10 col-md-10">
