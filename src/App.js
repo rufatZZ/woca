@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import Search from "./components/Search/Search";
 import Header from "./components/Header";
@@ -18,7 +18,9 @@ class App extends Component {
                 <Sidebar />
               </div>
               <div className="col-md-9">
-                <Route exact path="/" component={Search} />
+                <Route exact path="/" render={() => <Redirect to="/search"/>} />
+                <Route exact path="/search" component={Search} />
+                <Route path="/search/:word" component={Search} />
                 <Route path="/history" component={History} />
               </div>
             </div>

@@ -12,6 +12,13 @@ export class Searchbar extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
+    let urlEntry = nextProps.urlEntry;
+    this.setState({ inputValue: urlEntry });
+
+  }
+
   handleChange(e) {
     this.setState({ inputValue: e.target.value });
   }
@@ -36,8 +43,8 @@ export class Searchbar extends Component {
               />
           </div>
         </div>
-        <div className="col-md-1 col-sm-1">
-          <button className="btn btn-primary btn-lg" onClick={this.handleClick}>
+        <div className="col-md-2 col-sm-2">
+          <button className="btn btn-primary btn-lg btn-block" onClick={this.handleClick}>
             Search
           </button>
         </div>

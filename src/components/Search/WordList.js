@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 const ShordefList = ({ shortdef }) => {
   return shortdef.map(sd => {
@@ -18,20 +19,23 @@ class WordList extends Component {
         let { mw = "" } = prs[0] || {};
         let { fl = "", shortdef = [] } = word;
         count++;
+        
         if (typeof word === "string") {
+
           return (
             <div key={word}>
-              {" "}
-              <a
+              <Link
                 className="list-group-item"
                 style={{ marginBottom: "5px" }}
-                href={`?entry=${word}`}
+                to={`/search/${word}`}
               >
                 {word}
-              </a>
+              </Link>
             </div>
           );
+
         } else {
+
           return (
             <div className="card" key={uuid} style={{ marginBottom: "5px" }}>
               <div className="card-body" style={{ padding: 0 }}>
@@ -63,6 +67,7 @@ class WordList extends Component {
               </div>
             </div>
           );
+
         }
       });
     } else {

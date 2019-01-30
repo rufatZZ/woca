@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div className="row mb-3" >
       <div className="col-sm-12 text-center">
-        <h1>Woca</h1>
+        <h1>WOCA</h1>
       </div>
     </div>
   );
