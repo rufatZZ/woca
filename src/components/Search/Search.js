@@ -24,14 +24,14 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     let getEntry = nextProps.match.params.word;
     this.handleSearch(getEntry);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let getEntry = this.props.match.params.word;
-    if(getEntry !== undefined){
+    if (getEntry !== undefined) {
       this.handleSearch(getEntry);
     }
   }
@@ -93,10 +93,10 @@ class Search extends Component {
       isInvalid
     } = this.state;
 
-    const displayLoading = isLoading && isSearching;
-    const displayError = !isLoading && !isSearching && isEmpty;
+    const displayLoading      = isLoading && isSearching;
+    const displayError        = !isLoading && !isSearching && isEmpty;
     const displayInvalidEntry = !displayLoading && !isEmpty && isInvalid;
-    const displayResults = !displayLoading && !isEmpty;
+    const displayResults      = !displayLoading && !isEmpty;
 
     return (
       <div>
