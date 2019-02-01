@@ -1,4 +1,20 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+
+const InputResetIcon = styled.span`
+  z-index: 9;
+  top: 50%;
+  position: absolute;
+  right: 1rem;
+  transform: translate(-1rem, -80%);
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.6;
+
+  ${({inputValue}) => !inputValue && `
+    display: none;
+  `}
+`;
 
 export class Searchbar extends Component {
   constructor(props) {
@@ -39,21 +55,9 @@ export class Searchbar extends Component {
               value={inputValue}
               onChange={this.handleChange}
             />
-            <span
-              onClick={this.handleClear}
-              style={{
-                zIndex: "9",
-                top: "50%",
-                position: "absolute",
-                right: "1rem",
-                transform: "translate(-1rem, -80%)",
-                fontSize: "20px",
-                cursor: "pointer",
-                opacity: "0.6"
-              }}
-            >
+            <InputResetIcon onClick={this.handleClear} inputValue={inputValue}>
               <i className="fas fa-times" />
-            </span>
+            </InputResetIcon>
           </div>
         </div>
         <div className="col-md-2 col-sm-2">

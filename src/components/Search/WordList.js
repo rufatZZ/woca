@@ -1,5 +1,33 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const EntrySpan = styled.span`
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: lowercase;
+`;
+
+const ShordefListHolder = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const SuggestedWordLink = styled(Link)`
+  margin-bottom: 5px !important;
+  transition: 0.15s ease-in-out;
+  :hover {
+    color: white;
+    background-color: rgba(0, 123, 255, 0.5) !important;
+  }
+`;
+
+const WordCard = styled.div`
+  margin-bottom: 5px !important;
+  .card-body {
+    padding: 0;
+  }
+`;
 
 const ShordefList = ({ shortdef }) => {
   return shortdef.map(sd => {
@@ -19,38 +47,28 @@ class WordList extends Component {
         let { mw = "" } = prs[0] || {};
         let { fl = "", shortdef = [] } = word;
         count++;
-        
-        if (typeof word === "string") {
 
+        if (typeof word === "string") {
           return (
             <div key={word}>
-              <Link
+              <SuggestedWordLink
                 className="list-group-item"
-                style={{ marginBottom: "5px" }}
                 to={`/search/${word}`}
               >
                 {word}
-              </Link>
+              </SuggestedWordLink>
             </div>
           );
-
         } else {
-
           return (
-            <div className="card" key={uuid} style={{ marginBottom: "5px" }}>
-              <div className="card-body" style={{ padding: 0 }}>
+            <WordCard className="card" key={uuid}>
+              <div className="card-body">
                 <div className="alert alert-light">
                   <div>
-                    <span
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        textTransform: "lowercase"
-                      }}
-                    >
+                    <EntrySpan>
                       <sup>{count}</sup>
                       {entry}
-                    </span>
+                    </EntrySpan>
                     - <em>{fl}</em>
                   </div>
                   <div>
@@ -60,14 +78,13 @@ class WordList extends Component {
                   </div>
                 </div>
                 <div className="alert alert-secondary">
-                  <ul style={{ listStyleType: "none", padding: 0 }}>
+                  <ShordefListHolder>
                     <ShordefList shortdef={shortdef} />
-                  </ul>
+                  </ShordefListHolder>
                 </div>
               </div>
-            </div>
+            </WordCard>
           );
-
         }
       });
     } else {
