@@ -69,6 +69,17 @@ class Search extends Component {
             isInvalid: false,
             isSearching: false
           });
+
+          let wordHistoryArray = JSON.parse(
+            localStorage.getItem("wordHistory") || "[]"
+          );
+          let wordObj = {
+            value: this.state.entry,
+            time: new Date().toLocaleString()
+          };
+          wordHistoryArray.push(wordObj);
+
+          localStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
         }
       }
     } catch (error) {
@@ -93,10 +104,10 @@ class Search extends Component {
       isInvalid
     } = this.state;
 
-    const displayLoading      = isLoading && isSearching;
-    const displayError        = !isLoading && !isSearching && isEmpty;
+    const displayLoading = isLoading && isSearching;
+    const displayError = !isLoading && !isSearching && isEmpty;
     const displayInvalidEntry = !displayLoading && !isEmpty && isInvalid;
-    const displayResults      = !displayLoading && !isEmpty;
+    const displayResults = !displayLoading && !isEmpty;
 
     return (
       <div>
