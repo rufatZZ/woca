@@ -53,7 +53,7 @@ class WordList extends Component {
             <div key={word}>
               <SuggestedWordLink
                 className="list-group-item"
-                to={`/search/${word}`}
+                to={`/search?word=${word}`}
               >
                 {word}
               </SuggestedWordLink>

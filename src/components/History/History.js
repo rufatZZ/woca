@@ -11,7 +11,7 @@ const HistoryList = ({ wordList }) => {
         <td>{word.time}</td>
         <td>{word.value}</td>
         <td width="20%">
-          <Link to={`/search/${word.value}`} className="btn btn-outline-info">
+          <Link to={`/search?word=${word.value}`} className="btn btn-outline-info">
             Get definition
           </Link>
         </td>
