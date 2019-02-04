@@ -18,7 +18,7 @@ const SuggestedWordLink = styled(Link)`
   transition: 0.15s ease-in-out;
   :hover {
     color: white;
-    background-color: rgba(0, 123, 255, 0.5) !important;
+    background-color: rgba(0, 123, 255, 0.9) !important;
   }
 `;
 

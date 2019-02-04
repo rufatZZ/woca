@@ -11,17 +11,23 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <div className="container mt-3">
+          <div class="container-fluid">
             <Header />
             <div className="row">
               <div className="col-md-3">
                 <Sidebar />
               </div>
               <div className="col-md-9">
-                <Route exact path="/" render={() => <Redirect to="/search"/>} />
-                <Route exact path="/search" component={Search} />
-                <Route path="/search/:word" component={Search} />
-                <Route path="/history" component={History} />
+                <div className="container">
+                  <Route
+                    exact
+                    path="/"
+                    render={() => <Redirect to="/search" />}
+                  />
+                  <Route exact path="/search" component={Search} />
+                  <Route path="/search/:word" component={Search} />
+                  <Route path="/history" component={History} />
+                </div>
               </div>
             </div>
           </div>
