@@ -3,15 +3,21 @@ import { Link } from "react-router-dom";
 
 const HistoryList = ({ wordList }) => {
   let count = 0;
+  wordList.sort(function(a, b) {
+    return Date.parse(b.time) - Date.parse(a.time);
+  });
   return wordList.map(word => {
     count++;
     return (
-      <tr key={Date.parse(word.time)}>
+      <tr key={Math.random() * Date.parse(word.time)}>
         <th scope="row">{count}</th>
         <td>{word.time}</td>
         <td>{word.value}</td>
         <td width="20%">
-          <Link to={`/search?word=${word.value}`} className="btn btn-outline-info">
+          <Link
+            to={`/search?word=${word.value}`}
+            className="btn btn-outline-info"
+          >
             Get definition
           </Link>
         </td>
