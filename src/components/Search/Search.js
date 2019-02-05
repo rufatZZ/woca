@@ -25,17 +25,17 @@ class Search extends Component {
     this.setParams = this.setParams.bind(this);
     this.getParams = this.getParams.bind(this);
   }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.location.search !== prevProps.location.search) {
-      let getEntry = this.getParams("word");
+  componentDidMount() {
+    
+    let getEntry = this.getParams("word");
+    if (getEntry !== undefined && getEntry !== null) {
       this.handleSearch(getEntry);
     }
   }
 
-  componentWillMount() {
-    let getEntry = this.getParams("word");
-    if (getEntry !== undefined && getEntry !== null) {
+  componentDidUpdate(prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      let getEntry = this.getParams("word");
       this.handleSearch(getEntry);
     }
   }
@@ -89,19 +89,6 @@ class Search extends Component {
             isInvalid: false,
             isSearching: false
           });
-
-          let wordHistoryArray = JSON.parse(
-            localStorage.getItem("wordHistory") || "[]"
-          );
-          let wordObj = {
-            value: this.state.entry,
-            time: new Date().toLocaleString()
-          };
-          wordHistoryArray.push(wordObj);
-          localStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
-          const url = this.setParams({ query: this.state.entry });
-
-          this.props.history.push(`?${url}`);
         }
       }
     } catch (error) {
@@ -113,6 +100,19 @@ class Search extends Component {
         isSearching: false
       });
     }
+
+    let wordHistoryArray = JSON.parse(
+      localStorage.getItem("wordHistory") || "[]"
+    );
+    let wordObj = {
+      value: this.state.entry,
+      time: new Date().toLocaleString()
+    };
+    wordHistoryArray.push(wordObj);
+    localStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
+    const url = this.setParams({ query: this.state.entry });
+
+    this.props.history.push(`?${url}`);
   }
 
   render() {
