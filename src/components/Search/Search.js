@@ -22,32 +22,28 @@ class Search extends Component {
       isEmpty: true
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.findWord = this.findWord.bind(this);
     this.setParams = this.setParams.bind(this);
     this.getParams = this.getParams.bind(this);
   }
   componentDidMount() {
-    
     let getEntry = this.getParams("word");
     if (getEntry !== undefined && getEntry !== null) {
-      this.handleSearch(getEntry);
+      this.findWord(getEntry);
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.search !== prevProps.location.search) {
       let getEntry = this.getParams("word");
-      this.handleSearch(getEntry);
+      this.findWord(getEntry);
     }
   }
 
   getParams(word) {
     let search = window.location.search;
     let url = new URLSearchParams(search);
-    if (word !== undefined) {
-      return url.get(word);
-    } else {
-      return false;
-    }
+    return word !== undefined ? url.get(word) : false;
   }
 
   setParams({ query = "" }) {
@@ -56,9 +52,24 @@ class Search extends Component {
     return searchParam.toString();
   }
 
-  async handleSearch(word) {
+  handleSearch(word) {
+    this.setState({ entry: word }, () => {
+      let wordHistoryArray = JSON.parse(
+        localStorage.getItem("wordHistory") || "[]"
+      );
+      let wordObj = {
+        value: this.state.entry,
+        time: new Date().toLocaleString()
+      };
+      wordHistoryArray.push(wordObj);
+      localStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
+      const url = this.setParams({ query: this.state.entry });
+      this.props.history.push(`?${url}`);
+    });
+  }
+
+  async findWord(word) {
     this.setState({ isLoading: true, isSearching: true, isInvalid: false });
-    this.setState({ entry: word });
     try {
       let wordListJSON = await getDefinitionByWord(word);
       if (wordListJSON.length === 0) {
@@ -100,19 +111,6 @@ class Search extends Component {
         isSearching: false
       });
     }
-
-    let wordHistoryArray = JSON.parse(
-      localStorage.getItem("wordHistory") || "[]"
-    );
-    let wordObj = {
-      value: this.state.entry,
-      time: new Date().toLocaleString()
-    };
-    wordHistoryArray.push(wordObj);
-    localStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
-    const url = this.setParams({ query: this.state.entry });
-
-    this.props.history.push(`?${url}`);
   }
 
   render() {
