@@ -29,14 +29,18 @@ class Search extends Component {
   componentDidMount() {
     let getEntry = this.getParams("word");
     if (getEntry !== undefined && getEntry !== null) {
-      this.findWord(getEntry);
+      this.setState({ entry: getEntry }, () => {
+        this.findWord(getEntry);
+      });
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.search !== prevProps.location.search) {
       let getEntry = this.getParams("word");
-      this.findWord(getEntry);
+      this.setState({ entry: getEntry }, () => {
+        this.findWord(getEntry);
+      });
     }
   }
 
