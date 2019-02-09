@@ -10,13 +10,27 @@ import History from "./components/History/History";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
 `;
 
 const ContentHolder = styled.div`
   padding: 35px 0 0;
 `;
+
+const Flex = styled.div`
+  display: flex;
+`;
+
+const SidebarWrapper = styled.div`
+  width: 300px;
+`;
+
+const ContentWrapper = styled.div`
+  width: calc(100% - 400px);
+`;
+
+
 
 class App extends Component {
   render() {
@@ -25,11 +39,11 @@ class App extends Component {
         <Router>
           <Container>
             {/* <Header /> */}
-            <div className="row">
-              <div className="col-md-3" style={{ position: "relative" }}>
+            <Flex>
+              <SidebarWrapper>
                 <Sidebar />
-              </div>
-              <div className="col-md-9">
+              </SidebarWrapper>
+              <ContentWrapper>
                 <ContentHolder>
                   <Container>
                     <Route
@@ -42,8 +56,8 @@ class App extends Component {
                     <Route path="/history" component={History} />
                   </Container>
                 </ContentHolder>
-              </div>
-            </div>
+              </ContentWrapper>
+            </Flex>
           </Container>
         </Router>
       </div>
