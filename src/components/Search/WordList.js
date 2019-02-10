@@ -69,11 +69,10 @@ class WordList extends Component {
                       <sup>{count}</sup>
                       {entry}
                     </EntrySpan>
-                    - <em>{fl}</em>
                   </div>
                   <div>
                     <p>
-                      {hw} | {mw}
+                      <em>{fl}</em> { mw ? `|` + mw : ''}
                     </p>
                   </div>
                 </div>

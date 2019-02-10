@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SidebarLink = styled(Link)`
-  font-size: 16px;
+  font-size: 14px;
   color: white;
   padding: 10px 10px;
-  border-radius: 2px;
-  &:hover,
-  &:focus {
+  border-radius: 3px;
+  &:hover, &:focus {
     outline: none !important;
     text-decoration: none !important;
     color: white;
@@ -44,7 +43,7 @@ const SidebarLinkList = styled.div`
 const SidebarLinkListTitle = styled.span`
   color: white;
   opacity: 0.4;
-  font-size: 14px;
+  font-size: 12px;
 `;
 
 const Sidebar = () => {

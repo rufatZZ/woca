@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import Search from "./components/Search/Search";
-import Header from "./components/Header";
-
 import Sidebar from "./components/Sidebar";
 import History from "./components/History/History";
 
@@ -30,15 +28,12 @@ const ContentWrapper = styled.div`
   width: calc(100% - 400px);
 `;
 
-
-
 class App extends Component {
   render() {
     return (
       <div>
         <Router>
           <Container>
-            {/* <Header /> */}
             <Flex>
               <SidebarWrapper>
                 <Sidebar />
