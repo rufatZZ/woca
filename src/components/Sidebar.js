@@ -18,6 +18,7 @@ const SidebarLink = styled(Link)`
 
 const SidebarWrapper = styled.div`
   position: fixed;
+  max-width: 250px;
   width: 20%;
   height: 100vh;
   background-color: #11369e;
