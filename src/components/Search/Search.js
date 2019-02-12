@@ -26,6 +26,7 @@ class Search extends Component {
     this.setParams = this.setParams.bind(this);
     this.getParams = this.getParams.bind(this);
   }
+  
   componentDidMount() {
     let getEntry = this.getParams("word");
     if (getEntry !== undefined && getEntry !== null) {

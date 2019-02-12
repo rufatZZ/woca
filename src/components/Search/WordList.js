@@ -16,7 +16,7 @@ const ShordefListHolder = styled.ul`
 const SuggestedWordLink = styled(Link)`
   margin-bottom: 5px !important;
   transition: 0.15s ease-in-out;
-  :hover {
+  &:hover {
     color: white;
     background-color: rgba(0, 123, 255, 0.9) !important;
   }
@@ -72,7 +72,7 @@ class WordList extends Component {
                   </div>
                   <div>
                     <p>
-                      <em>{fl}</em> { mw ? `|` + mw : ''}
+                      <em>{fl}</em> {mw ? `|` + mw : ""}
                     </p>
                   </div>
                 </div>

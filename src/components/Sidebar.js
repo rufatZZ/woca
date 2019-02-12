@@ -7,7 +7,8 @@ const SidebarLink = styled(Link)`
   color: white;
   padding: 10px 10px;
   border-radius: 3px;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     outline: none !important;
     text-decoration: none !important;
     color: white;
@@ -31,8 +32,8 @@ const SidebarBrand = styled.div`
 `;
 
 const SidebarLinkListHolder = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SidebarLinkList = styled.div`
