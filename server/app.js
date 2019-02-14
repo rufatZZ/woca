@@ -20,7 +20,7 @@ routes(router);
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(helmet);
+app.use(helmet());
 
 app.use("/api", router);
 
