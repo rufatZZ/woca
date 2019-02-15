@@ -145,6 +145,9 @@ class Search extends Component {
             {displayInvalidEntry && <InvalidEntry entry={entry} />}
             {displayResults && <WordList wordList={wordList} entry={entry} />}
           </div>
+          <div className="col-sm-2 col-md-2">
+            {displayResults && <button className="btn btn-success btn-lg btn-block">Save Word</button>}
+          </div>
         </div>
       </div>
     );
