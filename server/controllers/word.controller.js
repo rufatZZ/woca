@@ -3,6 +3,11 @@ const fs = require("fs");
 
 module.exports = {
   addWord: (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     let { title } = req.body;
 
     saveWord({ title });
@@ -22,6 +27,11 @@ module.exports = {
     }
   },
   getAll: (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     Word.find(req.params.id).exec((err, word) => {
       if (err) {
         res.send(err);
@@ -34,6 +44,11 @@ module.exports = {
     });
   },
   getWord: (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     Word.findById(req.params.id).exec((err, word) => {
       if (err) {
         res.send(err);
