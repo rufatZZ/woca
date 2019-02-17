@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Search from "./components/Search/Search";
 import Sidebar from "./components/Sidebar";
 import History from "./components/History/History";
+import Saved from "./components/Saved/Saved";
 
 import styled from "styled-components";
 
@@ -49,6 +50,7 @@ class App extends Component {
                     <Route exact path="/search" component={Search} />
                     <Route path="/search/:word" component={Search} />
                     <Route path="/history" component={History} />
+                    <Route path="/saved" component={Saved} />
                   </Container>
                 </ContentHolder>
               </ContentWrapper>

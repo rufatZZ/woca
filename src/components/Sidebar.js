@@ -67,7 +67,7 @@ const Sidebar = () => {
           <SidebarLinkListTitle>Vocabulary</SidebarLinkListTitle>
           <SidebarLink to="/">Search</SidebarLink>
           <SidebarLink to="/history">History</SidebarLink>
-          <SidebarLink to="/">Saved</SidebarLink>
+          <SidebarLink to="/saved">Saved</SidebarLink>
         </SidebarLinkList>
 
         <SidebarLinkList>
