@@ -6,7 +6,7 @@ import InvalidEntry from "./InvalidEntry";
 import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
 //actions
-import { getDefinitionByWord } from "../../actions/actions";
+import { getDefinitionByWord, saveWord } from "../../actions/actions";
 
 class Search extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class Search extends Component {
       isEmpty: true
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleSaveWord = this.handleSaveWord.bind(this);
     this.findWord = this.findWord.bind(this);
     this.setParams = this.setParams.bind(this);
     this.getParams = this.getParams.bind(this);
@@ -71,6 +72,11 @@ class Search extends Component {
       const url = this.setParams({ query: this.state.entry });
       this.props.history.push(`?${url}`);
     });
+  }
+
+  async handleSaveWord(){
+    let entry = this.state.entry;
+    let saveWordReponse = await saveWord(entry);
   }
 
   async findWord(word) {
@@ -146,7 +152,7 @@ class Search extends Component {
             {displayResults && <WordList wordList={wordList} entry={entry} />}
           </div>
           <div className="col-sm-2 col-md-2">
-            {displayResults && <button className="btn btn-success btn-lg btn-block">Save Word</button>}
+            {displayResults && <button className="btn btn-success btn-lg btn-block" onClick={this.handleSaveWord}>Save Word</button>}
           </div>
         </div>
       </div>

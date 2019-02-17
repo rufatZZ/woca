@@ -2,8 +2,8 @@ const express = require("express");
 const routes = require("./routes/");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const helmet = require("helmet");
-const proxy = require("http-proxy-middleware");
+// const helmet = require("helmet");
+// const proxy = require("http-proxy-middleware");
 
 const app = express();
 const router = express.Router();
@@ -18,11 +18,15 @@ try {
 let port = 5000 || process.env.PORT;
 routes(router);
 
-// app.use(cors());
 app.use(bodyParser.json());
-// app.use(helmet());
 
-var proxySettings = proxy({ target: "http://localhost:5000/" });
+// var proxySettings = proxy({ target: "http://localhost:5000/" });
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.use("/api", router);
 
