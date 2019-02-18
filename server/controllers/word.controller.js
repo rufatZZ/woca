@@ -8,8 +8,11 @@ module.exports = {
     saveWord({ title });
 
     function saveWord(obj) {
-      console.log(obj);
-      new Word(obj).save((err, word) => {
+      Word.findOneAndUpdate(
+        { title: obj.title }, // find a document with that filter
+        { $setOnInsert: obj }, // document to insert when nothing was found
+        { upsert: true, new: true, runValidators: true }
+      ).exec((err, word) => {
         if (err) {
           res.send(err);
         } else if (!word) {
