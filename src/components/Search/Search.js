@@ -6,7 +6,11 @@ import InvalidEntry from "./InvalidEntry";
 import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
 //actions
-import { getDefinitionByWord, saveWord } from "../../actions/actions";
+import {
+  getDefinitionByWord,
+  saveWord,
+  getSavedWord
+} from "../../actions/actions";
 
 class Search extends Component {
   constructor(props) {
@@ -16,6 +20,7 @@ class Search extends Component {
       wordList: [],
       errorType: 0,
       counter: 0,
+      isExist: false,
       isSearching: false,
       isLoading: true,
       isInvalid: false,
@@ -27,7 +32,7 @@ class Search extends Component {
     this.setParams = this.setParams.bind(this);
     this.getParams = this.getParams.bind(this);
   }
-  
+
   componentDidMount() {
     let getEntry = this.getParams("word");
     if (getEntry !== undefined && getEntry !== null) {
@@ -74,7 +79,7 @@ class Search extends Component {
     });
   }
 
-  async handleSaveWord(){
+  async handleSaveWord() {
     let entry = this.state.entry;
     let saveWordReponse = await saveWord(entry);
   }
@@ -92,6 +97,7 @@ class Search extends Component {
           isSearching: false
         });
       } else {
+        const checkWordExist = await getSavedWord(this.state.entry);
         const checkTypeOf = typeof wordListJSON[0];
         if (checkTypeOf === "string") {
           this.setState({
@@ -109,7 +115,8 @@ class Search extends Component {
             errorType: 0,
             isLoading: false,
             isInvalid: false,
-            isSearching: false
+            isSearching: false,
+            isExist: checkWordExist.isExist ? true : false
           });
         }
       }
@@ -132,7 +139,8 @@ class Search extends Component {
       isSearching,
       isEmpty,
       errorType,
-      isInvalid
+      isInvalid,
+      isExist
     } = this.state;
 
     const displayLoading = isLoading && isSearching;
@@ -152,7 +160,14 @@ class Search extends Component {
             {displayResults && <WordList wordList={wordList} entry={entry} />}
           </div>
           <div className="col-sm-2 col-md-2">
-            {displayResults && <button className="btn btn-success btn-lg btn-block" onClick={this.handleSaveWord}>Save Word</button>}
+            {displayResults && !isExist && (
+              <button
+                className="btn btn-success btn-lg btn-block"
+                onClick={this.handleSaveWord}
+              >
+                Save Word
+              </button>
+            )}
           </div>
         </div>
       </div>

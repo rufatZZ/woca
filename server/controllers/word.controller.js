@@ -38,13 +38,13 @@ module.exports = {
     });
   },
   getWord: (req, res, next) => {
-    Word.findById(req.params.id).exec((err, word) => {
+    Word.findOne({title: req.params.word}).exec((err, word) => {
       if (err) {
-        res.send(err);
+        res.send({status: 'error', isExist: false, response: err});
       } else if (!word) {
-        res.send(400);
+        res.send({status: 'ok', isExist: false, response: 'No result'});
       } else {
-        res.send(word);
+        res.send({status: 'ok', isExist: true, response: word});
       }
       next();
     });
