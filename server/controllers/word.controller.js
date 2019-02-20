@@ -48,5 +48,17 @@ module.exports = {
       }
       next();
     });
+  },
+  deleteWord: (req, res, next) => {
+    Word.findByIdAndRemove(req.params.id).exec((err, word)=> {
+      if(err){
+        res.send({status: 'error', isDeleted: false, response: err});        
+      }else if(!word){
+        res.send({status: 'ok', isDeleted: false, response: 'Cant delete'});        
+      }else{
+        res.send({status: 'ok', isDeleted: true, response: 'Successfully deleted'});
+      }
+      next();
+    });
   }
 };
