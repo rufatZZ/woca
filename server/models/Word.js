@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 let WordSchema = new mongoose.Schema({
-  title: String
+  title: String,
+  createdAt: Date
 });
 
 // WordSchema.methods.add = function(){}

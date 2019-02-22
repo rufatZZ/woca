@@ -8,6 +8,7 @@ module.exports = {
     saveWord({ title });
 
     function saveWord(obj) {
+      obj.createdAt = new Date(Date.now());
       Word.findOneAndUpdate(
         { title: obj.title }, // find a document with that filter
         { $setOnInsert: obj }, // document to insert when nothing was found
@@ -26,7 +27,7 @@ module.exports = {
     }
   },
   getAll: (req, res, next) => {
-    Word.find(req.params.id).exec((err, word) => {
+    Word.find(req.params.id).sort({createdAt: -1}).exec((err, word) => {
       if (err) {
         res.send(err);
       } else if (!word) {
