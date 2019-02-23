@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 //components
 import Searchbar from "./Searchbar";
 import WordList from "./WordList";
@@ -153,21 +154,27 @@ class Search extends Component {
         <Searchbar onSearchEntry={this.handleSearch} />
         <hr />
         <div className="row">
-          <div className="col-sm-10 col-md-10">
+          <div className="col-sm-9 col-md-9">
             {displayLoading && <Loading />}
             {displayError && <Error type={errorType} />}
             {displayInvalidEntry && <InvalidEntry entry={entry} />}
             {displayResults && <WordList wordList={wordList} entry={entry} />}
           </div>
-          <div className="col-sm-2 col-md-2">
-            {displayResults && !isExist && (
-              <button
-                className="btn btn-success btn-lg btn-block"
-                onClick={this.handleSaveWord}
-              >
-                Save Word
-              </button>
-            )}
+          <div className="col-sm-3 col-md-3">
+            {displayResults &&
+              (!isExist ? (
+                <button
+                  className="btn btn-success btn-lg btn-block"
+                  onClick={this.handleSaveWord}
+                >
+                  Save Word
+                </button>
+              ) : (
+                <div className="alert alert-info">
+                  Word already saved. <br />
+                  Go to <Link to={"/saved"}>Saved words</Link>
+                </div>
+              ))}
           </div>
         </div>
       </div>

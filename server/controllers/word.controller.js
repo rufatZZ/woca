@@ -27,37 +27,43 @@ module.exports = {
     }
   },
   getAll: (req, res, next) => {
-    Word.find(req.params.id).sort({createdAt: -1}).exec((err, word) => {
-      if (err) {
-        res.send(err);
-      } else if (!word) {
-        res.send(400);
-      } else {
-        res.send(word);
-      }
-      next();
-    });
+    Word.find(req.params.id)
+      .sort({ createdAt: -1 })
+      .exec((err, word) => {
+        if (err) {
+          res.send(err);
+        } else if (!word) {
+          res.send(400);
+        } else {
+          res.send(word);
+        }
+        next();
+      });
   },
   getWord: (req, res, next) => {
-    Word.findOne({title: req.params.word}).exec((err, word) => {
+    Word.findOne({ title: req.params.word }).exec((err, word) => {
       if (err) {
-        res.send({status: 'error', isExist: false, response: err});
+        res.send({ status: "error", isExist: false, response: err });
       } else if (!word) {
-        res.send({status: 'ok', isExist: false, response: 'No result'});
+        res.send({ status: "ok", isExist: false, response: "No result" });
       } else {
-        res.send({status: 'ok', isExist: true, response: word});
+        res.send({ status: "ok", isExist: true, response: word });
       }
       next();
     });
   },
   deleteWord: (req, res, next) => {
-    Word.findByIdAndRemove(req.params.id).exec((err, word)=> {
-      if(err){
-        res.send({status: 'error', isDeleted: false, response: err});        
-      }else if(!word){
-        res.send({status: 'ok', isDeleted: false, response: 'Cant delete'});        
-      }else{
-        res.send({status: 'ok', isDeleted: true, response: 'Successfully deleted'});
+    Word.findByIdAndRemove(req.params.id).exec((err, word) => {
+      if (err) {
+        res.send({ status: "error", isDeleted: false, response: err });
+      } else if (!word) {
+        res.send({ status: "ok", isDeleted: false, response: "Cant delete" });
+      } else {
+        res.send({
+          status: "ok",
+          isDeleted: true,
+          response: "Successfully deleted"
+        });
       }
       next();
     });

@@ -11,9 +11,10 @@ const InputResetIcon = styled.span`
   cursor: pointer;
   opacity: 0.6;
 
-  ${({inputValue}) => !inputValue && `
-    display: none;
-  `}
+  ${({ inputValue }) =>
+    !inputValue &&
+    ` display: none;
+`}
 `;
 
 export class Searchbar extends Component {
@@ -46,11 +47,12 @@ export class Searchbar extends Component {
     let { inputValue } = this.state;
     return (
       <div className="row">
-        <div className="col-md-10 col-sm-10">
+        <div className="col-md-9 col-sm-9">
           <div className="form-group">
             <input
               className="form-control form-control-lg"
               type="text"
+              id="entryInput"
               placeholder="Enter the word"
               value={inputValue}
               onChange={this.handleChange}
@@ -60,7 +62,7 @@ export class Searchbar extends Component {
             </InputResetIcon>
           </div>
         </div>
-        <div className="col-md-2 col-sm-2">
+        <div className="col-md-3 col-sm-3">
           <button
             className="btn btn-primary btn-lg btn-block"
             onClick={this.handleClick}
