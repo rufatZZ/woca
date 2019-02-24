@@ -15,11 +15,11 @@ module.exports = {
         { upsert: true, new: true, runValidators: true }
       ).exec((err, word) => {
         if (err) {
-          res.send(err);
+          res.send({ status: "error", isSaved: false, response: err });
         } else if (!word) {
-          res.send(400);
+          res.send({ status: "ok", isSaved: false, response: 'No result' });  
         } else {
-          return res.send(word);
+          return res.send({ status: "ok", isSaved: true, response: word });  
         }
 
         next();

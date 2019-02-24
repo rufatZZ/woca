@@ -12,6 +12,7 @@ import {
   saveWord,
   getSavedWord
 } from "../../actions/actions";
+import Alert from "../_common/Alert/Alert";
 
 class Search extends Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class Search extends Component {
       isSearching: false,
       isLoading: true,
       isInvalid: false,
-      isEmpty: true
+      isEmpty: true,
+      messages: []
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSaveWord = this.handleSaveWord.bind(this);
@@ -83,6 +85,29 @@ class Search extends Component {
   async handleSaveWord() {
     let entry = this.state.entry;
     let saveWordReponse = await saveWord(entry);
+    if (saveWordReponse.isSaved) {
+      this.setState({
+        messages: [
+          ...this.state.messages,
+          {
+            type: "success",
+            id: Math.random() * 12345,
+            text: "Word successfully saved"
+          }
+        ]
+      });
+    } else {
+      this.setState({
+        messages: [
+          ...this.state.messages,
+          {
+            type: "danger",
+            id: Math.random() * 12345,
+            text: "Cant saved word"
+          }
+        ]
+      });
+    }
   }
 
   async findWord(word) {
@@ -141,7 +166,8 @@ class Search extends Component {
       isEmpty,
       errorType,
       isInvalid,
-      isExist
+      isExist,
+      messages
     } = this.state;
 
     const displayLoading = isLoading && isSearching;
@@ -153,6 +179,10 @@ class Search extends Component {
       <div>
         <Searchbar onSearchEntry={this.handleSearch} />
         <hr />
+        <div>
+          {messages.length > 0 &&
+            messages.map(msg => <Alert key={msg.id} message={msg} />)}
+        </div>
         <div className="row">
           <div className="col-sm-9 col-md-9">
             {displayLoading && <Loading />}
