@@ -19,7 +19,7 @@ class Alert extends Component {
     const { message } = this.props;
     const alertClassName = `alert ${this.alertClass(message.type)}`;
     return (
-      <div className={alertClassName}>
+      <div className={alertClassName} style={{marginTop: "5px"}}>
         <button className="close" data-dismiss="alert">
           &times;
         </button>
