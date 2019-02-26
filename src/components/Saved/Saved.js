@@ -1,13 +1,27 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { getAllSavedWords, deleteSavedWord } from "../../actions/actions";
+import Alert from "../_common/Alert/Alert";
+
+const AlertHolder = styled.div`
+  width: 300px;
+  height: 80px;
+  z-index: 9;
+  position: fixed;
+  right: 30px;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column-reverse;
+`;
 
 class Saved extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      savedList: []
+      savedList: [],
+      messages: []
     };
 
     this.getAllSavedWords = this.getAllSavedWords.bind(this);
@@ -22,6 +36,27 @@ class Saved extends Component {
     let deleteResponse = await deleteSavedWord(word_id);
     if (deleteResponse.isDeleted) {
       this.getAllSavedWords();
+      this.setState({
+        messages: [
+          ...this.state.messages,
+          {
+            type: "error",
+            id: Math.random() * 12345,
+            text: "Word deleted"
+          }
+        ]
+      });
+    } else {
+      this.setState({
+        messages: [
+          ...this.state.messages,
+          {
+            type: "alert",
+            id: Math.random() * 12345,
+            text: "Cant delete word"
+          }
+        ]
+      });
     }
   }
 
@@ -31,7 +66,7 @@ class Saved extends Component {
   }
 
   render() {
-    let { savedList } = this.state;
+    let { savedList, messages } = this.state;
     let count = 0;
     savedList.sort(function(a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
@@ -39,6 +74,10 @@ class Saved extends Component {
 
     return (
       <div>
+        <AlertHolder>
+          {messages.length > 0 &&
+            messages.map(msg => <Alert key={msg.id} message={msg} />)}
+        </AlertHolder>
         <div className="row">
           <h2>Saved word list</h2>
         </div>
@@ -65,7 +104,7 @@ class Saved extends Component {
                     <td width="5%">
                       <button
                         className="btn btn-outline-danger"
-                        onClick={e => this.handleDelete(word._id)}
+                        onClick={e => this.handleDeleteSavedWord(word._id)}
                       >
                         Delete
                       </button>
