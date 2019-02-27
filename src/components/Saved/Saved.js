@@ -1,19 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { getAllSavedWords, deleteSavedWord } from "../../actions/actions";
 import Alert from "../_common/Alert/Alert";
-
-const AlertHolder = styled.div`
-  width: 300px;
-  height: 80px;
-  z-index: 9;
-  position: fixed;
-  right: 30px;
-  bottom: 40px;
-  display: flex;
-  flex-direction: column-reverse;
-`;
 
 class Saved extends Component {
   constructor(props) {
@@ -74,10 +62,7 @@ class Saved extends Component {
 
     return (
       <div>
-        <AlertHolder>
-          {messages.length > 0 &&
-            messages.map(msg => <Alert key={msg.id} message={msg} />)}
-        </AlertHolder>
+        {messages.length > 0 && <Alert messages={messages} />}
         <div className="row">
           <h2>Saved word list</h2>
         </div>

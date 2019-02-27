@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 //components
 import Searchbar from "./Searchbar";
 import WordList from "./WordList";
@@ -14,17 +13,6 @@ import {
   getSavedWord
 } from "../../actions/actions";
 import Alert from "../_common/Alert/Alert";
-
-const AlertHolder = styled.div`
-  width: 300px;
-  height: 80px;
-  z-index: 9;
-  position: fixed;
-  right: 30px;
-  bottom: 40px;
-  display: flex;
-  flex-direction: column-reverse;
-`;
 
 class Search extends Component {
   constructor(props) {
@@ -191,10 +179,8 @@ class Search extends Component {
       <div>
         <Searchbar onSearchEntry={this.handleSearch} />
         <hr />
-        <AlertHolder>
-          {messages.length > 0 &&
-            messages.map(msg => <Alert key={msg.id} message={msg} />)}
-        </AlertHolder>
+        {messages.length > 0 && <Alert messages={messages} />}
+
         <div className="row">
           <div className="col-sm-9 col-md-9">
             {displayLoading && <Loading />}
