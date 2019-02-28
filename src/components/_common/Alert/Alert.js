@@ -27,8 +27,11 @@ class Alert extends Component {
     return classes[type] || classes.success;
   }
 
+  handleClose() {}
+
   render() {
-    const { messages } = this.props;
+    const { messages, onCloseAlert } = this.props;
+    console.log(onCloseAlert);
     return (
       <div>
         <AlertHolder>
@@ -39,7 +42,11 @@ class Alert extends Component {
                 className={`alert ${this.alertClass(msg.type)}`}
                 style={{ marginTop: "5px" }}
               >
-                <button className="close" data-dismiss="alert">
+                <button
+                  className="close"
+                  data-dismiss="alert"
+                  onClick={e => onCloseAlert(msg.text)}
+                >
                   &times;
                 </button>
                 {msg.text}

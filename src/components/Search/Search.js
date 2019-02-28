@@ -29,11 +29,12 @@ class Search extends Component {
       isEmpty: true,
       messages: []
     };
-    this.handleSearch = this.handleSearch.bind(this);
+    this.handleClose    = this.handleClose.bind(this);
+    this.handleSearch   = this.handleSearch.bind(this);
     this.handleSaveWord = this.handleSaveWord.bind(this);
-    this.findWord = this.findWord.bind(this);
-    this.setParams = this.setParams.bind(this);
-    this.getParams = this.getParams.bind(this);
+    this.findWord       = this.findWord.bind(this);
+    this.setParams      = this.setParams.bind(this);
+    this.getParams      = this.getParams.bind(this);
   }
 
   componentDidMount() {
@@ -66,6 +67,10 @@ class Search extends Component {
     return searchParam.toString();
   }
 
+  handleClose(message) {
+    console.log(message);
+  }
+
   handleSearch(word) {
     this.setState({ entry: word }, () => {
       let wordHistoryArray = JSON.parse(
@@ -87,6 +92,7 @@ class Search extends Component {
     let saveWordReponse = await saveWord(entry);
     if (saveWordReponse.isSaved) {
       this.setState({
+        isExist: true,
         messages: [
           ...this.state.messages,
           {
@@ -179,7 +185,9 @@ class Search extends Component {
       <div>
         <Searchbar onSearchEntry={this.handleSearch} />
         <hr />
-        {messages.length > 0 && <Alert messages={messages} />}
+        {messages.length > 0 && (
+          <Alert messages={messages} onCloseAlert={this.handleClose} />
+        )}
 
         <div className="row">
           <div className="col-sm-9 col-md-9">
