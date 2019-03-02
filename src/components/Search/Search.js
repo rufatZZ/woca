@@ -29,12 +29,12 @@ class Search extends Component {
       isEmpty: true,
       messages: []
     };
-    this.handleClose    = this.handleClose.bind(this);
-    this.handleSearch   = this.handleSearch.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleSaveWord = this.handleSaveWord.bind(this);
-    this.findWord       = this.findWord.bind(this);
-    this.setParams      = this.setParams.bind(this);
-    this.getParams      = this.getParams.bind(this);
+    this.findWord = this.findWord.bind(this);
+    this.setParams = this.setParams.bind(this);
+    this.getParams = this.getParams.bind(this);
   }
 
   componentDidMount() {
@@ -67,8 +67,17 @@ class Search extends Component {
     return searchParam.toString();
   }
 
-  handleClose(message) {
-    console.log(message);
+  handleClose(msgId) {
+    this.setState(({ messages }) => {
+      const _messages = [...messages];
+      _messages.splice(
+        _messages.find(item => {
+          return item.id === msgId;
+        }),
+        1
+      );
+      return { messages: _messages };
+    });
   }
 
   handleSearch(word) {
@@ -97,7 +106,7 @@ class Search extends Component {
           ...this.state.messages,
           {
             type: "success",
-            id: Math.random() * 12345,
+            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
             text: "Word successfully saved"
           }
         ]
@@ -108,7 +117,7 @@ class Search extends Component {
           ...this.state.messages,
           {
             type: "danger",
-            id: Math.random() * 12345,
+            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
             text: "Cant saved word"
           }
         ]

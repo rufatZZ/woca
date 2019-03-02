@@ -27,11 +27,8 @@ class Alert extends Component {
     return classes[type] || classes.success;
   }
 
-  handleClose() {}
-
   render() {
     const { messages, onCloseAlert } = this.props;
-    console.log(onCloseAlert);
     return (
       <div>
         <AlertHolder>
@@ -45,7 +42,7 @@ class Alert extends Component {
                 <button
                   className="close"
                   data-dismiss="alert"
-                  onClick={e => onCloseAlert(msg.text)}
+                  onClick={e => onCloseAlert(msg.id)}
                 >
                   &times;
                 </button>

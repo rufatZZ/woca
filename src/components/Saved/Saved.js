@@ -12,12 +12,26 @@ class Saved extends Component {
       messages: []
     };
 
+    this.handleClose = this.handleClose.bind(this);
     this.getAllSavedWords = this.getAllSavedWords.bind(this);
     this.handleDeleteSavedWord = this.handleDeleteSavedWord.bind(this);
   }
 
   componentWillMount() {
     this.getAllSavedWords();
+  }
+
+  handleClose(msgId) {
+    this.setState(({ messages }) => {
+      const _messages = [...messages];
+      _messages.splice(
+        _messages.find(item => {
+          return item.id === msgId;
+        }),
+        1
+      );
+      return { messages: _messages };
+    });
   }
 
   async handleDeleteSavedWord(word_id) {
@@ -29,7 +43,7 @@ class Saved extends Component {
           ...this.state.messages,
           {
             type: "error",
-            id: Math.random() * 12345,
+            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
             text: "Word deleted"
           }
         ]
@@ -40,7 +54,7 @@ class Saved extends Component {
           ...this.state.messages,
           {
             type: "alert",
-            id: Math.random() * 12345,
+            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
             text: "Cant delete word"
           }
         ]
@@ -62,7 +76,9 @@ class Saved extends Component {
 
     return (
       <div>
-        {messages.length > 0 && <Alert messages={messages} />}
+        {messages.length > 0 && (
+          <Alert messages={messages} onCloseAlert={this.handleClose} />
+        )}
         <div className="row">
           <h2>Saved word list</h2>
         </div>
