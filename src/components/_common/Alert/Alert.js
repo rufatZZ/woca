@@ -36,13 +36,15 @@ class Alert extends Component {
             return (
               <div
                 key={msg.id}
-                className={`alert ${this.alertClass(msg.type)}`}
+                className={`alert ${this.alertClass(
+                  msg.type
+                )} animated fadeInUp`}
                 style={{ marginTop: "5px" }}
               >
                 <button
                   className="close"
                   data-dismiss="alert"
-                  onClick={e => onCloseAlert(msg.id)}
+                  onClick={e => onCloseAlert(msg.id, e)}
                 >
                   &times;
                 </button>

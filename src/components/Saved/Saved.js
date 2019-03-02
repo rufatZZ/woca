@@ -21,17 +21,22 @@ class Saved extends Component {
     this.getAllSavedWords();
   }
 
-  handleClose(msgId) {
-    this.setState(({ messages }) => {
-      const _messages = [...messages];
-      _messages.splice(
-        _messages.find(item => {
-          return item.id === msgId;
-        }),
-        1
-      );
-      return { messages: _messages };
-    });
+  handleClose(msgId, e) {
+    let target = e.currentTarget;
+    target.parentElement.classList.remove("fadeInUp");
+    target.parentElement.classList.add("fadeOutDown");
+    setTimeout(() => {
+      this.setState(({ messages }) => {
+        const _messages = [...messages];
+        _messages.splice(
+          _messages.findIndex(item => {
+            return item.id === msgId;
+          }),
+          1
+        );
+        return { messages: _messages };
+      });
+    }, 500);
   }
 
   async handleDeleteSavedWord(word_id) {
