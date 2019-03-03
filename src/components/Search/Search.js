@@ -88,14 +88,14 @@ class Search extends Component {
   handleSearch(word) {
     this.setState({ entry: word }, () => {
       let wordHistoryArray = JSON.parse(
-        localStorage.getItem("wordHistory") || "[]"
+        sessionStorage.getItem("wordHistory") || "[]"
       );
       let wordObj = {
         value: this.state.entry,
         time: new Date().toLocaleString()
       };
       wordHistoryArray.push(wordObj);
-      localStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
+      sessionStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
       const url = this.setParams({ query: this.state.entry });
       this.props.history.push(`?${url}`);
     });

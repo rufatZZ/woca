@@ -36,13 +36,25 @@ class History extends Component {
     this.state = {
       historyList: []
     };
+
+    this.handleFlush = this.handleFlush.bind(this);
+    this.getHistory = this.getHistory.bind(this);
   }
 
   componentWillMount() {
+    this.getHistory();
+  }
+
+  getHistory() {
     let historyWordList = JSON.parse(
-      localStorage.getItem("wordHistory") || "[]"
+      sessionStorage.getItem("wordHistory") || "[]"
     );
     this.setState({ historyList: historyWordList });
+  }
+
+  handleFlush() {
+    sessionStorage.removeItem("wordHistory");
+    this.getHistory();
   }
 
   render() {
@@ -51,6 +63,12 @@ class History extends Component {
       <div>
         <div className="row">
           <h2>
+            <button
+              className="btn btn-danger mr-3 mb-1"
+              onClick={this.handleFlush}
+            >
+              <i className="fa fa-trash" /> Flush
+            </button>
             History <small>(*session based history)</small>
           </h2>
         </div>

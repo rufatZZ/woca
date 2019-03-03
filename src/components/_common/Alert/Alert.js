@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { setTimeout } from "timers";
 
 const AlertHolder = styled.div`
   width: 300px;
@@ -16,6 +17,17 @@ class Alert extends Component {
   constructor(props) {
     super(props);
   }
+
+  // made flashmessages component
+  // componentDidMount(){
+  //   this.timer = setTimeout(
+  //     this.props.onCloseAlert,
+  //     this.props.timeout
+  //   );
+  // }
+  // componentWillUnmount(){
+  //   clearTimeout(this.timer);
+  // }
 
   alertClass(type) {
     let classes = {
@@ -57,5 +69,9 @@ class Alert extends Component {
     );
   }
 }
+
+Alert.defaultProps = {
+  timeout: 3000
+};
 
 export default Alert;
