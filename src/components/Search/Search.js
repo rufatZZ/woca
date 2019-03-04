@@ -12,7 +12,7 @@ import {
   saveWord,
   getSavedWord
 } from "../../actions/actions";
-import Alert from "../_common/Alert/Alert";
+import FlashMessages from "../_common/FlashMessages/FlashMessages";
 
 class Search extends Component {
   constructor(props) {
@@ -27,9 +27,9 @@ class Search extends Component {
       isLoading: true,
       isInvalid: false,
       isEmpty: true,
-      messages: []
+      message: {}
     };
-    this.handleClose = this.handleClose.bind(this);
+
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSaveWord = this.handleSaveWord.bind(this);
     this.findWord = this.findWord.bind(this);
@@ -67,24 +67,6 @@ class Search extends Component {
     return searchParam.toString();
   }
 
-  handleClose(msgId, e) {
-    let target = e.currentTarget;
-    target.parentElement.classList.remove("fadeInUp");
-    target.parentElement.classList.add("fadeOutDown");
-    setTimeout(() => {
-      this.setState(({ messages }) => {
-        const _messages = [...messages];
-        _messages.splice(
-          _messages.findIndex(item => {
-            return item.id === msgId;
-          }),
-          1
-        );
-        return { messages: _messages };
-      });
-    }, 500);
-  }
-
   handleSearch(word) {
     this.setState({ entry: word }, () => {
       let wordHistoryArray = JSON.parse(
@@ -107,25 +89,19 @@ class Search extends Component {
     if (saveWordReponse.isSaved) {
       this.setState({
         isExist: true,
-        messages: [
-          ...this.state.messages,
-          {
-            type: "success",
-            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
-            text: "Word successfully saved"
-          }
-        ]
+        message: {
+          type: "success",
+          id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
+          text: "Word successfully saved"
+        }
       });
     } else {
       this.setState({
-        messages: [
-          ...this.state.messages,
-          {
-            type: "danger",
-            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
-            text: "Cant saved word"
-          }
-        ]
+        message: {
+          type: "danger",
+          id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
+          text: "Cant saved word"
+        }
       });
     }
   }
@@ -187,7 +163,7 @@ class Search extends Component {
       errorType,
       isInvalid,
       isExist,
-      messages
+      message
     } = this.state;
 
     const displayLoading = isLoading && isSearching;
@@ -199,9 +175,7 @@ class Search extends Component {
       <div>
         <Searchbar onSearchEntry={this.handleSearch} />
         <hr />
-        {messages.length > 0 && (
-          <Alert messages={messages} onCloseAlert={this.handleClose} />
-        )}
+        <FlashMessages message={message} />
 
         <div className="row">
           <div className="col-sm-9 col-md-9">

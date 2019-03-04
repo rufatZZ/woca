@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { getAllSavedWords, deleteSavedWord } from "../../actions/actions";
-import Alert from "../_common/Alert/Alert";
+import FlashMessages from "../_common/FlashMessages/FlashMessages";
 
 class Saved extends Component {
   constructor(props) {
@@ -9,10 +9,9 @@ class Saved extends Component {
 
     this.state = {
       savedList: [],
-      messages: []
+      message: {}
     };
 
-    this.handleClose = this.handleClose.bind(this);
     this.getAllSavedWords = this.getAllSavedWords.bind(this);
     this.handleDeleteSavedWord = this.handleDeleteSavedWord.bind(this);
   }
@@ -21,48 +20,24 @@ class Saved extends Component {
     this.getAllSavedWords();
   }
 
-  handleClose(msgId, e) {
-    let target = e.currentTarget;
-    target.parentElement.classList.remove("fadeInUp");
-    target.parentElement.classList.add("fadeOutDown");
-    setTimeout(() => {
-      this.setState(({ messages }) => {
-        const _messages = [...messages];
-        _messages.splice(
-          _messages.findIndex(item => {
-            return item.id === msgId;
-          }),
-          1
-        );
-        return { messages: _messages };
-      });
-    }, 500);
-  }
-
   async handleDeleteSavedWord(word_id) {
     let deleteResponse = await deleteSavedWord(word_id);
     if (deleteResponse.isDeleted) {
       this.getAllSavedWords();
       this.setState({
-        messages: [
-          ...this.state.messages,
-          {
-            type: "error",
-            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
-            text: "Word deleted"
-          }
-        ]
+        message: {
+          type: "error",
+          id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
+          text: "Word deleted"
+        }
       });
     } else {
       this.setState({
-        messages: [
-          ...this.state.messages,
-          {
-            type: "alert",
-            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
-            text: "Cant delete word"
-          }
-        ]
+        message: {
+          type: "alert",
+          id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
+          text: "Cant delete word"
+        }
       });
     }
   }
@@ -73,7 +48,7 @@ class Saved extends Component {
   }
 
   render() {
-    let { savedList, messages } = this.state;
+    let { savedList, message } = this.state;
     let count = 0;
     savedList.sort(function(a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
@@ -81,9 +56,7 @@ class Saved extends Component {
 
     return (
       <div>
-        {messages.length > 0 && (
-          <Alert messages={messages} onCloseAlert={this.handleClose} />
-        )}
+        <FlashMessages message={message} />
         <div className="row">
           <h2>Saved word list</h2>
         </div>
