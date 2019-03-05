@@ -56,6 +56,8 @@ export class Searchbar extends Component {
               placeholder="Enter the word"
               value={inputValue}
               onChange={this.handleChange}
+              autoComplete="off"
+              onKeyPress={e => e.key === 'Enter' ? this.handleClick() : '' }
             />
             <InputResetIcon onClick={this.handleClear} inputValue={inputValue}>
               <i className="fas fa-times" />
