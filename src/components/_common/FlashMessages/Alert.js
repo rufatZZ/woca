@@ -4,6 +4,7 @@ class Alert extends Component {
   componentDidMount() {
     this.timer = setTimeout(this.props.onClose.bind(this), this.props.timeout);
   }
+
   componentWillUnmount() {
     clearTimeout(this.timer);
   }
@@ -39,7 +40,7 @@ class Alert extends Component {
 }
 
 Alert.defaultProps = {
-  timeout: 5000
+  timeout: 2000
 };
 
 export default Alert;
