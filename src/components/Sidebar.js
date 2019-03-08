@@ -13,7 +13,6 @@ const SidebarLink = styled(Link)`
     text-decoration: none !important;
     color: white;
     background-color: #11328d;
-    transition: 0.15s ease-in-out;
   }
 `;
 
@@ -24,11 +23,26 @@ const SidebarWrapper = styled.div`
   height: 100vh;
   background-color: #11369e;
   padding: 25px 25px;
+  transition: 0.5s ease-in-out;
 `;
 
 const SidebarBrand = styled.div`
   color: white;
   margin: 0px 0px 40px;
+`;
+
+const SidebarBrandLink = styled(Link)`
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  &:hover,
+  &:active,
+  &:focus {
+    color: white;
+    opacity: 0.7;
+    text-decoration: none;
+  }
 `;
 
 const SidebarLinkListHolder = styled.div`
@@ -53,25 +67,15 @@ const Sidebar = () => {
     <SidebarWrapper>
       <SidebarBrand>
         <h1>Woca</h1>
+        <SidebarBrandLink to="/">Woca</SidebarBrandLink>
       </SidebarBrand>
 
       <SidebarLinkListHolder>
-        <SidebarLinkList>
-          <SidebarLinkListTitle>Profile</SidebarLinkListTitle>
-          <SidebarLink to="/">My profile</SidebarLink>
-          <SidebarLink to="/">Notifications</SidebarLink>
-          <SidebarLink to="/">Settings</SidebarLink>
-        </SidebarLinkList>
-
         <SidebarLinkList>
           <SidebarLinkListTitle>Vocabulary</SidebarLinkListTitle>
           <SidebarLink to="/">Search</SidebarLink>
           <SidebarLink to="/history">History</SidebarLink>
           <SidebarLink to="/saved">Saved</SidebarLink>
-        </SidebarLinkList>
-
-        <SidebarLinkList>
-          <SidebarLink to="/">Log out</SidebarLink>
         </SidebarLinkList>
       </SidebarLinkListHolder>
     </SidebarWrapper>
