@@ -66,7 +66,6 @@ const Sidebar = () => {
   return (
     <SidebarWrapper>
       <SidebarBrand>
-        <h1>Woca</h1>
         <SidebarBrandLink to="/">Woca</SidebarBrandLink>
       </SidebarBrand>
 
