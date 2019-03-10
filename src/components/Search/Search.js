@@ -21,9 +21,7 @@ class Search extends Component {
       entry: "",
       wordList: [],
       errorType: 0,
-      counter: 0,
       isExist: false,
-      isSearching: false,
       isLoading: true,
       isInvalid: false,
       isEmpty: true,
@@ -107,7 +105,7 @@ class Search extends Component {
   }
 
   async findWord(word) {
-    this.setState({ isLoading: true, isSearching: true, isInvalid: false });
+    this.setState({ isLoading: true, isInvalid: false, isExist: false });
     try {
       let wordListJSON = await getDefinitionByWord(word);
       if (wordListJSON.length === 0) {
@@ -115,8 +113,7 @@ class Search extends Component {
           isEmpty: true,
           errorType: 0,
           isLoading: false,
-          isInvalid: false,
-          isSearching: false
+          isInvalid: false
         });
       } else {
         const checkWordExist = await getSavedWord(this.state.entry);
@@ -127,8 +124,7 @@ class Search extends Component {
             isEmpty: false,
             errorType: 0,
             isLoading: false,
-            isInvalid: true,
-            isSearching: false
+            isInvalid: true
           });
         } else {
           this.setState({
@@ -137,7 +133,6 @@ class Search extends Component {
             errorType: 0,
             isLoading: false,
             isInvalid: false,
-            isSearching: false,
             isExist: checkWordExist.isExist ? true : false
           });
         }
@@ -147,8 +142,7 @@ class Search extends Component {
         isEmpty: true,
         errorType: 1,
         isLoading: false,
-        isInvalid: false,
-        isSearching: false
+        isInvalid: false
       });
     }
   }
@@ -158,7 +152,6 @@ class Search extends Component {
       entry,
       wordList,
       isLoading,
-      isSearching,
       isEmpty,
       errorType,
       isInvalid,
@@ -166,8 +159,8 @@ class Search extends Component {
       message
     } = this.state;
 
-    const displayLoading = isLoading && isSearching;
-    const displayError = !isLoading && !isSearching && isEmpty;
+    const displayLoading = isLoading && entry.length > 0;
+    const displayError = !isLoading && isEmpty;
     const displayInvalidEntry = !displayLoading && !isEmpty && isInvalid;
     const displayResults = !displayLoading && !isEmpty;
 

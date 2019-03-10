@@ -8,25 +8,41 @@ export async function getDefinitionByWord(word) {
 }
 
 export async function getAllSavedWords() {
-  const response = await fetch("http://localhost:5000/api/words");
-  return await response.json();
+  try{
+    const response = await fetch("http://localhost:5000/api/words");
+    return await response.json();
+  }catch(e){
+    return [];
+  }
 }
 
 export async function saveWord(entry) {
-  const response = await fetch("http://localhost:5000/api/word", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=UTF-8"
-    },
-    body: JSON.stringify({ title: entry })
-  });
-
-  return await response.json();
+  try {
+    const response = await fetch("http://localhost:5000/api/word", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      body: JSON.stringify({ title: entry })
+    });
+    return await response.json();
+  } catch (e) {
+    // console.log(e);
+  }
 }
 
 export async function getSavedWord(entry) {
-  const response = await fetch(`http://localhost:5000/api/word/${entry}`);
-  return await response.json();
+  try {
+    const response = await fetch(`http://localhost:5000/api/word/${entry}`);
+    return await response.json();
+  } catch (e) {
+    if (String(e) === "TypeError: Failed to fetch") {
+      return {
+        isExist: false,
+        connectionError: true
+      };
+    }
+  }
 }
 
 export async function deleteSavedWord(word_id) {
