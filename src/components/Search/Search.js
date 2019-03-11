@@ -25,6 +25,7 @@ class Search extends Component {
       isLoading: true,
       isInvalid: false,
       isEmpty: true,
+      connectionError: false,
       message: {}
     };
 
@@ -133,7 +134,8 @@ class Search extends Component {
             errorType: 0,
             isLoading: false,
             isInvalid: false,
-            isExist: checkWordExist.isExist ? true : false
+            isExist: checkWordExist.isExist ? true : false,
+            connectionError: checkWordExist.connectionError ? true : false
           });
         }
       }
@@ -156,7 +158,8 @@ class Search extends Component {
       errorType,
       isInvalid,
       isExist,
-      message
+      message,
+      connectionError
     } = this.state;
 
     const displayLoading = isLoading && entry.length > 0;
@@ -178,7 +181,10 @@ class Search extends Component {
             {displayResults && <WordList wordList={wordList} entry={entry} />}
           </div>
           <div className="col-sm-3 col-md-3">
-            {displayResults &&
+            {connectionError ? (
+              <div className="alert alert-danger">Can't connect to server</div>
+            ) : (
+              displayResults &&
               (!isExist ? (
                 <button
                   className="btn btn-success btn-lg btn-block"
@@ -191,7 +197,8 @@ class Search extends Component {
                   Word already saved. <br />
                   Go to <Link to={"/saved"}>Saved words</Link>
                 </div>
-              ))}
+              ))
+            )}
           </div>
         </div>
       </div>

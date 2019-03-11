@@ -8,11 +8,14 @@ export async function getDefinitionByWord(word) {
 }
 
 export async function getAllSavedWords() {
-  try{
+  try {
     const response = await fetch("http://localhost:5000/api/words");
     return await response.json();
-  }catch(e){
-    return [];
+  } catch (e) {
+    return {
+      isExist: false,
+      connectionError: true
+    };
   }
 }
 

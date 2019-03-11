@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { getAllSavedWords, deleteSavedWord } from "../../actions/actions";
 import FlashMessages from "../_common/FlashMessages/FlashMessages";
+import Loading from "../_common/Loading/Loading";
 
 class Saved extends Component {
   constructor(props) {
@@ -9,7 +10,10 @@ class Saved extends Component {
 
     this.state = {
       savedList: [],
-      message: {}
+      message: {},
+      isLoading: true,
+      isEmpty: true,
+      connectionError: false
     };
 
     this.getAllSavedWords = this.getAllSavedWords.bind(this);
@@ -44,11 +48,28 @@ class Saved extends Component {
 
   async getAllSavedWords() {
     let savedList = await getAllSavedWords();
-    this.setState({ savedList: savedList });
+    if (savedList.connectionError) {
+      this.setState({
+        savedList: [],
+        isLoading: false,
+        isEmpty: true,
+        connectionError: true
+      });
+    } else {
+      if (savedList.length > 0) {
+        this.setState({
+          savedList: savedList,
+          isLoading: false,
+          isEmpty: false
+        });
+      } else {
+        this.setState({ savedList: [], isLoading: false, isEmpty: true });
+      }
+    }
   }
 
   render() {
-    let { savedList, message } = this.state;
+    let { savedList, message, isLoading, isEmpty, connectionError } = this.state;
     let count = 0;
     savedList.sort(function(a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
@@ -61,39 +82,60 @@ class Saved extends Component {
           <h2>Saved word list</h2>
         </div>
         <br />
-        <div className="row">
-          <table className="table table-hover table-borderless">
-            <tbody>
-              {savedList.map(word => {
-                count++;
-                return (
-                  <tr key={word._id}>
-                    <th scope="row" width="5%">
-                      {count}
-                    </th>
-                    <td width="80%">{word.title}</td>
-                    <td width="20%">
-                      <Link
-                        to={`/search?word=${word.title}`}
-                        className="btn btn-outline-info"
-                      >
-                        Get definition
-                      </Link>
-                    </td>
-                    <td width="5%">
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={e => this.handleDeleteSavedWord(word._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {isLoading && <Loading />}
+        {connectionError && (
+          <div className="row">
+            <div className="col-md-12">
+              <h3 className="alert alert-danger text-center">
+                Can't connect to server
+              </h3>
+            </div>
+          </div>
+        )}
+        {!isLoading && !connectionError &&
+          (isEmpty ? (
+            <div className="row">
+              <div className="col-md-12">
+                <h3 className="alert alert-warning text-center">
+                  Saved list is empty
+                </h3>
+              </div>
+            </div>
+          ) : (
+            <div className="row">
+              <table className="table table-hover table-borderless">
+                <tbody>
+                  {savedList.map(word => {
+                    count++;
+                    return (
+                      <tr key={word._id}>
+                        <th scope="row" width="5%">
+                          {count}
+                        </th>
+                        <td width="80%">{word.title}</td>
+                        <td width="20%">
+                          <Link
+                            to={`/search?word=${word.title}`}
+                            className="btn btn-outline-info"
+                          >
+                            Get definition
+                          </Link>
+                        </td>
+                        <td width="5%">
+                          <button
+                            className="btn btn-outline-danger"
+                            onClick={e => this.handleDeleteSavedWord(word._id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ))}
       </div>
     );
   }
