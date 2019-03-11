@@ -36,6 +36,14 @@ const ShordefList = ({ shortdef }) => {
 };
 
 class WordList extends Component {
+  handleAudio(e) {
+    const parent = Array.from(e.currentTarget.children);
+    let sound = parent.find(item => {
+      return item.tagName === "AUDIO";
+    });
+    sound.play();
+  }
+
   render() {
     const { wordList, entry } = this.props;
     let count = 0;
@@ -46,6 +54,19 @@ class WordList extends Component {
         let { hw = "", prs = {} } = word.hwi || {};
         let { mw = "" } = prs[0] || {};
         let { fl = "", shortdef = [] } = word;
+
+        let soundPath;
+        if(prs[0] && prs[0].sound !== undefined){
+          if (prs[0].sound.audio.substr(0, 2) === "bix") {
+            soundPath = "bix";
+          } else if (prs[0].sound.audio.substr(0, 1) === "gg") {
+            soundPath = "gg";
+          } else if (!isNaN(prs[0].sound.audio[0])) {
+            soundPath = "number";
+          } else {
+            soundPath = prs[0].sound.audio[0];
+          }
+        }
         count++;
 
         if (typeof word === "string") {
@@ -68,6 +89,19 @@ class WordList extends Component {
                     <EntrySpan>
                       <sup>{count}</sup>
                       {entry}
+                      {prs[0] && prs[0].sound !== undefined && (
+                        <button
+                          className="ml-2 mb-1 btn btn-sm btn-secondary"
+                          onClick={e => this.handleAudio(e)}
+                        >
+                          <i className="fa fa-volume-up" />
+                          <audio
+                            src={`https://media.merriam-webster.com/soundc11/${soundPath}/${
+                              prs[0].sound.audio
+                            }.wav`}
+                          />
+                        </button>
+                      )}
                     </EntrySpan>
                   </div>
                   <div>
