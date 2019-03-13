@@ -17,9 +17,9 @@ module.exports = {
         if (err) {
           res.send({ status: "error", isSaved: false, response: err });
         } else if (!word) {
-          res.send({ status: "ok", isSaved: false, response: 'No result' });  
+          res.send({ status: "ok", isSaved: false, response: "No result" });
         } else {
-          return res.send({ status: "ok", isSaved: true, response: word });  
+          return res.send({ status: "ok", isSaved: true, response: word });
         }
 
         next();

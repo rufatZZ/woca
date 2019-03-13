@@ -2,8 +2,6 @@ const express = require("express");
 const routes = require("./routes/");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-// const helmet = require("helmet");
-// const proxy = require("http-proxy-middleware");
 
 const app = express();
 const router = express.Router();
@@ -24,7 +22,10 @@ app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
