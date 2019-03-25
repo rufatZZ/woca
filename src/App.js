@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import styled from "styled-components";
 
 import Search from "./components/Search/Search";
 import Sidebar from "./components/Sidebar";
 import History from "./components/History/History";
 import Saved from "./components/Saved/Saved";
 
-import styled from "styled-components";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas);
 
 const Container = styled.div`
   max-width: 100%;

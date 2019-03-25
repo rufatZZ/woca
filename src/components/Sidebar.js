@@ -1,38 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SidebarLink = styled(Link)`
-  font-size: 14px;
+  font-size: 1rem;
   color: white;
-  padding: 10px 10px;
-  border-radius: 3px;
+  padding: 15px 15px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease-in-out;
   &:hover,
   &:focus {
+    transition: all 0.3s ease-in-out;
     outline: none !important;
     text-decoration: none !important;
     color: white;
-    background-color: #11328d;
+    background-color: #994ed3;
   }
 `;
 
 const SidebarWrapper = styled.div`
   position: fixed;
-  max-width: 250px;
-  width: 20%;
+  width: 100px;
   height: 100vh;
-  background-color: #11369e;
-  padding: 25px 25px;
-  transition: 0.5s ease-in-out;
+  background-color: #852dc8;
+  text-align: center;
 `;
 
 const SidebarBrand = styled.div`
   color: white;
-  margin: 0px 0px 40px;
+  margin: 20px 0px 40px;
 `;
 
 const SidebarBrandLink = styled(Link)`
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: white;
   text-decoration: none;
@@ -56,12 +57,6 @@ const SidebarLinkList = styled.div`
   margin-bottom: 30px;
 `;
 
-const SidebarLinkListTitle = styled.span`
-  color: white;
-  opacity: 0.4;
-  font-size: 12px;
-`;
-
 const Sidebar = () => {
   return (
     <SidebarWrapper>
@@ -71,10 +66,15 @@ const Sidebar = () => {
 
       <SidebarLinkListHolder>
         <SidebarLinkList>
-          <SidebarLinkListTitle>Vocabulary</SidebarLinkListTitle>
-          <SidebarLink to="/">Search</SidebarLink>
-          <SidebarLink to="/history">History</SidebarLink>
-          <SidebarLink to="/saved">Saved</SidebarLink>
+          <SidebarLink to="/" title="Search">
+            <FontAwesomeIcon icon="search" />
+          </SidebarLink>
+          <SidebarLink to="/history" title="History">
+            <FontAwesomeIcon icon="history" />
+          </SidebarLink>
+          <SidebarLink to="/saved" title="Saved">
+            <FontAwesomeIcon icon="bookmark" />
+          </SidebarLink>
         </SidebarLinkList>
       </SidebarLinkListHolder>
     </SidebarWrapper>
