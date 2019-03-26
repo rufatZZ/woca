@@ -1,0 +1,19 @@
+/* FONT FACE SETTINGS */
+
+@font-face {
+  font-family: "MS-Regular";
+  src: local("MS-Regular"),
+    url("./assets/fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "MS-Medium";
+  src: local("MS-Medium"),
+    url("./assets/fonts/Montserrat-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "MS-Bold";
+  src: local("MS-Bold"),
+    url("./assets/fonts/Montserrat-Bold.ttf") format("truetype");
+}

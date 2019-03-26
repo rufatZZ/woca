@@ -1,16 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const SidebarLink = styled(Link)`
+const SidebarLink = styled(NavLink)`
   font-size: 1rem;
   color: white;
   padding: 15px 15px;
   margin-bottom: 10px;
   transition: all 0.3s ease-in-out;
   &:hover,
-  &:focus {
+  &:focus,
+  &.active {
     transition: all 0.3s ease-in-out;
     outline: none !important;
     text-decoration: none !important;
@@ -66,13 +67,13 @@ const Sidebar = () => {
 
       <SidebarLinkListHolder>
         <SidebarLinkList>
-          <SidebarLink to="/" title="Search">
+          <SidebarLink to="/search" title="Search" activeClassName="active">
             <FontAwesomeIcon icon="search" />
           </SidebarLink>
-          <SidebarLink to="/history" title="History">
+          <SidebarLink to="/history" title="History" activeClassName="active">
             <FontAwesomeIcon icon="history" />
           </SidebarLink>
-          <SidebarLink to="/saved" title="Saved">
+          <SidebarLink to="/saved" title="Saved" activeClassName="active">
             <FontAwesomeIcon icon="bookmark" />
           </SidebarLink>
         </SidebarLinkList>

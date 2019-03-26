@@ -1,16 +1,25 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 import Search from "./components/Search/Search";
 import Sidebar from "./components/Sidebar";
 import History from "./components/History/History";
 import Saved from "./components/Saved/Saved";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 
 library.add(fas);
+
+const GlobalStyle = createGlobalStyle`
+   body {
+      font-family: 'MS-Regular';
+      margin: 0;
+      padding: 0;
+   }
+
+`;
 
 const Container = styled.div`
   max-width: 100%;
@@ -36,32 +45,33 @@ const ContentWrapper = styled.div`
 class App extends Component {
   render() {
     return (
-      <div>
-        <Router>
-          <Container>
-            <Flex>
-              <SidebarWrapper>
-                <Sidebar />
-              </SidebarWrapper>
-              <ContentWrapper>
-                <ContentHolder>
-                  <Container>
-                    <Route
-                      exact
-                      path="/"
-                      render={() => <Redirect to="/search" />}
-                    />
-                    <Route exact path="/search" component={Search} />
-                    <Route path="/search/:word" component={Search} />
-                    <Route path="/history" component={History} />
-                    <Route path="/saved" component={Saved} />
-                  </Container>
-                </ContentHolder>
-              </ContentWrapper>
-            </Flex>
-          </Container>
-        </Router>
-      </div>
+      <React.Fragment>
+        <GlobalStyle />
+          <Router>
+            <Container>
+              <Flex>
+                <SidebarWrapper>
+                  <Sidebar />
+                </SidebarWrapper>
+                <ContentWrapper>
+                  <ContentHolder>
+                    <Container>
+                      <Route
+                        exact
+                        path="/"
+                        render={() => <Redirect to="/search" />}
+                      />
+                      <Route exact path="/search" component={Search} />
+                      <Route path="/search/:word" component={Search} />
+                      <Route path="/history" component={History} />
+                      <Route path="/saved" component={Saved} />
+                    </Container>
+                  </ContentHolder>
+                </ContentWrapper>
+              </Flex>
+            </Container>
+          </Router>
+      </React.Fragment>
     );
   }
 }
