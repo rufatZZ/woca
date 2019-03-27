@@ -55,11 +55,6 @@ For production release:
 $ npm run build
 ```
 
-### Todos
-
- - Write MORE Tests
- - Add Night Mode
-
 License
 ----
 
