@@ -1,8 +1,65 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { getAllSavedWords, deleteSavedWord } from "../../actions/actions";
+
 import FlashMessages from "../_common/FlashMessages/FlashMessages";
 import Loading from "../_common/Loading/Loading";
+
+const SavedTitle = styled.h1`
+  font-family: "MS-Bold";
+  font-size: 2.5rem;
+`;
+
+const SavedFlex = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const SavedWordBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 200px;
+  padding: 20px;
+  margin: 0px 25px 30px 0px;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    ${"" /* cursor: pointer; */}
+    box-shadow: -10px 10px 20px 0px #994ed361;
+    transition: all 0.2s ease-in-out;
+  }
+`;
+
+const SavedWordBoxTitle = styled.h2`
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  font-family: "MS-Bold";
+  opacity: 0.6;
+`;
+
+const SavedWordBoxBody = styled.div`
+  height: 90%;
+`;
+
+const SavedWordBoxFooter = styled.div`
+  height: 10%;
+  font-size: 1rem;
+`;
+
+const SavedWordBoxFooterIcon = styled(FontAwesomeIcon)`
+  margin-right: 10px;
+  opacity: 0.6;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+`;
 
 class Saved extends Component {
   constructor(props) {
@@ -69,7 +126,13 @@ class Saved extends Component {
   }
 
   render() {
-    let { savedList, message, isLoading, isEmpty, connectionError } = this.state;
+    let {
+      savedList,
+      message,
+      isLoading,
+      isEmpty,
+      connectionError
+    } = this.state;
     let count = 0;
     savedList.sort(function(a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
@@ -79,10 +142,11 @@ class Saved extends Component {
       <div>
         <FlashMessages message={message} />
         <div className="row">
-          <h2>Saved word list</h2>
+          <SavedTitle>Saved</SavedTitle>
         </div>
         <br />
         {isLoading && <Loading />}
+
         {connectionError && (
           <div className="row">
             <div className="col-md-12">
@@ -92,7 +156,9 @@ class Saved extends Component {
             </div>
           </div>
         )}
-        {!isLoading && !connectionError &&
+
+        {!isLoading &&
+          !connectionError &&
           (isEmpty ? (
             <div className="row">
               <div className="col-md-12">
@@ -102,39 +168,37 @@ class Saved extends Component {
               </div>
             </div>
           ) : (
-            <div className="row">
-              <table className="table table-hover table-borderless">
-                <tbody>
-                  {savedList.map(word => {
-                    count++;
-                    return (
-                      <tr key={word._id}>
-                        <th scope="row" width="5%">
-                          {count}
-                        </th>
-                        <td width="80%">{word.title}</td>
-                        <td width="20%">
-                          <Link
-                            to={`/search?word=${word.title}`}
-                            className="btn btn-outline-info"
-                          >
-                            Get definition
-                          </Link>
-                        </td>
-                        <td width="5%">
-                          <button
-                            className="btn btn-outline-danger"
-                            onClick={e => this.handleDeleteSavedWord(word._id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            <SavedFlex>
+              {savedList.map(word => {
+                count++;
+                return (
+                  <SavedWordBox key={word._id}>
+                    <SavedWordBoxBody>
+                      <SavedWordBoxTitle>
+                        {word.title}
+                      </SavedWordBoxTitle>
+                    </SavedWordBoxBody>
+                    <SavedWordBoxFooter>
+                      <SavedWordBoxFooterIcon
+                        icon="trash-alt"
+                        title="Delete"
+                        onClick={e => this.handleDeleteSavedWord(word._id)}
+                      />
+                      <Link
+                        to={`/search?word=${word.title}`}
+                        style={{ color: "black" }}
+                      >
+                        <SavedWordBoxFooterIcon
+                          icon="external-link-square-alt"
+                          title="Get definition"
+                          style={{ transform: "translateY(8%)" }}
+                        />
+                      </Link>
+                    </SavedWordBoxFooter>
+                  </SavedWordBox>
+                );
+              })}
+            </SavedFlex>
           ))}
       </div>
     );

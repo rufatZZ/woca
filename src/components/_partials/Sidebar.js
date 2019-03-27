@@ -8,11 +8,11 @@ const SidebarLink = styled(NavLink)`
   color: white;
   padding: 15px 15px;
   margin-bottom: 10px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   &:hover,
   &:focus,
   &.active {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
     outline: none !important;
     text-decoration: none !important;
     color: white;
@@ -34,6 +34,7 @@ const SidebarBrand = styled.div`
 `;
 
 const SidebarBrandLink = styled(Link)`
+  font-family: 'MS-Bold';
   font-size: 1.5rem;
   font-weight: 500;
   color: white;

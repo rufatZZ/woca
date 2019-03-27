@@ -26,11 +26,12 @@ const Flex = styled.div`
 `;
 
 const SidebarWrapper = styled.div`
-  width: 300px;
+  width: 100px;
+  margin-right: 50px;
 `;
 
 const ContentWrapper = styled.div`
-  width: calc(100% - 400px);
+  width: calc(100% - 200px);
 `;
 
 class Woca extends Component {
