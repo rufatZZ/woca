@@ -133,7 +133,7 @@ class Saved extends Component {
       isEmpty,
       connectionError
     } = this.state;
-    let count = 0;
+    
     savedList.sort(function(a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
     });
@@ -170,7 +170,6 @@ class Saved extends Component {
           ) : (
             <SavedFlex>
               {savedList.map(word => {
-                count++;
                 return (
                   <SavedWordBox key={word._id}>
                     <SavedWordBoxBody>
