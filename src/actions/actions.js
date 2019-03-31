@@ -19,6 +19,21 @@ export async function getAllSavedWords() {
   }
 }
 
+export function getAllHistory(asc = false) {
+  console.log(asc);
+  let historyList = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");
+
+  historyList.sort(function(a, b) {
+    if (asc) {
+      return Date.parse(a.time) - Date.parse(b.time);
+    } else {
+      return Date.parse(b.time) - Date.parse(a.time);
+    }
+  });
+  console.log(historyList);
+  return historyList;
+}
+
 export async function saveWord(entry) {
   try {
     const response = await fetch("http://localhost:5000/api/word", {

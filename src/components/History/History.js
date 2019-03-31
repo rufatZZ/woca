@@ -1,30 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
-const HistoryList = ({ wordList }) => {
-  wordList.sort(function(a, b) {
-    return Date.parse(b.time) - Date.parse(a.time);
-  });
-  return wordList.map(word => {
-    return (
-      <tr key={Math.random() * Date.parse(word.time)}>
-        <td>{word.time}</td>
-        <td>{word.value}</td>
-        <td width="20%">
-          <Link
-            to={`/search?word=${word.value}`}
-            className="btn btn-outline-info"
-          >
-            Get definition
-          </Link>
-        </td>
-        <td width="5%">
-          <button className="btn btn-outline-danger">Delete</button>
-        </td>
-      </tr>
-    );
-  });
-};
+import { getAllHistory } from "../../actions/actions";
 
 class History extends Component {
   constructor(props) {
@@ -43,9 +19,7 @@ class History extends Component {
   }
 
   getHistory() {
-    let historyWordList = JSON.parse(
-      sessionStorage.getItem("wordHistory") || "[]"
-    );
+    let historyWordList = getAllHistory();
     this.setState({ historyList: historyWordList });
   }
 
@@ -73,7 +47,25 @@ class History extends Component {
         <div className="row">
           <table className="table table-hover table-borderless">
             <tbody>
-              <HistoryList wordList={historyList} />
+              {historyList.map(word => {
+                return (
+                  <tr key={Math.random() * Date.parse(word.time)}>
+                    <td>{word.time}</td>
+                    <td>{word.value}</td>
+                    <td width="20%">
+                      <Link
+                        to={`/search?word=${word.value}`}
+                        className="btn btn-outline-info"
+                      >
+                        Get definition
+                      </Link>
+                    </td>
+                    <td width="5%">
+                      <button className="btn btn-outline-danger">Delete</button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
