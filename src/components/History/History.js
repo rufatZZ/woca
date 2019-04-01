@@ -88,7 +88,7 @@ class History extends Component {
     let { historyList } = this.state;
     return (
       <div>
-        <div className="row">
+        <SavedFlex>
           <SavedTitle>
             <button
               className="btn btn-danger mr-3 mb-1"
@@ -98,16 +98,14 @@ class History extends Component {
             </button>
             History <small>(*session based history)</small>
           </SavedTitle>
-        </div>
+        </SavedFlex>
         <br />
         <SavedFlex>
           {historyList.map(word => {
             return (
               <SavedWordBox key={Math.random() * Date.parse(word.time)}>
                 <SavedWordBoxBody>
-                  <SavedWordBoxTitle>
-                    {word.value}
-                  </SavedWordBoxTitle>
+                  <SavedWordBoxTitle>{word.value}</SavedWordBoxTitle>
                 </SavedWordBoxBody>
                 <SavedWordBoxFooter>
                   <SavedWordBoxFooterIcon
@@ -126,7 +124,6 @@ class History extends Component {
                     />
                   </Link>
                   {word.time}
-
                 </SavedWordBoxFooter>
               </SavedWordBox>
             );

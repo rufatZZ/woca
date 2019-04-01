@@ -133,7 +133,7 @@ class Saved extends Component {
       isEmpty,
       connectionError
     } = this.state;
-    
+
     savedList.sort(function(a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
     });
@@ -141,9 +141,9 @@ class Saved extends Component {
     return (
       <div>
         <FlashMessages message={message} />
-        <div className="row">
+        <SavedFlex>
           <SavedTitle>Saved</SavedTitle>
-        </div>
+        </SavedFlex>
         <br />
         {isLoading && <Loading />}
 
@@ -173,9 +173,7 @@ class Saved extends Component {
                 return (
                   <SavedWordBox key={word._id}>
                     <SavedWordBoxBody>
-                      <SavedWordBoxTitle>
-                        {word.title}
-                      </SavedWordBoxTitle>
+                      <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
                     </SavedWordBoxBody>
                     <SavedWordBoxFooter>
                       <SavedWordBoxFooterIcon
