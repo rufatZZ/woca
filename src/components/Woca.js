@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import Sidebar from "./_partials/Sidebar";
 import Search from "./Search/Search";
+import Words from "./Words/Words";
 import History from "./History/History";
 import Saved from "./Saved/Saved";
 
@@ -53,6 +54,8 @@ class Woca extends Component {
                   />
                   <Route exact path="/search" component={Search} />
                   <Route path="/search/:word" component={Search} />
+                  <Route path="/words/:type" component={Words} />
+
                   <Route path="/history" component={History} />
                   <Route path="/saved" component={Saved} />
                 </Container>

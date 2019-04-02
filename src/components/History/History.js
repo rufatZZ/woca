@@ -123,7 +123,7 @@ class History extends Component {
                       style={{ transform: "translateY(8%)" }}
                     />
                   </Link>
-                  {word.time}
+                  <span style={{float: "right"}}>{word.time}</span>
                 </SavedWordBoxFooter>
               </SavedWordBox>
             );
