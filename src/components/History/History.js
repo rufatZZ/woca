@@ -79,6 +79,16 @@ class History extends Component {
     this.setState({ historyList: historyWordList });
   }
 
+  handleDeleteHistoryWord(e, time) {
+    e.target.parentNode.parentNode.parentNode.style.display = "none";
+
+    let history = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");
+    history = history.filter(obj => {
+      return obj.time !== time;
+    });
+    sessionStorage.setItem("wordHistory", JSON.stringify(history));
+  }
+
   handleFlush() {
     sessionStorage.removeItem("wordHistory");
     this.getHistory();
@@ -111,7 +121,7 @@ class History extends Component {
                   <SavedWordBoxFooterIcon
                     icon="trash-alt"
                     title="Delete"
-                    // onClick={e => this.handleDeleteSavedWord(word._id)}
+                    onClick={e => this.handleDeleteHistoryWord(e, word.time)}
                   />
                   <Link
                     to={`/search?word=${word.value}`}
@@ -123,7 +133,7 @@ class History extends Component {
                       style={{ transform: "translateY(8%)" }}
                     />
                   </Link>
-                  <span style={{float: "right"}}>{word.time}</span>
+                  <span style={{ float: "right" }}>{word.time}</span>
                 </SavedWordBoxFooter>
               </SavedWordBox>
             );
