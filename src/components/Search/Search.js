@@ -170,7 +170,6 @@ class Search extends Component {
     return (
       <div>
         <Searchbar onSearchEntry={this.handleSearch} />
-        <hr />
         <FlashMessages message={message} />
 
         <div className="row">

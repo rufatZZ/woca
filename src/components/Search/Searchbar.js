@@ -1,12 +1,36 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
-const InputResetIcon = styled.span`
+
+const SearchBarHolder = styled.div`
+  width: 60%;
+  position: relative;
+  margin: 0 0 1rem;
+  ${'' /* padding: 0px 0px 1rem; */}
+  border-bottom: 1px solid lightgrey;
+`;
+const SearchBarInput = styled.input `
+  width: 100%;
+  padding: 10px 15px;
+  border:none;
+  border: 1px solid rgb(222, 221, 221);
+  border-radius: 1rem;
+  &:hover,
+  &:active,
+  &:focus{
+    border: 1px solid transparent;
+    outline:none;
+    box-shadow: -1px 1px 10px 1px rgb(222, 221, 221);
+  }
+`;
+
+const InputResetIcon = styled(FontAwesomeIcon)`
   z-index: 9;
   top: 50%;
   position: absolute;
   right: 1rem;
-  transform: translate(-1rem, -80%);
+  transform: translate(-1rem, -60%);
   font-size: 20px;
   cursor: pointer;
   opacity: 0.6;
@@ -40,17 +64,18 @@ export class Searchbar extends Component {
 
   handleClick() {
     let entry = this.state.inputValue;
-    this.props.onSearchEntry(entry);
+    if(entry !== undefined && entry ){
+      this.props.onSearchEntry(entry);
+    }
   }
 
   render() {
     let { inputValue } = this.state;
     return (
       <div className="row">
-        <div className="col-md-9 col-sm-9">
-          <div className="form-group">
-            <input
-              className="form-control form-control-lg"
+        {/* <div className="col-md-8 col-sm-8"> */}
+          <SearchBarHolder>
+            <SearchBarInput
               type="text"
               id="entryInput"
               placeholder="Enter the word"
@@ -59,12 +84,10 @@ export class Searchbar extends Component {
               autoComplete="off"
               onKeyPress={e => e.key === 'Enter' ? this.handleClick() : '' }
             />
-            <InputResetIcon onClick={this.handleClear} inputValue={inputValue}>
-              <i className="fas fa-times" />
-            </InputResetIcon>
-          </div>
-        </div>
-        <div className="col-md-3 col-sm-3">
+              <InputResetIcon icon="times" onClick={this.handleClear} inputValue={inputValue}/>
+          </SearchBarHolder>
+        {/* </div> */}
+        <div className="col-md-2 col-sm-2">
           <button
             className="btn btn-primary btn-lg btn-block"
             onClick={this.handleClick}
