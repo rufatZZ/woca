@@ -2,43 +2,50 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
+const Flex = styled.div`
+  display: flex;
+`;
 
 const SearchBarHolder = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
   width: 60%;
-  position: relative;
+  max-width: 650px;
   margin: 0 0 1rem;
-  ${'' /* padding: 0px 0px 1rem; */}
-  border-bottom: 1px solid lightgrey;
-`;
-const SearchBarInput = styled.input `
-  width: 100%;
-  padding: 10px 15px;
-  border:none;
+  border: none;
+  padding: 0px 15px;
   border: 1px solid rgb(222, 221, 221);
   border-radius: 1rem;
   &:hover,
   &:active,
-  &:focus{
+  &:focus {
     border: 1px solid transparent;
-    outline:none;
     box-shadow: -1px 1px 10px 1px rgb(222, 221, 221);
   }
 `;
 
-const InputResetIcon = styled(FontAwesomeIcon)`
-  z-index: 9;
-  top: 50%;
-  position: absolute;
-  right: 1rem;
-  transform: translate(-1rem, -60%);
+const SearchBarInput = styled.input`
+  display: flex;
+  flex: 100%;
+  flex-wrap: wrap;
+  width: 60%;
+  padding: 10px 0px;
+  border: none;
+  &:hover,
+  &:active,
+  &:focus {
+    outline: none;
+  }
+`;
+
+const InputIcon = styled(FontAwesomeIcon)`
   font-size: 20px;
   cursor: pointer;
   opacity: 0.6;
+  margin-left: 10px;
 
-  ${({ inputValue }) =>
-    !inputValue &&
-    ` display: none;
-`}
+  ${"" /* ${props => (props.inputvalue ? `display:block;` : `display: none;`)} */}
 `;
 
 export class Searchbar extends Component {
@@ -64,7 +71,7 @@ export class Searchbar extends Component {
 
   handleClick() {
     let entry = this.state.inputValue;
-    if(entry !== undefined && entry ){
+    if (entry !== undefined && entry) {
       this.props.onSearchEntry(entry);
     }
   }
@@ -72,8 +79,8 @@ export class Searchbar extends Component {
   render() {
     let { inputValue } = this.state;
     return (
-      <div className="row">
-        {/* <div className="col-md-8 col-sm-8"> */}
+      <div>
+        <Flex>
           <SearchBarHolder>
             <SearchBarInput
               type="text"
@@ -82,19 +89,17 @@ export class Searchbar extends Component {
               value={inputValue}
               onChange={this.handleChange}
               autoComplete="off"
-              onKeyPress={e => e.key === 'Enter' ? this.handleClick() : '' }
+              onKeyPress={e => (e.key === "Enter" ? this.handleClick() : "")}
             />
-              <InputResetIcon icon="times" onClick={this.handleClear} inputValue={inputValue}/>
+            <InputIcon
+              icon="times"
+              onClick={this.handleClear}
+              inputvalue={inputValue}
+            />
+            <InputIcon icon="search" onClick={this.handleClick} />
           </SearchBarHolder>
-        {/* </div> */}
-        <div className="col-md-2 col-sm-2">
-          <button
-            className="btn btn-primary btn-lg btn-block"
-            onClick={this.handleClick}
-          >
-            Search
-          </button>
-        </div>
+        </Flex>
+        <hr />
       </div>
     );
   }

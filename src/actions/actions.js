@@ -19,8 +19,8 @@ export async function getAllSavedWords() {
   }
 }
 
-export function getAllHistory(asc = false) {
-  console.log(asc);
+export function getAllHistory(asc = false) { 
+
   let historyList = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");
 
   historyList.sort(function(a, b) {
@@ -30,7 +30,7 @@ export function getAllHistory(asc = false) {
       return Date.parse(b.time) - Date.parse(a.time);
     }
   });
-  console.log(historyList);
+  
   return historyList;
 }
 

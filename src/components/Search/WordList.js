@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EntrySpan = styled.span`
   font-size: 24px;
@@ -94,7 +95,7 @@ class WordList extends Component {
                           className="ml-2 mb-1 btn btn-sm btn-secondary"
                           onClick={e => this.handleAudio(e)}
                         >
-                          <i className="fa fa-volume-up" />
+                          <FontAwesomeIcon icon="volume-up"/>
                           <audio
                             src={`https://media.merriam-webster.com/soundc11/${soundPath}/${
                               prs[0].sound.audio
