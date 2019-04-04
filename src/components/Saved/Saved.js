@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from 'react-helmet';
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -140,6 +141,10 @@ class Saved extends Component {
 
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Saved</title>
+        </Helmet>
         <FlashMessages message={message} />
         <SavedFlex>
           <SavedTitle>Saved</SavedTitle>

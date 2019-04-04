@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from 'react-helmet';
 //components
 import Searchbar from "./Searchbar";
 import WordList from "./WordList";
@@ -169,6 +170,10 @@ class Search extends Component {
 
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Search</title>
+        </Helmet>
         <Searchbar onSearchEntry={this.handleSearch} />
         <FlashMessages message={message} />
 

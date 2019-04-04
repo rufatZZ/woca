@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import { Helmet } from 'react-helmet';
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -98,6 +98,10 @@ class History extends Component {
     let { historyList } = this.state;
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Recently searched</title>
+        </Helmet>
         <SavedFlex>
           <SavedTitle>
             <button
