@@ -24,10 +24,22 @@ const SuggestedWordLink = styled(Link)`
 `;
 
 const WordCard = styled.div`
-  margin-bottom: 5px !important;
+  margin: 0px 25px 30px 0px;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    box-shadow: -10px 10px 20px 0px #994ed361;
+    transition: all 0.2s ease-in-out;
+  }
+  ${'' /* margin-bottom: 5px !important; */}
+  ${'' /* .card{
+    border-radius: 1rem;
+  }
   .card-body {
     padding: 0;
-  }
+  } */}
 `;
 
 const ShordefList = ({ shortdef }) => {
@@ -111,7 +123,7 @@ class WordList extends Component {
                     </p>
                   </div>
                 </div>
-                <div className="alert alert-secondary">
+                <div className="alert alert-secondary" style={{borderRadius: '1rem'}}>
                   <ShordefListHolder>
                     <ShordefList shortdef={shortdef} />
                   </ShordefListHolder>

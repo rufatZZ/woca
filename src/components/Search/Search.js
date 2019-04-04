@@ -178,7 +178,7 @@ class Search extends Component {
         <FlashMessages message={message} />
 
         <div className="row">
-          <div className="col-sm-9 col-md-9">
+          <div className="col-sm-8 col-md-8">
             {displayLoading && <Loading />}
             {displayError && <Error type={errorType} />}
             {displayInvalidEntry && <InvalidEntry entry={entry} />}
