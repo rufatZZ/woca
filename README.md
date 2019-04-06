@@ -1,18 +1,22 @@
 
-# Woca
+<img align="right" width="200" src="https://github.com/rufatZZ/woca/blob/master/public/apple-touch-icon.png" />
 
-[![N|Solid](https://www.dictionaryapi.com/images/MWLogo_120x120.png)](https://www.dictionaryapi.com/)
+# Woca
 
 [![Build Status](https://travis-ci.org/rufatZZ/woca.svg?branch=master)](https://travis-ci.org/rufatZZ/woca)
 
 Woca is a api-based, React/Node powered vocabulary app.
-
   - Search some words from Merriam-Webster Dictionary
   - See your search history
   - Save your words to MongoDB via Express/Mongoose
 
 
 ### Tech
+
+[![N|Solid](https://www.dictionaryapi.com/images/MWLogo_120x120.png)](https://www.dictionaryapi.com/)
+
+Woca uses API for back-end from Merriam-Webster API
+
 
 Woca uses a number of open source projects to work properly:
 
@@ -23,6 +27,7 @@ Woca uses a number of open source projects to work properly:
 * [mongoose](https://mongoosejs.com/) - elegant mongodb object modeling for node.js
 * [MongoDB](https://www.mongodb.com) - document database with the scalability and flexibility
 * [styled-components](https://www.styled-components.com/) -  CSS-in-JS library
+* [react-helmet](https://github.com/nfl/react-helmet) -  A document head manager for React
 
 And of course woca itself is open source with a [public repository][woca]
  on GitHub.
