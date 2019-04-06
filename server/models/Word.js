@@ -5,7 +5,4 @@ let WordSchema = new mongoose.Schema({
   createdAt: Date
 });
 
-// WordSchema.methods.add = function(){}
-
-
 module.exports = mongoose.model('Word', WordSchema);

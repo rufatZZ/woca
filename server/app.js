@@ -11,7 +11,7 @@ try {
   mongoose.connect(url, {
     //   useMongoClient: true
   });
-} catch (error) {}
+} catch (error) { }
 
 let port = 5000 || process.env.PORT;
 routes(router);
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 // var proxySettings = proxy({ target: "http://localhost:5000/" });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -33,5 +33,5 @@ app.use(function(req, res, next) {
 app.use("/api", router);
 
 app.listen(port, () => {
-  console.log(`Party began at ${port}`);
+  console.log(`Server: ${port}`);
 });
