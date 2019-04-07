@@ -6,6 +6,7 @@ import Sidebar from "./_partials/Sidebar";
 import Search from "./Search/Search";
 import Words from "./Words/Words";
 import History from "./History/History";
+import StyleGuide from "./StyleGuide";
 import Saved from "./Saved/Saved";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -56,6 +57,7 @@ class Woca extends Component {
                   <Route path="/search/:word" component={Search} />
                   <Route path="/words/:type" component={Words} />
 
+                  <Route path="/style_guide" component={StyleGuide} />
                   <Route path="/history" component={History} />
                   <Route path="/saved" component={Saved} />
                 </Container>
