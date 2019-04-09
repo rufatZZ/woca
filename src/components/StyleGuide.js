@@ -26,11 +26,21 @@ class StyleGuide extends Component {
                 <SavedFlex>
                     <SavedTitle>Style guide</SavedTitle>
                 </SavedFlex>
-                <div style={{ width: "90%", display: 'flex', flexDirection: 'column' }}>
-
-                    <WButton />
-                    <WLink />
-                    <WAlert />
+                <div>
+                    <div >
+                        <WButton bg="primary" size="lg"/>
+                        <WButton bg="success"/>
+                        <WButton bg="warning"/>
+                        <WButton/>
+                        <WButton bg="danger" size="sm"/>
+                    </div>
+                    <div>
+                        <WLink />
+                    </div>
+                    <div>
+                        <WAlert />
+                    </div>
+                        
                 </div>
             </div>
         );
