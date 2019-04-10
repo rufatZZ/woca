@@ -27,11 +27,21 @@ class StyleGuide extends Component {
                     <SavedTitle>Style guide</SavedTitle>
                 </SavedFlex>
                 <div>
+                    <div>
+                        <button className="btn btn-primary">Woca</button>
+                        <button className="btn btn-warning">Woca</button>
+                        <button className="btn btn-success">Woca</button>
+                        <button className="btn btn-danger">Woca</button>
+                        <button className="btn btn-secondary">Woca</button>
+                    </div>
                     <div >
+                        <button className="btn btn-primary btn-lg">Woca</button>
                         <WButton bg="primary" size="lg"/>
+                        <button className="btn btn-success">Woca</button>
                         <WButton bg="success"/>
-                        <WButton bg="warning"/>
-                        <WButton/>
+                        {/* <WButton bg="warning"/> */}
+                        {/* <WButton/> */}
+                        <button className="btn btn-danger btn-sm">Woca</button>
                         <WButton bg="danger" size="sm"/>
                     </div>
                     <div>
