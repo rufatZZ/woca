@@ -36,13 +36,13 @@ class StyleGuide extends Component {
                     </div>
                     <div >
                         <button className="btn btn-primary btn-lg">Woca</button>
-                        <WButton bg="primary" size="lg"/>
+                        <WButton bg="primary" size="lg" label={'Woca'}/>
                         <button className="btn btn-success">Woca</button>
-                        <WButton bg="success"/>
+                        <WButton bg="success" label={'Woca'}/>
                         {/* <WButton bg="warning"/> */}
                         {/* <WButton/> */}
                         <button className="btn btn-danger btn-sm">Woca</button>
-                        <WButton bg="danger" size="sm"/>
+                        <WButton bg="danger" size="sm" label={'Woca'}/>
                     </div>
                     <div>
                         <WLink />
