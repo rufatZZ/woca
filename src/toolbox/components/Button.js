@@ -4,6 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 const Button = styled.button`
     display: inline-block;
     vertical-align:middle;
+    margin: 5px 5px 0px 0px;
     ${'' /* width: 100%; */}
     border: 1px solid transparent;
     border-radius: .35rem;
@@ -35,10 +36,12 @@ const Button = styled.button`
                 return 'white';
             case 'warning':
                 return 'black';
+            case 'light':
+                return 'black';
             case 'success':
                 return 'white';
             default:
-                return 'black';
+                return 'white';
         }
     }};
     background-color: ${props => {
@@ -56,10 +59,11 @@ const Button = styled.button`
             case 'light':
                 return props.theme.light;
             default:
-                return 'transparent';
+                return props.theme.default;
         }
     }};
-        cursor: pointer;
+
+    cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
 
     &:hover {
         opacity: 0.9;
@@ -80,14 +84,18 @@ const Button = styled.button`
             case 'secondary':
                 return props.theme.secondary + '80';
             case 'light':
-                return props.theme.light + '80';
+                return props.theme.secondary + '80';
             default:
-                return 'transparent';
+                return props.theme.default + '80';
         }
     }
-    };
-`;
+    }
+    }
 
+    &:disabled{
+        cursor: not-allowed;
+    }
+`;
 
 const theme = {
     primary: '#007bff',
@@ -96,13 +104,13 @@ const theme = {
     warning: '#ffc107',
     light: '#f8f9fa',
     secondary: '#6c757d',
-    default: '#'
+    default: '#852dc8'
 };
 
-const WButton = ({ bg, size, label }) => {
+const WButton = ({ bg, size, label, type, disabled, onClick }) => {
     return (
         <ThemeProvider theme={theme}>
-            <Button bg={bg} size={size}>{label}</Button>
+            <Button type={type} disabled={disabled} bg={bg} size={size} onClick={onClick}>{label}</Button>
         </ThemeProvider>
     );
 }

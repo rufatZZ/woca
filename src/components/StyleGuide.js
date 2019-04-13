@@ -27,14 +27,33 @@ class StyleGuide extends Component {
                     <SavedTitle>Style guide</SavedTitle>
                 </SavedFlex>
                 <div>
-                    <div >
-                        <WButton bg="primary" size="lg" label={'Woca'}/>
-                        <WButton bg="success" label={'Woca'}/>
-                        <WButton bg="danger" size="sm" label={'Woca'}/>
+                    <div><h2>Buttons (normal, lg, sm)</h2></div>
+                    <div>
+                        <WButton label={'Default'}/>
+                        <WButton bg="primary" label={'Primary'}/>
+                        <WButton bg="success" label={'Success'}/>
+                        <WButton bg="danger" label={'Danger'}/>
+                        <WButton bg="warning" label={'Warning'}/>
+                        <WButton bg="secondary" label={'Secondary'}/>
+                        <WButton bg="light" label={'Light'}/>
                     </div>
+
+                    <div>
+                        <WButton size="lg" label={'Large'}/>
+                        <WButton size="lg" bg="primary" label={'Large'}/>
+                    </div>
+
+                    <div>
+                        <WButton size="sm" label={'Small'}/>
+                        <WButton size="sm" bg="primary" label={'Small'}/>
+                    </div>
+                    <br/>
+                    <div><h2>Links</h2></div>
                     <div>
                         <WLink />
                     </div>
+                    <br/>
+                    <div><h2>Alerts</h2></div>
                     <div>
                         <WAlert />
                     </div>
