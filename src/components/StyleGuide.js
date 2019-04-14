@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import WButton from '../toolbox/components/Button';
 import WAlert from '../toolbox/components/Alert';
-import WLink from '../toolbox/components/Link';
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -29,28 +28,28 @@ class StyleGuide extends Component {
                 <div>
                     <div><h2>Buttons (normal, lg, sm)</h2></div>
                     <div>
-                        <WButton label={'Default'}/>
-                        <WButton bg="primary" label={'Primary'}/>
-                        <WButton bg="success" label={'Success'}/>
-                        <WButton bg="danger" label={'Danger'}/>
-                        <WButton bg="warning" label={'Warning'}/>
-                        <WButton bg="secondary" label={'Secondary'}/>
-                        <WButton bg="light" label={'Light'}/>
+                        <WButton>Default</WButton>
+                        <WButton bg="primary">Primary</WButton>
+                        <WButton bg="success">Success</WButton>
+                        <WButton bg="danger">Danger</WButton>
+                        <WButton bg="warning">Warning</WButton>
+                        <WButton bg="secondary">Secondary</WButton>
+                        <WButton bg="light">Light</WButton>
                     </div>
 
                     <div>
-                        <WButton size="lg" label={'Large'}/>
-                        <WButton size="lg" bg="primary" label={'Large'}/>
+                        <WButton size="lg">Large</WButton>
+                        <WButton size="lg" bg="primary">Large</WButton>
                     </div>
 
                     <div>
-                        <WButton size="sm" label={'Small'}/>
-                        <WButton size="sm" bg="primary" label={'Small'}/>
+                        <WButton size="sm">Small</WButton>
+                        <WButton size="sm" bg="primary">Small</WButton>
                     </div>
                     <br/>
                     <div><h2>Links</h2></div>
                     <div>
-                        <WLink />
+                        Link
                     </div>
                     <br/>
                     <div><h2>Alerts</h2></div>

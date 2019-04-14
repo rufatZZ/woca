@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Button = styled.button`
     display: inline-block;
@@ -7,7 +8,7 @@ const Button = styled.button`
     margin: 5px 5px 0px 0px;
     ${'' /* width: 100%; */}
     border: 1px solid transparent;
-    border-radius: .35rem;
+    border-radius: 1rem;
     font-size: ${props => {
         switch (props.size) {
             case 'sm':
@@ -67,6 +68,23 @@ const Button = styled.button`
 
     &:hover {
         opacity: 0.9;
+        text-decoration: none;
+        color: ${props => {
+        switch (props.bg) {
+            case 'primary':
+                return 'white';
+            case 'danger':
+                return 'white';
+            case 'warning':
+                return 'black';
+            case 'light':
+                return 'black';
+            case 'success':
+                return 'white';
+            default:
+                return 'white';
+        }
+    }}; 
     }
 
     &:focus {
@@ -107,11 +125,17 @@ const theme = {
     default: '#852dc8'
 };
 
-const WButton = ({ bg, size, label, type, disabled, onClick }) => {
+const WButton = ({ as: tag = 'button', children, ...props }) => {
+
+    let _tag = (tag === 'Link') ? Link : tag;
+    const Composed = Button.withComponent(_tag);
+
     return (
+
         <ThemeProvider theme={theme}>
-            <Button type={type} disabled={disabled} bg={bg} size={size} onClick={onClick}>{label}</Button>
+            <Composed {...props}>{children}</Composed>
         </ThemeProvider>
+
     );
 }
 export default WButton;
