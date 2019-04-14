@@ -7,6 +7,7 @@ import WordList from "./WordList";
 import InvalidEntry from "./InvalidEntry";
 import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
+import WButton from "../../toolbox/components/Button";
 //actions
 import {
   getDefinitionByWord,
@@ -188,21 +189,21 @@ class Search extends Component {
             {connectionError ? (
               <div className="alert alert-danger">Can't connect to server</div>
             ) : (
-              displayResults &&
-              (!isExist ? (
-                <button
-                  className="btn btn-success btn-lg btn-block"
-                  onClick={this.handleSaveWord}
-                >
-                  Save Word
-                </button>
-              ) : (
-                <div className="alert alert-info">
-                  Word already saved. <br />
-                  Go to <Link to={"/saved"}>Saved words</Link>
-                </div>
-              ))
-            )}
+                displayResults &&
+                (!isExist ? (
+                  <WButton
+                    bg="success" size="lg" block={true}
+                    onClick={this.handleSaveWord}
+                  >
+                    Save Word
+                </WButton>
+                ) : (
+                    <div className="alert alert-info">
+                      Word already saved. <br />
+                      Go to <Link to={"/saved"}>Saved words</Link>
+                    </div>
+                  ))
+              )}
           </div>
         </div>
       </div>

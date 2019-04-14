@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet';
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import WButton from '../../toolbox/components/Button';
 import { getAllHistory } from "../../actions/actions";
 
 const SavedTitle = styled.h1`
@@ -104,12 +104,12 @@ class History extends Component {
         </Helmet>
         <SavedFlex>
           <SavedTitle>
-            <button
-              className="btn btn-danger mr-3 mb-1"
+            <WButton
+              bg="danger"
               onClick={this.handleFlush}
             >
-              <i className="fa fa-trash" /> Flush
-            </button>
+              <FontAwesomeIcon icon="trash" /> Flush
+            </WButton>
             History <small>(*session based history)</small>
           </SavedTitle>
         </SavedFlex>

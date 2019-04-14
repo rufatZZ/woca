@@ -3,10 +3,9 @@ import styled, { ThemeProvider } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Button = styled.button`
-    display: inline-block;
+    display: ${props => (props.block ? `block` : ``)};
     vertical-align:middle;
-    margin: 5px 5px 0px 0px;
-    ${'' /* width: 100%; */}
+    width: ${props => (props.block ? `100%` : ``)};
     border: 1px solid transparent;
     border-radius: 1rem;
     font-size: ${props => {

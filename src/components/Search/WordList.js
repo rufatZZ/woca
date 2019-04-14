@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import WButton from "../../toolbox/components/Button";
 
 const EntrySpan = styled.span`
   font-size: 24px;
@@ -69,7 +70,7 @@ class WordList extends Component {
         let { fl = "", shortdef = [] } = word;
 
         let soundPath;
-        if(prs[0] && prs[0].sound !== undefined){
+        if (prs[0] && prs[0].sound !== undefined) {
           if (prs[0].sound.audio.substr(0, 2) === "bix") {
             soundPath = "bix";
           } else if (prs[0].sound.audio.substr(0, 1) === "gg") {
@@ -103,17 +104,17 @@ class WordList extends Component {
                       <sup>{count}</sup>
                       {entry}
                       {prs[0] && prs[0].sound !== undefined && (
-                        <button
-                          className="ml-2 mb-1 btn btn-sm btn-secondary"
+                        <WButton
+                          size="sm" bg="secondary"
                           onClick={e => this.handleAudio(e)}
                         >
-                          <FontAwesomeIcon icon="volume-up"/>
+                          <FontAwesomeIcon icon="volume-up" />
                           <audio
                             src={`https://media.merriam-webster.com/soundc11/${soundPath}/${
                               prs[0].sound.audio
-                            }.wav`}
+                              }.wav`}
                           />
-                        </button>
+                        </WButton>
                       )}
                     </EntrySpan>
                   </div>
@@ -123,7 +124,7 @@ class WordList extends Component {
                     </p>
                   </div>
                 </div>
-                <div className="alert alert-secondary" style={{borderRadius: '1rem'}}>
+                <div className="alert alert-secondary" style={{ borderRadius: '1rem' }}>
                   <ShordefListHolder>
                     <ShordefList shortdef={shortdef} />
                   </ShordefListHolder>
