@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet';
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import WButton from '../../toolbox/components/Button';
-import { getAllHistory } from "../../actions/actions";
+import WButton from '../toolbox/components/Button';
+import { getAllHistory } from "../actions/actions";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";

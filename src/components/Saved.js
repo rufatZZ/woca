@@ -4,10 +4,10 @@ import { Helmet } from 'react-helmet';
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { getAllSavedWords, deleteSavedWord } from "../../actions/actions";
+import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
 
-import FlashMessages from "../_common/FlashMessages/FlashMessages";
-import Loading from "../_common/Loading/Loading";
+import FlashMessages from "./_common/FlashMessages/FlashMessages";
+import Loading from "./_common/Loading/Loading";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
