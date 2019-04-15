@@ -23,7 +23,7 @@ const SavedWordBox = styled.div`
   height: 200px;
   padding: 20px;
   margin: 0px 25px 30px 0px;
-  border-radius: 1rem;
+  border-radius: .35rem;
   box-sizing: border-box;
   box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
   transition: all 0.2s ease-in-out;

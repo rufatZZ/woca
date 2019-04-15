@@ -7,7 +7,7 @@ const Button = styled.button`
     vertical-align:middle;
     width: ${props => (props.block ? `100%` : ``)};
     border: 1px solid transparent;
-    border-radius: 1rem;
+    border-radius: .35rem;
     font-size: ${props => {
         switch (props.size) {
             case 'sm':

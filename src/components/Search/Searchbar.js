@@ -16,7 +16,7 @@ const SearchBarHolder = styled.div`
   border: none;
   padding: 0px 15px;
   border: 1px solid rgb(222, 221, 221);
-  border-radius: 1rem;
+  border-radius: .35rem;
   &:hover,
   &:active,
   &:focus {

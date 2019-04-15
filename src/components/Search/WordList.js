@@ -26,7 +26,7 @@ const SuggestedWordLink = styled(Link)`
 
 const WordCard = styled.div`
   margin: 0px 25px 30px 0px;
-  border-radius: 1rem;
+  border-radius: .35rem;
   box-sizing: border-box;
   box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
   transition: all 0.2s ease-in-out;
@@ -124,7 +124,7 @@ class WordList extends Component {
                     </p>
                   </div>
                 </div>
-                <div className="alert alert-secondary" style={{ borderRadius: '1rem' }}>
+                <div className="alert alert-secondary" style={{ borderRadius: '.35rem' }}>
                   <ShordefListHolder>
                     <ShordefList shortdef={shortdef} />
                   </ShordefListHolder>
