@@ -8,6 +8,7 @@ const Button = styled.button`
     width: ${props => (props.block ? `100%` : ``)};
     border: 1px solid transparent;
     border-radius: .35rem;
+    line-height: 1.5;
     font-size: ${props => {
         switch (props.size) {
             case 'sm':

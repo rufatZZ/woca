@@ -1,8 +1,9 @@
 import React from "react";
+import WAlert from '../../../toolbox/components/Alert';
 
 const Error = ({ type }) => {
   return (
-    <div className="alert alert-danger text-center">
+    <WAlert bg="danger" className="text-center">
       {type === 1 && <h4>Whoops!</h4>}
       {type === 0 && (
         <div>
@@ -12,7 +13,7 @@ const Error = ({ type }) => {
           </p>
         </div>
       )}
-    </div>
+    </WAlert>
   );
 };
 

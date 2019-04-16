@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import WAlert from '../../../toolbox/components/Alert';
 
 class Alert extends Component {
   componentDidMount() {
@@ -11,10 +12,10 @@ class Alert extends Component {
 
   alertClass(type) {
     let classes = {
-      error: "alert-danger",
-      alert: "alert-warning",
-      notice: "alert-info",
-      success: "alert-success"
+      error: "danger",
+      alert: "warning",
+      notice: "info",
+      success: "success"
     };
     return classes[type] || classes.success;
   }
@@ -22,8 +23,8 @@ class Alert extends Component {
   render() {
     const { message, onClose } = this.props;
     return (
-      <div
-        className={`alert ${this.alertClass(message.type)} animated fadeInUp`}
+      <WAlert
+        bg={`${this.alertClass(message.type)}`} className="animated fadeInUp"
         style={{ marginTop: "5px" }}
       >
         <button
@@ -34,7 +35,7 @@ class Alert extends Component {
           &times;
         </button>
         {message.text}
-      </div>
+      </WAlert>
     );
   }
 }

@@ -8,6 +8,7 @@ import InvalidEntry from "./InvalidEntry";
 import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
 import WButton from "../../toolbox/components/Button";
+import WAlert from "../../toolbox/components/Alert";
 //actions
 import {
   getDefinitionByWord,
@@ -187,7 +188,7 @@ class Search extends Component {
           </div>
           <div className="col-sm-3 col-md-3">
             {connectionError ? (
-              <div className="alert alert-danger">Can't connect to server</div>
+              <WAlert bg="danger">Can't connect to server</WAlert>
             ) : (
                 displayResults &&
                 (!isExist ? (
@@ -198,10 +199,10 @@ class Search extends Component {
                     Save Word
                 </WButton>
                 ) : (
-                    <div className="alert alert-info">
+                    <WAlert bg="success">
                       Word already saved. <br />
                       Go to <Link to={"/saved"}>Saved words</Link>
-                    </div>
+                    </WAlert>
                   ))
               )}
           </div>

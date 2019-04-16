@@ -9,6 +9,8 @@ import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
+import WAlert from '../toolbox/components/Alert';
+
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
   font-size: 2.5rem;
@@ -135,7 +137,7 @@ class Saved extends Component {
       connectionError
     } = this.state;
 
-    savedList.sort(function(a, b) {
+    savedList.sort(function (a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
     });
 
@@ -155,9 +157,11 @@ class Saved extends Component {
         {connectionError && (
           <div className="row">
             <div className="col-md-12">
-              <h3 className="alert alert-danger text-center">
-                Can't connect to server
-              </h3>
+              <WAlert bg="danger">
+                <h3 className="text-center">
+                  Can't connect to server
+                </h3>
+              </WAlert>
             </div>
           </div>
         )}
@@ -167,41 +171,43 @@ class Saved extends Component {
           (isEmpty ? (
             <div className="row">
               <div className="col-md-12">
-                <h3 className="alert alert-warning text-center">
-                  Saved list is empty
-                </h3>
+                <WAlert bg="warning">
+                  <h3 className="text-center">
+                    Saved list is empty
+                  </h3>
+                </WAlert>
               </div>
             </div>
           ) : (
-            <SavedFlex>
-              {savedList.map(word => {
-                return (
-                  <SavedWordBox key={word._id}>
-                    <SavedWordBoxBody>
-                      <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
-                    </SavedWordBoxBody>
-                    <SavedWordBoxFooter>
-                      <SavedWordBoxFooterIcon
-                        icon="trash-alt"
-                        title="Delete"
-                        onClick={e => this.handleDeleteSavedWord(word._id)}
-                      />
-                      <Link
-                        to={`/search?word=${word.title}`}
-                        style={{ color: "black" }}
-                      >
+              <SavedFlex>
+                {savedList.map(word => {
+                  return (
+                    <SavedWordBox key={word._id}>
+                      <SavedWordBoxBody>
+                        <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
+                      </SavedWordBoxBody>
+                      <SavedWordBoxFooter>
                         <SavedWordBoxFooterIcon
-                          icon="external-link-square-alt"
-                          title="Get definition"
-                          style={{ transform: "translateY(8%)" }}
+                          icon="trash-alt"
+                          title="Delete"
+                          onClick={e => this.handleDeleteSavedWord(word._id)}
                         />
-                      </Link>
-                    </SavedWordBoxFooter>
-                  </SavedWordBox>
-                );
-              })}
-            </SavedFlex>
-          ))}
+                        <Link
+                          to={`/search?word=${word.title}`}
+                          style={{ color: "black" }}
+                        >
+                          <SavedWordBoxFooterIcon
+                            icon="external-link-square-alt"
+                            title="Get definition"
+                            style={{ transform: "translateY(8%)" }}
+                          />
+                        </Link>
+                      </SavedWordBoxFooter>
+                    </SavedWordBox>
+                  );
+                })}
+              </SavedFlex>
+            ))}
       </div>
     );
   }
