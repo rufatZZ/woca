@@ -190,8 +190,8 @@ class Search extends Component {
             {connectionError ? (
               <WAlert bg="danger">Can't connect to server</WAlert>
             ) : (
-                displayResults &&
-                (!isExist ? (
+                displayResults && !isInvalid &&
+                ( !isExist ? (
                   <WButton
                     bg="success" size="lg" block={true}
                     onClick={this.handleSaveWord}
