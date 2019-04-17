@@ -45,7 +45,10 @@ const InputIcon = styled(FontAwesomeIcon)`
   opacity: 0.6;
   margin-left: 10px;
 
-  ${"" /* ${props => (props.inputvalue ? `display:block;` : `display: none;`)} */}
+`;
+
+const ClearIcon = styled.div`
+  display: ${props => (props.inputvalue ? `` : `none`)};
 `;
 
 export class Searchbar extends Component {
@@ -91,11 +94,12 @@ export class Searchbar extends Component {
               autoComplete="off"
               onKeyPress={e => (e.key === "Enter" ? this.handleClick() : "")}
             />
-            <InputIcon
-              icon="times"
-              onClick={this.handleClear}
-              inputvalue={inputValue}
-            />
+            <ClearIcon inputvalue={inputValue}>
+              <InputIcon
+                icon="times"
+                onClick={this.handleClear}
+              />
+            </ClearIcon>
             <InputIcon icon="search" onClick={this.handleClick} />
           </SearchBarHolder>
         </Flex>
