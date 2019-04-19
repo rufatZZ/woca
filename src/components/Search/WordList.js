@@ -16,11 +16,14 @@ const ShordefListHolder = styled.ul`
 `;
 
 const SuggestedWordLink = styled(Link)`
-  margin-bottom: 5px !important;
+  margin-bottom: 10px !important;
   transition: 0.15s ease-in-out;
+  box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
+  border-radius: .35rem;
+
   &:hover {
-    color: white;
-    background-color: rgba(0, 123, 255, 0.9) !important;
+    box-shadow: -10px 10px 20px 0px #994ed361;
+    transition: all 0.2s ease-in-out;
   }
 `;
 
