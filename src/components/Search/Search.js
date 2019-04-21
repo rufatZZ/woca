@@ -9,6 +9,8 @@ import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
 import WButton from "../../toolbox/components/Button";
 import WAlert from "../../toolbox/components/Alert";
+import WRow from "../../toolbox/components/Row";
+
 //actions
 import {
   getDefinitionByWord,
@@ -179,7 +181,7 @@ class Search extends Component {
         <Searchbar onSearchEntry={this.handleSearch} />
         <FlashMessages message={message} />
 
-        <div className="row">
+        <WRow>
           <div className="col-sm-8 col-md-8">
             {displayLoading && <Loading />}
             {displayError && <Error type={errorType} />}
@@ -206,7 +208,7 @@ class Search extends Component {
                   ))
               )}
           </div>
-        </div>
+        </WRow>
       </div>
     );
   }

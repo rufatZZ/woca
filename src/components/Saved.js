@@ -10,15 +10,11 @@ import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
 import WAlert from '../toolbox/components/Alert';
+import WRow from '../toolbox/components/Row';
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
   font-size: 2.5rem;
-`;
-
-const SavedFlex = styled.div`
-  display: flex;
-  flex-wrap: wrap;
 `;
 
 const SavedWordBox = styled.div`
@@ -148,14 +144,14 @@ class Saved extends Component {
           <title>Saved</title>
         </Helmet>
         <FlashMessages message={message} />
-        <SavedFlex>
+        <WRow>
           <SavedTitle>Saved</SavedTitle>
-        </SavedFlex>
+        </WRow>
         <br />
         {isLoading && <Loading />}
 
         {connectionError && (
-          <div className="row">
+          <WRow>
             <div className="col-md-12">
               <WAlert bg="danger">
                 <h3 className="text-center">
@@ -163,13 +159,13 @@ class Saved extends Component {
                 </h3>
               </WAlert>
             </div>
-          </div>
+          </WRow>
         )}
 
         {!isLoading &&
           !connectionError &&
           (isEmpty ? (
-            <div className="row">
+            <WRow>
               <div className="col-md-12">
                 <WAlert bg="warning">
                   <h3 className="text-center">
@@ -177,9 +173,9 @@ class Saved extends Component {
                   </h3>
                 </WAlert>
               </div>
-            </div>
+            </WRow>
           ) : (
-              <SavedFlex>
+              <WRow>
                 {savedList.map(word => {
                   return (
                     <SavedWordBox key={word._id}>
@@ -206,7 +202,7 @@ class Saved extends Component {
                     </SavedWordBox>
                   );
                 })}
-              </SavedFlex>
+              </WRow>
             ))}
       </div>
     );

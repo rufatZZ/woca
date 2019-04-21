@@ -49,12 +49,12 @@ class StyleGuide extends Component {
                     <br/>
                     <div><h2>Links</h2></div>
                     <div>
-                        Link
+                        <WButton as="Link" to={`/search`}>Link</WButton>
                     </div>
                     <br/>
                     <div><h2>Alerts</h2></div>
                     <div>
-                        <WAlert />
+                        <WAlert>Alert</WAlert>
                     </div>
                         
                 </div>

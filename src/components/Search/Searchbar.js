@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-
-const Flex = styled.div`
-  display: flex;
-`;
+import WRow from "../../toolbox/components/Row";
 
 const SearchBarHolder = styled.div`
   display: flex;
@@ -83,7 +80,7 @@ export class Searchbar extends Component {
     let { inputValue } = this.state;
     return (
       <div>
-        <Flex>
+        <WRow fluid={true}>
           <SearchBarHolder>
             <SearchBarInput
               type="text"
@@ -102,7 +99,7 @@ export class Searchbar extends Component {
             </ClearIcon>
             <InputIcon icon="search" onClick={this.handleClick} />
           </SearchBarHolder>
-        </Flex>
+        </WRow>
         <hr />
       </div>
     );

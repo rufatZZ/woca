@@ -4,16 +4,12 @@ import { Helmet } from 'react-helmet';
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WButton from '../toolbox/components/Button';
+import WRow from '../toolbox/components/Row';
 import { getAllHistory } from "../actions/actions";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
   font-size: 2.5rem;
-`;
-
-const SavedFlex = styled.div`
-  display: flex;
-  flex-wrap: wrap;
 `;
 
 const SavedWordBox = styled.div`
@@ -102,7 +98,7 @@ class History extends Component {
           <meta charSet="utf-8" />
           <title>Recently searched</title>
         </Helmet>
-        <SavedFlex>
+        <WRow>
           <SavedTitle>
             <WButton
               bg="danger"
@@ -112,9 +108,9 @@ class History extends Component {
             </WButton>
             History <small>(*session based history)</small>
           </SavedTitle>
-        </SavedFlex>
+        </WRow>
         <br />
-        <SavedFlex>
+        <WRow>
           {historyList.map(word => {
             return (
               <SavedWordBox key={Math.random() * Date.parse(word.time)}>
@@ -142,7 +138,7 @@ class History extends Component {
               </SavedWordBox>
             );
           })}
-        </SavedFlex>
+        </WRow>
       </div>
     );
   }
