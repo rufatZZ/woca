@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import WButton from '../toolbox/components/Button';
 import WAlert from '../toolbox/components/Alert';
+import WRow from '../toolbox/components/Row';
+import Col from '../toolbox/components/Col';
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -55,6 +57,11 @@ class StyleGuide extends Component {
                     <div><h2>Alerts</h2></div>
                     <div>
                         <WAlert>Alert</WAlert>
+                    </div>
+                    <div>
+                        <WRow>
+                            <Col><WAlert>Alert</WAlert></Col>
+                        </WRow>
                     </div>
                         
                 </div>
