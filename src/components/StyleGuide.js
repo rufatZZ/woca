@@ -58,9 +58,17 @@ class StyleGuide extends Component {
                     <div>
                         <WAlert>Alert</WAlert>
                     </div>
+                    <br/>
+                    <div><h2>Grid (based on 12 grid system)</h2></div>
                     <div>
                         <WRow>
-                            <Col><WAlert>Alert</WAlert></Col>
+                            <Col grid="1"><WAlert>grid-1</WAlert></Col>
+                            <Col grid="5"><WAlert>grid-5</WAlert></Col>
+                            <Col grid="6"><WAlert>grid-6</WAlert></Col>
+                        </WRow>
+                        <WRow>
+                            <Col grid="5" offset="2"><WAlert>grid-5 offset-2</WAlert></Col>
+                            <Col grid="2" offset="1"><WAlert>grid-2 offset-1</WAlert></Col>
                         </WRow>
                     </div>
                         
