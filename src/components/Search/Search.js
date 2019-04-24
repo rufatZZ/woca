@@ -10,6 +10,7 @@ import Error from "../_common/Error/Error";
 import WButton from "../../toolbox/components/Button";
 import WAlert from "../../toolbox/components/Alert";
 import WRow from "../../toolbox/components/Row";
+import Col from "../../toolbox/components/Col";
 
 //actions
 import {
@@ -182,13 +183,13 @@ class Search extends Component {
         <FlashMessages message={message} />
 
         <WRow>
-          <div className="col-sm-8 col-md-8">
+          <Col grid="8">
             {displayLoading && <Loading />}
             {displayError && <Error type={errorType} />}
             {displayInvalidEntry && <InvalidEntry entry={entry} />}
             {displayResults && <WordList wordList={wordList} entry={entry} />}
-          </div>
-          <div className="col-sm-3 col-md-3">
+          </Col>
+          <Col grid="2">
             {connectionError ? (
               <WAlert bg="danger">Can't connect to server</WAlert>
             ) : (
@@ -207,7 +208,7 @@ class Search extends Component {
                     </WAlert>
                   ))
               )}
-          </div>
+          </Col>
         </WRow>
       </div>
     );
