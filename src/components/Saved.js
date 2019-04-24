@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -9,8 +9,9 @@ import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
-import WAlert from '../toolbox/components/Alert';
-import WRow from '../toolbox/components/Row';
+import WAlert from "../toolbox/components/Alert";
+import WRow from "../toolbox/components/Row";
+import Col from "../toolbox/components/Col";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -24,7 +25,7 @@ const SavedWordBox = styled.div`
   height: 200px;
   padding: 20px;
   margin: 0px 25px 30px 0px;
-  border-radius: .35rem;
+  border-radius: 0.35rem;
   box-sizing: border-box;
   box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
   transition: all 0.2s ease-in-out;
@@ -133,7 +134,7 @@ class Saved extends Component {
       connectionError
     } = this.state;
 
-    savedList.sort(function (a, b) {
+    savedList.sort(function(a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
     });
 
@@ -152,13 +153,11 @@ class Saved extends Component {
 
         {connectionError && (
           <WRow>
-            <div className="col-md-12">
+            <Col>
               <WAlert bg="danger">
-                <h3 className="text-center">
-                  Can't connect to server
-                </h3>
+                <h3 className="text-center">Can't connect to server</h3>
               </WAlert>
-            </div>
+            </Col>
           </WRow>
         )}
 
@@ -166,44 +165,42 @@ class Saved extends Component {
           !connectionError &&
           (isEmpty ? (
             <WRow>
-              <div className="col-md-12">
+              <Col>
                 <WAlert bg="warning">
-                  <h3 className="text-center">
-                    Saved list is empty
-                  </h3>
+                  <h3 className="text-center">Saved list is empty</h3>
                 </WAlert>
-              </div>
+              </Col>
             </WRow>
           ) : (
-              <WRow>
-                {savedList.map(word => {
-                  return (
-                    <SavedWordBox key={word._id}>
-                      <SavedWordBoxBody>
-                        <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
-                      </SavedWordBoxBody>
-                      <SavedWordBoxFooter>
+            <WRow>
+              {savedList.map(word => {
+                return (
+                  <SavedWordBox key={word._id}>
+                    <SavedWordBoxBody>
+                      <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
+                    </SavedWordBoxBody>
+                    <SavedWordBoxFooter>
+                      <SavedWordBoxFooterIcon
+                        icon="trash-alt"
+                        title="Delete"
+                        onClick={e => this.handleDeleteSavedWord(word._id)}
+                      />
+                      <Link
+                        to={`/search?word=${word.title}`}
+                        style={{ color: "black" }}
+                      >
                         <SavedWordBoxFooterIcon
-                          icon="trash-alt"
-                          title="Delete"
-                          onClick={e => this.handleDeleteSavedWord(word._id)}
+                          icon="external-link-square-alt"
+                          title="Get definition"
+                          style={{ transform: "translateY(8%)" }}
                         />
-                        <Link
-                          to={`/search?word=${word.title}`}
-                          style={{ color: "black" }}
-                        >
-                          <SavedWordBoxFooterIcon
-                            icon="external-link-square-alt"
-                            title="Get definition"
-                            style={{ transform: "translateY(8%)" }}
-                          />
-                        </Link>
-                      </SavedWordBoxFooter>
-                    </SavedWordBox>
-                  );
-                })}
-              </WRow>
-            ))}
+                      </Link>
+                    </SavedWordBoxFooter>
+                  </SavedWordBox>
+                );
+              })}
+            </WRow>
+          ))}
       </div>
     );
   }

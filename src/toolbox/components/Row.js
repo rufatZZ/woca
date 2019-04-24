@@ -6,6 +6,9 @@ const WRow = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0px ${props => props.fluid ? `-0px`: `-15px` }; 
+    & + & {
+      margin-top: 1rem;
+    }
 `;
 
 const Row = ({ children, ...props }) => {
