@@ -21,7 +21,6 @@ Woca uses API for back-end from Merriam-Webster API
 Woca uses a number of open source projects to work properly:
 
 * [ReactJS](https://reactjs.org) - JavaScript library for building user interfaces!
-* [Twitter Bootstrap] - great UI boilerplate for modern web apps
 * [node.js] - evented I/O for the backend
 * [Express] - fast node.js network app framework [@tjholowaychuk]
 * [mongoose](https://mongoosejs.com/) - elegant mongodb object modeling for node.js
@@ -72,6 +71,5 @@ Licensed under the [MIT](LICENSE.txt) License.
    [woca]: <https://github.com/rufatZZ/woca>
    [git-repo-url]: <https://github.com/rufatZZ/woca.git>
    [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
    [express]: <http://expressjs.com>
 
