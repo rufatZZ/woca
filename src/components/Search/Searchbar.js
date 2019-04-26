@@ -13,7 +13,7 @@ const SearchBarHolder = styled.div`
   border: none;
   padding: 0px 15px;
   border: 1px solid rgb(222, 221, 221);
-  border-radius: .35rem;
+  border-radius: 0.35rem;
   &:hover,
   &:active,
   &:focus {
@@ -27,7 +27,9 @@ const SearchBarInput = styled.input`
   flex: 100%;
   flex-wrap: wrap;
   width: 60%;
-  padding: 10px 0px;
+  padding: 15px 10px;
+  font-size: 1rem;
+  font-family: inherit;
   border: none;
   &:hover,
   &:active,
@@ -41,7 +43,6 @@ const InputIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
   opacity: 0.6;
   margin-left: 10px;
-
 `;
 
 const ClearIcon = styled.div`
@@ -92,10 +93,7 @@ export class Searchbar extends Component {
               onKeyPress={e => (e.key === "Enter" ? this.handleClick() : "")}
             />
             <ClearIcon inputvalue={inputValue}>
-              <InputIcon
-                icon="times"
-                onClick={this.handleClear}
-              />
+              <InputIcon icon="times" onClick={this.handleClear} />
             </ClearIcon>
             <InputIcon icon="search" onClick={this.handleClick} />
           </SearchBarHolder>

@@ -145,7 +145,7 @@ class Saved extends Component {
           <title>Saved</title>
         </Helmet>
         <FlashMessages message={message} />
-        <WRow>
+        <WRow fluid={true}>
           <SavedTitle>Saved</SavedTitle>
         </WRow>
         <br />

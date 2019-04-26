@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WButton from "../../toolbox/components/Button";
+import WAlert from "../../toolbox/components/Alert";
 
 const EntrySpan = styled.span`
   font-size: 24px;
@@ -19,7 +20,7 @@ const SuggestedWordLink = styled(Link)`
   margin-bottom: 10px !important;
   transition: 0.15s ease-in-out;
   box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
-  border-radius: .35rem;
+  border-radius: 0.35rem;
 
   &:hover {
     box-shadow: -10px 10px 20px 0px #994ed361;
@@ -28,8 +29,16 @@ const SuggestedWordLink = styled(Link)`
 `;
 
 const WordCard = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
   margin: 0px 25px 30px 0px;
-  border-radius: .35rem;
+  border-radius: 0.35rem;
   box-sizing: border-box;
   box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
   transition: all 0.2s ease-in-out;
@@ -37,13 +46,11 @@ const WordCard = styled.div`
     box-shadow: -10px 10px 20px 0px #994ed361;
     transition: all 0.2s ease-in-out;
   }
-  ${'' /* margin-bottom: 5px !important; */}
-  ${'' /* .card{
-    border-radius: 1rem;
-  }
-  .card-body {
-    padding: 0;
-  } */}
+`;
+
+const WordCardBody = styled.div`
+  padding: 1.125rem;
+  flex: 1 1 auto;
 `;
 
 const ShordefList = ({ shortdef }) => {
@@ -100,22 +107,23 @@ class WordList extends Component {
         } else {
           return (
             <WordCard className="card" key={uuid}>
-              <div className="card-body">
-                <div className="alert alert-light">
+              <WordCardBody>
+                <WAlert bg="light">
                   <div>
                     <EntrySpan>
                       <sup>{count}</sup>
                       {entry}
                       {prs[0] && prs[0].sound !== undefined && (
                         <WButton
-                          size="sm" bg="secondary"
+                          size="sm"
+                          bg="secondary"
                           onClick={e => this.handleAudio(e)}
                         >
                           <FontAwesomeIcon icon="volume-up" />
                           <audio
                             src={`https://media.merriam-webster.com/soundc11/${soundPath}/${
                               prs[0].sound.audio
-                              }.wav`}
+                            }.wav`}
                           />
                         </WButton>
                       )}
@@ -126,13 +134,13 @@ class WordList extends Component {
                       <em>{fl}</em> {mw ? `|` + mw : ""}
                     </p>
                   </div>
-                </div>
-                <div className="alert alert-secondary" style={{ borderRadius: '.35rem' }}>
+                </WAlert>
+                <WAlert bg="secondary">
                   <ShordefListHolder>
                     <ShordefList shortdef={shortdef} />
                   </ShordefListHolder>
-                </div>
-              </div>
+                </WAlert>
+              </WordCardBody>
             </WordCard>
           );
         }
