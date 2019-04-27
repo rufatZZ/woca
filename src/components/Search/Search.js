@@ -14,9 +14,10 @@ import Col from "../../toolbox/components/Col";
 
 //actions
 import {
-  getDefinitionByWord,
   saveWord,
-  getSavedWord
+  getSavedWord,
+  getDefinitionByWord,
+  addHistory
 } from "../../actions/actions";
 import FlashMessages from "../_common/FlashMessages/FlashMessages";
 
@@ -47,6 +48,7 @@ class Search extends Component {
     if (getEntry !== undefined && getEntry !== null) {
       this.setState({ entry: getEntry }, () => {
         this.findWord(getEntry);
+        addHistory(getEntry);
       });
     }
   }
@@ -56,6 +58,7 @@ class Search extends Component {
       let getEntry = this.getParams("word");
       this.setState({ entry: getEntry }, () => {
         this.findWord(getEntry);
+        addHistory(getEntry);
       });
     }
   }
@@ -74,15 +77,7 @@ class Search extends Component {
 
   handleSearch(word) {
     this.setState({ entry: word }, () => {
-      let wordHistoryArray = JSON.parse(
-        sessionStorage.getItem("wordHistory") || "[]"
-      );
-      let wordObj = {
-        value: this.state.entry,
-        time: new Date().toLocaleString()
-      };
-      wordHistoryArray.push(wordObj);
-      sessionStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
+      addHistory(this.state.entry);
       const url = this.setParams({ query: this.state.entry });
       this.props.history.push(`?${url}`);
     });
@@ -177,7 +172,7 @@ class Search extends Component {
       <div>
         <Helmet>
           <meta charSet="utf-8" />
-          <title>Search</title>
+          <title>Woca Search</title>
         </Helmet>
         <Searchbar onSearchEntry={this.handleSearch} />
         <FlashMessages message={message} />
@@ -194,7 +189,7 @@ class Search extends Component {
               <WAlert bg="danger">Can't connect to server</WAlert>
             ) : (
                 displayResults && !isInvalid &&
-                ( !isExist ? (
+                (!isExist ? (
                   <WButton
                     bg="success" size="lg" block={true}
                     onClick={this.handleSaveWord}

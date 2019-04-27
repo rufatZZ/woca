@@ -19,6 +19,18 @@ export async function getAllSavedWords() {
   }
 }
 
+export function addHistory(word){
+  let wordHistoryArray = JSON.parse(
+    sessionStorage.getItem("wordHistory") || "[]"
+  );
+  let wordObj = {
+    value: word,
+    time: new Date().toLocaleString()
+  };
+  wordHistoryArray.push(wordObj);
+  sessionStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
+}
+
 export function getAllHistory(asc = false) { 
 
   let historyList = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");

@@ -36,7 +36,6 @@ const WordCard = styled.div`
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
   margin: 0px 25px 30px 0px;
   border-radius: 0.35rem;
   box-sizing: border-box;
