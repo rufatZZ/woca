@@ -59,6 +59,8 @@ const Button = styled.button`
                 return props.theme.secondary;
             case 'light':
                 return props.theme.light;
+            case 'glass':
+                return props.theme.glass;
             default:
                 return props.theme.default;
         }
@@ -81,6 +83,8 @@ const Button = styled.button`
                 return 'black';
             case 'success':
                 return 'white';
+            case 'glass':
+                return 'grey';
             default:
                 return 'white';
         }
@@ -103,6 +107,8 @@ const Button = styled.button`
                 return props.theme.secondary + '80';
             case 'light':
                 return props.theme.secondary + '80';
+            case 'glass':
+                return props.theme.glass;
             default:
                 return props.theme.default + '80';
         }
@@ -122,7 +128,8 @@ const theme = {
     warning: '#ffc107',
     light: '#f8f9fa',
     secondary: '#6c757d',
-    default: '#852dc8'
+    default: '#852dc8',
+    glass: 'transparent'
 };
 
 const WButton = ({ as: tag = 'button', children, ...props }) => {

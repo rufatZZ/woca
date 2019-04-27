@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import WAlert from '../../../toolbox/components/Alert';
+import WButton from '../../../toolbox/components/Button';
 
 class Alert extends Component {
   componentDidMount() {
@@ -27,13 +28,13 @@ class Alert extends Component {
         bg={`${this.alertClass(message.type)}`} className="animated fadeInUp"
         style={{ marginTop: "5px" }}
       >
-        <button
-          className="close"
+        <WButton
+          bg="glass"
           data-dismiss="alert"
           onClick={e => onClose(message.id)}
         >
           &times;
-        </button>
+        </WButton>
         {message.text}
       </WAlert>
     );
