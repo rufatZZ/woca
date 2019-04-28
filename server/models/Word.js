@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-let WordSchema = new mongoose.Schema({
+let WordSchema = new Schema({
   title: String,
   createdAt: Date
 });
 
-module.exports = mongoose.model('Word', WordSchema);
+export default model('Word', WordSchema);
