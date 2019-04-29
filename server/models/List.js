@@ -1,8 +1,8 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-let ListSchema = new Schema({
-    name: String,
+let ListSchema = new mongoose.Schema({
+    title: String,
     createdAt: Date
 });
 
-export default model('List', ListSchema);
+module.exports = mongoose.model('List', ListSchema);
