@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
       font-family: 'MS-Regular';
       margin: 0;
       padding: 0;
+      font-size: 1rem;
    }
 
     a {
@@ -32,6 +33,8 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 0.5rem;
     font-weight: 500;
     line-height: 1.2;
+    font-family: 'MS-SemiBold';
+
   }
 
   h1 {

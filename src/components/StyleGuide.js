@@ -56,6 +56,12 @@ class StyleGuide extends Component {
                     <br/>
                     <div><h2>Alerts</h2></div>
                     <div>
+                        <WAlert bg="primary">Alert</WAlert>
+                        <WAlert bg="success">Alert</WAlert>
+                        <WAlert bg="danger">Alert</WAlert>
+                        <WAlert bg="warning">Alert</WAlert>
+                        <WAlert bg="secondary">Alert</WAlert>
+                        <WAlert bg="light">Alert</WAlert>
                         <WAlert>Alert</WAlert>
                     </div>
                     <br/>
