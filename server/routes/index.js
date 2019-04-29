@@ -1,5 +1,7 @@
-import word from "./word";
+const word = require("./word");
+const list = require("./list");
 
-export default router => {
+module.exports = router => {
   word(router);
+  list(router);
 };

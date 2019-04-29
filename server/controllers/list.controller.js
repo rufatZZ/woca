@@ -1,25 +1,25 @@
-const Word = require("../models/Word");
+const List = require("../models/List");
 // const fs = require("fs");
 
 module.exports = {
-  addWord: (req, res, next) => {
+  addList: (req, res, next) => {
     let { title } = req.body;
 
-    saveWord({ title });
+    saveList({ title });
 
-    function saveWord(obj) {
+    function saveList(obj) {
       obj.createdAt = new Date(Date.now());
-      Word.findOneAndUpdate(
+      List.findOneAndUpdate(
         { title: obj.title }, // find a document with that filter
         { $setOnInsert: obj }, // document to insert when nothing was found
         { upsert: true, new: true, runValidators: true }
-      ).exec((err, word) => {
+      ).exec((err, list) => {
         if (err) {
           res.send({ status: "error", isSaved: false, response: err });
-        } else if (!word) {
+        } else if (!list) {
           res.send({ status: "ok", isSaved: false, response: "No result" });
         } else {
-          return res.send({ status: "ok", isSaved: true, response: word });
+          return res.send({ status: "ok", isSaved: true, response: list });
         }
 
         next();
@@ -27,36 +27,36 @@ module.exports = {
     }
   },
   getAll: (req, res, next) => {
-    Word.find(req.params.id)
+    List.find(req.params.id)
       .sort({ createdAt: -1 })
-      .exec((err, word) => {
+      .exec((err, list) => {
         if (err) {
           res.send(err);
-        } else if (!word) {
+        } else if (!list) {
           res.send(400);
         } else {
-          res.send(word);
+          res.send(list);
         }
         next();
       });
   },
-  getWord: (req, res, next) => {
-    Word.findOne({ title: req.params.word }).exec((err, word) => {
+  getList: (req, res, next) => {
+    List.findOne({ title: req.params.list }).exec((err, list) => {
       if (err) {
         res.send({ status: "error", isExist: false, response: err });
-      } else if (!word) {
+      } else if (!list) {
         res.send({ status: "ok", isExist: false, response: "No result" });
       } else {
-        res.send({ status: "ok", isExist: true, response: word });
+        res.send({ status: "ok", isExist: true, response: list });
       }
       next();
     });
   },
-  deleteWord: (req, res, next) => {
-    Word.findByIdAndRemove(req.params.id).exec((err, word) => {
+  deleteList: (req, res, next) => {
+    List.findByIdAndRemove(req.params.id).exec((err, list) => {
       if (err) {
         res.send({ status: "error", isDeleted: false, response: err });
-      } else if (!word) {
+      } else if (!list) {
         res.send({ status: "ok", isDeleted: false, response: "Cant delete" });
       } else {
         res.send({
