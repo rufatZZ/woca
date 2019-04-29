@@ -42,6 +42,24 @@ const Alert = styled.div`
           return props.theme.default + "33";
       }
     }};
+    color: ${props => {
+    switch (props.bg) {
+      case "primary":
+        return props.theme.primary;
+      case "danger":
+        return props.theme.danger;
+      case "warning":
+        return props.theme.warning;
+      case "success":
+        return props.theme.success;
+      case "secondary":
+        return props.theme.secondary;
+      case "light":
+        return 'black';
+      default:
+        return props.theme.default;
+    }
+  }};
 `;
 
 const theme = {
