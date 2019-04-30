@@ -3,7 +3,7 @@
 
 # Woca
 
-[![Build Status](https://travis-ci.org/rufatZZ/woca.svg?branch=master)](https://travis-ci.org/rufatZZ/woca)
+[![CircleCI](https://circleci.com/gh/rufatZZ/woca.svg?style=svg)](https://circleci.com/gh/rufatZZ/woca)
 
 Woca is a api-based, React/Node powered vocabulary app.
   - Search some words from Merriam-Webster Dictionary
