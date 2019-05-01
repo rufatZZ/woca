@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
 
 class App extends Component {
   render() {
-    // return (
+    return (
       <React.Fragment>
         <GlobalStyle />
         <Woca />
