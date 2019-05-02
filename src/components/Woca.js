@@ -9,7 +9,7 @@ import History from "./History";
 import List from "./List";
 import StyleGuide from "./StyleGuide";
 
-import WRow from "../toolbox/components/Row";
+import { Row } from "../toolbox/components/";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -33,7 +33,7 @@ class Woca extends Component {
   render() {
     return (
       <Router>
-        <WRow fluid={true}>
+        <Row fluid={true}>
           <SidebarWrapper>
             <Sidebar />
           </SidebarWrapper>
@@ -48,7 +48,7 @@ class Woca extends Component {
               <Route path="/list" component={List} />
             </ContentHolder>
           </ContentWrapper>
-        </WRow>
+        </Row>
       </Router>
     );
   }

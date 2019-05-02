@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 //components
 import Searchbar from "./Searchbar";
 import WordList from "./WordList";
 import InvalidEntry from "./InvalidEntry";
 import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
-import WButton from "../../toolbox/components/Button";
-import WAlert from "../../toolbox/components/Alert";
-import WRow from "../../toolbox/components/Row";
-import Col from "../../toolbox/components/Col";
+
+import { Row, Col, WButton, WAlert } from "../../toolbox/components";
 
 //actions
 import {
@@ -177,7 +175,7 @@ class Search extends Component {
         <Searchbar onSearchEntry={this.handleSearch} />
         <FlashMessages message={message} />
 
-        <WRow>
+        <Row>
           <Col grid="8">
             {displayLoading && <Loading />}
             {displayError && <Error type={errorType} />}
@@ -188,23 +186,26 @@ class Search extends Component {
             {connectionError ? (
               <WAlert bg="danger">Can't connect to server</WAlert>
             ) : (
-                displayResults && !isInvalid &&
-                (!isExist ? (
-                  <WButton
-                    bg="success" size="lg" block={true}
-                    onClick={this.handleSaveWord}
-                  >
-                    Save Word
+              displayResults &&
+              !isInvalid &&
+              (!isExist ? (
+                <WButton
+                  bg="success"
+                  size="lg"
+                  block={true}
+                  onClick={this.handleSaveWord}
+                >
+                  Save Word
                 </WButton>
-                ) : (
-                    <WAlert bg="success">
-                      Word already saved. <br />
-                      Go to <Link to={"/saved"}>Saved words</Link>
-                    </WAlert>
-                  ))
-              )}
+              ) : (
+                <WAlert bg="success">
+                  Word already saved. <br />
+                  Go to <Link to={"/saved"}>Saved words</Link>
+                </WAlert>
+              ))
+            )}
           </Col>
-        </WRow>
+        </Row>
       </div>
     );
   }

@@ -9,9 +9,7 @@ import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
-import WAlert from "../toolbox/components/Alert";
-import WRow from "../toolbox/components/Row";
-import Col from "../toolbox/components/Col";
+import { Row, Col, WAlert } from "../toolbox/components";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -145,34 +143,34 @@ class Saved extends Component {
           <title>Saved</title>
         </Helmet>
         <FlashMessages message={message} />
-        <WRow fluid={true}>
+        <Row fluid={true}>
           <SavedTitle>Saved</SavedTitle>
-        </WRow>
+        </Row>
         <br />
         {isLoading && <Loading />}
 
         {connectionError && (
-          <WRow>
+          <Row>
             <Col>
               <WAlert bg="danger">
                 <h3 className="text-center">Can't connect to server</h3>
               </WAlert>
             </Col>
-          </WRow>
+          </Row>
         )}
 
         {!isLoading &&
           !connectionError &&
           (isEmpty ? (
-            <WRow>
+            <Row>
               <Col>
                 <WAlert bg="warning">
                   <h3 className="text-center">Saved list is empty</h3>
                 </WAlert>
               </Col>
-            </WRow>
+            </Row>
           ) : (
-            <WRow>
+            <Row>
               {savedList.map(word => {
                 return (
                   <SavedWordBox key={word._id}>
@@ -199,7 +197,7 @@ class Saved extends Component {
                   </SavedWordBox>
                 );
               })}
-            </WRow>
+            </Row>
           ))}
       </div>
     );

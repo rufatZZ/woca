@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import WButton from "../../toolbox/components/Button";
-import WAlert from "../../toolbox/components/Alert";
+import { WAlert, WButton } from "../../toolbox/components/";
 
 const EntrySpan = styled.span`
   font-size: 24px;

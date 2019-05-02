@@ -1,7 +1,7 @@
 import React from "react";
-import WAlert from '../../toolbox/components/Alert';
+import { WAlert } from "../../toolbox/components/";
 
-const InvalidEntry = ({entry}) => {
+const InvalidEntry = ({ entry }) => {
   return (
     <WAlert bg="danger" className="text-center mb-3">
       <h4>"{entry}"</h4>
