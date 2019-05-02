@@ -6,24 +6,18 @@ import Sidebar from "./_partials/Sidebar";
 import Search from "./Search/Search";
 import Saved from "./Saved";
 import History from "./History";
+import List from "./List";
 import StyleGuide from "./StyleGuide";
+
+import WRow from "../toolbox/components/Row";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 
 library.add(fas);
 
-const Container = styled.div`
-  max-width: 100%;
-  margin: 0 auto;
-`;
-
 const ContentHolder = styled.div`
   padding: 35px 0 0;
-`;
-
-const Flex = styled.div`
-  display: flex;
 `;
 
 const SidebarWrapper = styled.div`
@@ -39,29 +33,22 @@ class Woca extends Component {
   render() {
     return (
       <Router>
-        <Container>
-          <Flex>
-            <SidebarWrapper>
-              <Sidebar />
-            </SidebarWrapper>
-            <ContentWrapper>
-              <ContentHolder>
-                <Container>
-                  <Route
-                    exact
-                    path="/"
-                    render={() => <Redirect to="/search" />}
-                  />
-                  <Route exact path="/search" component={Search} />
-                  <Route path="/search/:word" component={Search} />
-                  <Route path="/style_guide" component={StyleGuide} />
-                  <Route path="/history" component={History} />
-                  <Route path="/saved" component={Saved} />
-                </Container>
-              </ContentHolder>
-            </ContentWrapper>
-          </Flex>
-        </Container>
+        <WRow fluid={true}>
+          <SidebarWrapper>
+            <Sidebar />
+          </SidebarWrapper>
+          <ContentWrapper>
+            <ContentHolder>
+              <Route exact path="/" render={() => <Redirect to="/search" />} />
+              <Route exact path="/search" component={Search} />
+              <Route path="/search/:word" component={Search} />
+              <Route path="/style_guide" component={StyleGuide} />
+              <Route path="/history" component={History} />
+              <Route path="/saved" component={Saved} />
+              <Route path="/list" component={List} />
+            </ContentHolder>
+          </ContentWrapper>
+        </WRow>
       </Router>
     );
   }

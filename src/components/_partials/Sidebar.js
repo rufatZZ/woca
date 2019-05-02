@@ -77,6 +77,9 @@ const Sidebar = () => {
           <SidebarLink to="/saved" title="Saved" activeClassName="active">
             <FontAwesomeIcon icon="bookmark" />
           </SidebarLink>
+          <SidebarLink to="/list" title="List" activeClassName="active">
+            <FontAwesomeIcon icon="th-list" />
+          </SidebarLink>
           <SidebarLink to="/style_guide" title="Style Guide" activeClassName="active">
             <FontAwesomeIcon icon="code" />
           </SidebarLink>
