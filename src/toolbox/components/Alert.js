@@ -42,7 +42,7 @@ const Alert = styled.div`
           return props.theme.default + "33";
       }
     }};
-    color: ${props => {
+  color: ${props => {
     switch (props.bg) {
       case "primary":
         return props.theme.primary;
@@ -55,7 +55,7 @@ const Alert = styled.div`
       case "secondary":
         return props.theme.secondary;
       case "light":
-        return 'black';
+        return "black";
       default:
         return props.theme.default;
     }
@@ -72,12 +72,10 @@ const theme = {
   default: "#852dc8"
 };
 
-const WAlert = ({ children, ...props }) => {
+export const WAlert = ({ children, ...props }) => {
   return (
     <ThemeProvider theme={theme}>
       <Alert {...props}>{children}</Alert>
     </ThemeProvider>
   );
 };
-
-export default WAlert;

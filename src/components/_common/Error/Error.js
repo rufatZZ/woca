@@ -1,5 +1,5 @@
 import React from "react";
-import WAlert from '../../../toolbox/components/Alert';
+import { WAlert } from "../../../toolbox/components/";
 
 const Error = ({ type }) => {
   return (

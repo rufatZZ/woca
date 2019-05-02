@@ -3,7 +3,7 @@ import Helmet from "react-helmet";
 import styled from "styled-components";
 
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
-import WRow from "../toolbox/components/Row";
+import { Row } from "../toolbox/components";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -21,9 +21,9 @@ class List extends Component {
           <title>List</title>
         </Helmet>
         <FlashMessages message={message} />
-        <WRow fluid={true}>
+        <Row fluid={true}>
           <SavedTitle>List</SavedTitle>
-        </WRow>
+        </Row>
         <br />
       </div>
     );

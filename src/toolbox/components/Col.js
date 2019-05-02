@@ -16,8 +16,6 @@ const WCol = styled.div`
     props.grid && props.grid <= 12 ? (100 / 12) * props.grid : 100}%;
 `;
 
-const Col = ({ children, ...props }) => {
+export const Col = ({ children, ...props }) => {
   return <WCol {...props}>{children}</WCol>;
 };
-
-export default Col;

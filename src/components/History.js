@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import WButton from '../toolbox/components/Button';
-import WRow from '../toolbox/components/Row';
+
+import { Row, WButton } from "../toolbox/components";
 import { getAllHistory } from "../actions/actions";
 
 const SavedTitle = styled.h1`
@@ -19,7 +19,7 @@ const SavedWordBox = styled.div`
   height: 200px;
   padding: 20px;
   margin: 0px 25px 30px 0px;
-  border-radius: .35rem;
+  border-radius: 0.35rem;
   box-sizing: border-box;
   box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
   transition: all 0.2s ease-in-out;
@@ -98,19 +98,16 @@ class History extends Component {
           <meta charSet="utf-8" />
           <title>Recently searched</title>
         </Helmet>
-        <WRow>
+        <Row>
           <SavedTitle>
-            <WButton
-              bg="danger"
-              onClick={this.handleFlush}
-            >
+            <WButton bg="danger" onClick={this.handleFlush}>
               <FontAwesomeIcon icon="trash" /> Flush
             </WButton>
             History <small>(*session based history)</small>
           </SavedTitle>
-        </WRow>
+        </Row>
         <br />
-        <WRow>
+        <Row>
           {historyList.map(word => {
             return (
               <SavedWordBox key={Math.random() * Date.parse(word.time)}>
@@ -138,7 +135,7 @@ class History extends Component {
               </SavedWordBox>
             );
           })}
-        </WRow>
+        </Row>
       </div>
     );
   }

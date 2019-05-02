@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import WAlert from '../../../toolbox/components/Alert';
-import WButton from '../../../toolbox/components/Button';
+import { WAlert, WButton } from "../../../toolbox/components/";
 
 class Alert extends Component {
   componentDidMount() {
@@ -25,7 +24,8 @@ class Alert extends Component {
     const { message, onClose } = this.props;
     return (
       <WAlert
-        bg={`${this.alertClass(message.type)}`} className="animated fadeInUp"
+        bg={`${this.alertClass(message.type)}`}
+        className="animated fadeInUp"
         style={{ marginTop: "5px" }}
       >
         <WButton
