@@ -19,7 +19,7 @@ export async function getAllSavedWords() {
   }
 }
 
-export function addHistory(word){
+export function addHistory(word) {
   let wordHistoryArray = JSON.parse(
     sessionStorage.getItem("wordHistory") || "[]"
   );
@@ -31,8 +31,7 @@ export function addHistory(word){
   sessionStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
 }
 
-export function getAllHistory(asc = false) { 
-
+export function getAllHistory(asc = false) {
   let historyList = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");
 
   historyList.sort(function(a, b) {
@@ -42,7 +41,7 @@ export function getAllHistory(asc = false) {
       return Date.parse(b.time) - Date.parse(a.time);
     }
   });
-  
+
   return historyList;
 }
 
@@ -86,3 +85,13 @@ export async function deleteSavedWord(word_id) {
 
   return await response.json();
 }
+
+// lists
+
+export async function getAllLists() {}
+
+export async function getList(list) {}
+
+export async function saveList(list) {}
+
+export async function deleteList(list) {}
