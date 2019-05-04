@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import Alert from "./Alert";
+import FlashAlert from "./FlashAlert";
 
-const AlertHolder = styled.div`
+const FlashAlertHolder = styled.div`
   width: 300px;
   height: 80px;
   z-index: 9;
@@ -50,17 +50,17 @@ class FlashMessages extends Component {
     const { messages } = this.state;
 
     return (
-      <AlertHolder>
+      <FlashAlertHolder>
         {messages.map(msg => {
           return (
-            <Alert
+            <FlashAlert
               key={msg.id}
               message={msg}
               onClose={e => this.removeFlash(msg)}
             />
           );
         })}
-      </AlertHolder>
+      </FlashAlertHolder>
     );
   }
 }

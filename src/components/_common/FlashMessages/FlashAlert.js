@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { WAlert, WButton } from "../../../toolbox/components/";
+import { WAlert, WButton } from "../../../toolbox/components";
 
-class Alert extends Component {
+class FlashAlert extends Component {
   componentDidMount() {
     this.timer = setTimeout(this.props.onClose.bind(this), this.props.timeout);
   }
@@ -41,8 +41,8 @@ class Alert extends Component {
   }
 }
 
-Alert.defaultProps = {
+FlashAlert.defaultProps = {
   timeout: 2000
 };
 
-export default Alert;
+export default FlashAlert;
