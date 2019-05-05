@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { WAlert, WButton } from "../../../toolbox/components";
+import { Alert, Button } from "../../../toolbox/components";
 
 class FlashAlert extends Component {
   componentDidMount() {
@@ -23,20 +23,20 @@ class FlashAlert extends Component {
   render() {
     const { message, onClose } = this.props;
     return (
-      <WAlert
+      <Alert
         bg={`${this.alertClass(message.type)}`}
         className="animated fadeInUp"
         style={{ marginTop: "5px" }}
       >
-        <WButton
+        <Button
           bg="glass"
           data-dismiss="alert"
           onClick={e => onClose(message.id)}
         >
           &times;
-        </WButton>
+        </Button>
         {message.text}
-      </WAlert>
+      </Alert>
     );
   }
 }

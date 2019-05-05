@@ -8,7 +8,7 @@ import InvalidEntry from "./InvalidEntry";
 import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
 
-import { Row, Col, WButton, WAlert } from "../../toolbox/components";
+import { Row, Col, Button, Alert } from "../../toolbox/components";
 
 //actions
 import {
@@ -184,24 +184,24 @@ class Search extends Component {
           </Col>
           <Col grid="2">
             {connectionError ? (
-              <WAlert bg="danger">Can't connect to server</WAlert>
+              <Alert bg="danger">Can't connect to server</Alert>
             ) : (
               displayResults &&
               !isInvalid &&
               (!isExist ? (
-                <WButton
+                <Button
                   bg="success"
                   size="lg"
                   block={true}
                   onClick={this.handleSaveWord}
                 >
                   Save Word
-                </WButton>
+                </Button>
               ) : (
-                <WAlert bg="success">
+                <Alert bg="success">
                   Word already saved. <br />
                   Go to <Link to={"/saved"}>Saved words</Link>
-                </WAlert>
+                </Alert>
               ))
             )}
           </Col>

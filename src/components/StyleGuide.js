@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
-import { Row, Col, WAlert, WButton } from "../toolbox/components";
+import { Row, Col, Alert, Button } from "../toolbox/components";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -30,49 +30,49 @@ class StyleGuide extends Component {
             <h2>Buttons (normal, lg, sm)</h2>
           </div>
           <div>
-            <WButton>Default</WButton>
-            <WButton bg="primary">Primary</WButton>
-            <WButton bg="success">Success</WButton>
-            <WButton bg="danger">Danger</WButton>
-            <WButton bg="warning">Warning</WButton>
-            <WButton bg="secondary">Secondary</WButton>
-            <WButton bg="light">Light</WButton>
+            <Button>Default</Button>
+            <Button bg="primary">Primary</Button>
+            <Button bg="success">Success</Button>
+            <Button bg="danger">Danger</Button>
+            <Button bg="warning">Warning</Button>
+            <Button bg="secondary">Secondary</Button>
+            <Button bg="light">Light</Button>
           </div>
 
           <div>
-            <WButton size="lg">Large</WButton>
-            <WButton size="lg" bg="primary">
+            <Button size="lg">Large</Button>
+            <Button size="lg" bg="primary">
               Large
-            </WButton>
+            </Button>
           </div>
 
           <div>
-            <WButton size="sm">Small</WButton>
-            <WButton size="sm" bg="primary">
+            <Button size="sm">Small</Button>
+            <Button size="sm" bg="primary">
               Small
-            </WButton>
+            </Button>
           </div>
           <br />
           <div>
             <h2>Links</h2>
           </div>
           <div>
-            <WButton as="Link" to={`/search`}>
+            <Button as="Link" to={`/search`}>
               Link
-            </WButton>
+            </Button>
           </div>
           <br />
           <div>
             <h2>Alerts</h2>
           </div>
           <div>
-            <WAlert bg="primary">Alert</WAlert>
-            <WAlert bg="success">Alert</WAlert>
-            <WAlert bg="danger">Alert</WAlert>
-            <WAlert bg="warning">Alert</WAlert>
-            <WAlert bg="secondary">Alert</WAlert>
-            <WAlert bg="light">Alert</WAlert>
-            <WAlert>Alert</WAlert>
+            <Alert bg="primary">Alert</Alert>
+            <Alert bg="success">Alert</Alert>
+            <Alert bg="danger">Alert</Alert>
+            <Alert bg="warning">Alert</Alert>
+            <Alert bg="secondary">Alert</Alert>
+            <Alert bg="light">Alert</Alert>
+            <Alert>Alert</Alert>
           </div>
           <br />
           <div>
@@ -81,21 +81,21 @@ class StyleGuide extends Component {
           <div>
             <Row>
               <Col grid="1">
-                <WAlert>grid-1</WAlert>
+                <Alert>grid-1</Alert>
               </Col>
               <Col grid="5">
-                <WAlert>grid-5</WAlert>
+                <Alert>grid-5</Alert>
               </Col>
               <Col grid="6">
-                <WAlert>grid-6</WAlert>
+                <Alert>grid-6</Alert>
               </Col>
             </Row>
             <Row>
               <Col grid="5" offset="2">
-                <WAlert>grid-5 offset-2</WAlert>
+                <Alert>grid-5 offset-2</Alert>
               </Col>
               <Col grid="2" offset="1">
-                <WAlert>grid-2 offset-1</WAlert>
+                <Alert>grid-2 offset-1</Alert>
               </Col>
             </Row>
           </div>

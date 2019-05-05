@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { WAlert, WButton } from "../../toolbox/components/";
+import { Alert, Button } from "../../toolbox/components/";
 
 const EntrySpan = styled.span`
   font-size: 24px;
@@ -106,13 +106,13 @@ class WordList extends Component {
           return (
             <WordCard className="card" key={uuid}>
               <WordCardBody>
-                <WAlert bg="light">
+                <Alert bg="light">
                   <div>
                     <EntrySpan>
                       <sup>{count}</sup>
                       {entry}
                       {prs[0] && prs[0].sound !== undefined && (
-                        <WButton
+                        <Button
                           size="sm"
                           bg="secondary"
                           onClick={e => this.handleAudio(e)}
@@ -123,7 +123,7 @@ class WordList extends Component {
                               prs[0].sound.audio
                             }.wav`}
                           />
-                        </WButton>
+                        </Button>
                       )}
                     </EntrySpan>
                   </div>
@@ -132,12 +132,12 @@ class WordList extends Component {
                       <em>{fl}</em> {mw ? `|` + mw : ""}
                     </p>
                   </div>
-                </WAlert>
-                <WAlert bg="secondary">
+                </Alert>
+                <Alert bg="secondary">
                   <ShordefListHolder>
                     <ShordefList shortdef={shortdef} />
                   </ShordefListHolder>
-                </WAlert>
+                </Alert>
               </WordCardBody>
             </WordCard>
           );
