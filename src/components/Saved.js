@@ -9,7 +9,7 @@ import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
-import { Row, Col, WAlert } from "../toolbox/components";
+import { Row, Col, Alert } from "../toolbox/components";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -152,9 +152,9 @@ class Saved extends Component {
         {connectionError && (
           <Row>
             <Col>
-              <WAlert bg="danger">
+              <Alert bg="danger">
                 <h3 className="text-center">Can't connect to server</h3>
-              </WAlert>
+              </Alert>
             </Col>
           </Row>
         )}
@@ -164,9 +164,9 @@ class Saved extends Component {
           (isEmpty ? (
             <Row>
               <Col>
-                <WAlert bg="warning">
+                <Alert bg="warning">
                   <h3 className="text-center">Saved list is empty</h3>
-                </WAlert>
+                </Alert>
               </Col>
             </Row>
           ) : (

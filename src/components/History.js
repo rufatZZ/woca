@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Row, WButton } from "../toolbox/components";
+import { Row, Button } from "../toolbox/components";
 import { getAllHistory } from "../actions/actions";
 
 const SavedTitle = styled.h1`
@@ -100,9 +100,9 @@ class History extends Component {
         </Helmet>
         <Row>
           <SavedTitle>
-            <WButton bg="danger" onClick={this.handleFlush}>
+            <Button bg="danger" onClick={this.handleFlush}>
               <FontAwesomeIcon icon="trash" /> Flush
-            </WButton>
+            </Button>
             History <small>(*session based history)</small>
           </SavedTitle>
         </Row>

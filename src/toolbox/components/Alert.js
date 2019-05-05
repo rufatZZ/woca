@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 
-const Alert = styled.div`
+const WAlert = styled.div`
   font-size: 1rem;
   padding: 0.75rem 1.25rem;
   background-color: ${props => {
@@ -72,10 +72,10 @@ const theme = {
   default: "#852dc8"
 };
 
-export const WAlert = ({ children, ...props }) => {
+export const Alert = ({ children, ...props }) => {
   return (
     <ThemeProvider theme={theme}>
-      <Alert {...props}>{children}</Alert>
+      <WAlert {...props}>{children}</WAlert>
     </ThemeProvider>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
 
-const Button = styled.button`
+const WButton = styled.button`
   display: ${props => (props.block ? `block` : ``)};
   vertical-align: middle;
   width: ${props => (props.block ? `100%` : ``)};
@@ -132,9 +132,9 @@ const theme = {
   glass: "transparent"
 };
 
-export const WButton = ({ as: tag = "button", children, ...props }) => {
+export const Button = ({ as: tag = "button", children, ...props }) => {
   let _tag = tag === "Link" ? Link : tag;
-  const Composed = Button.withComponent(_tag);
+  const Composed = WButton.withComponent(_tag);
 
   return (
     <ThemeProvider theme={theme}>
