@@ -3,7 +3,8 @@ import Helmet from "react-helmet";
 import styled from "styled-components";
 
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
-import { Row } from "../toolbox/components";
+import { Row, Button } from "../toolbox/components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SavedTitle = styled.h1`
   font-family: "MS-Bold";
@@ -22,9 +23,15 @@ class List extends Component {
         </Helmet>
         <FlashMessages message={message} />
         <Row fluid={true}>
-          <SavedTitle>List</SavedTitle>
+          <SavedTitle>
+            <Button onClick={this.handleFlush}>
+              <FontAwesomeIcon icon="plus" /> Add List
+            </Button>
+            List
+          </SavedTitle>
         </Row>
         <br />
+        
       </div>
     );
   }
