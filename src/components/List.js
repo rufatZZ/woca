@@ -32,24 +32,62 @@ const ModalContent = styled.div`
   background-color: #fff;
 `;
 
+const ModalHeader = styled.div`
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+`;
+
+const ModalBody = styled.div`
+  padding: 1rem;
+`;
+
+const ModalFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #e9ecef;
+`;
+
+const Input = styled.input`
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #e5e5e5;
+    border-radius: .35rem;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 1rem
+`;
+
 class List extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      visible: false
+      visible: false,
+      inputValue: ''
     };
 
+    this.handleChange = this.handleChange.bind(this);
+    // this.handleAddList = this.handleAddList.bind(this);
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
   }
 
-  handleTogglePopup() {
-    this.setState({ visible: !this.state.visible });
+  handleChange(e) {
+    this.setState({ inputValue: e.target.value });
   }
+  handleTogglePopup() {
+    this.setState({ visible: !this.state.visible }, () => {
+      if (!this.state.visible) {
+        this.setState({ inputValue: '' });
+      }
+    });
+  }
+
 
   render() {
     let message = "";
-    const { visible } = this.state;
+    const { visible, inputValue } = this.state;
 
     return (
       <div>
@@ -72,11 +110,20 @@ class List extends Component {
           <ModalHolder>
             <ModalDialog>
               <ModalContent>
-                <div>pop up</div>
-                <Button onClick={this.handleTogglePopup}>
-                  {/* <FontAwesomeIcon icon="close" />  */}
-                  Close
+                <ModalHeader><h5 style={{ marginBottom: '0' }}>Add new List</h5></ModalHeader>
+                <ModalBody>
+                  <div>
+                    <Input type="text" value={inputValue} placeholder="Add list title" onChange={this.handleChange} />
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                  <Button bg="success" onClick={this.handleAddList}>
+                    Add
                 </Button>
+                  <Button bg="danger" onClick={this.handleTogglePopup}>
+                    Cancel
+                </Button>
+                </ModalFooter>
               </ModalContent>
             </ModalDialog>
           </ModalHolder>
