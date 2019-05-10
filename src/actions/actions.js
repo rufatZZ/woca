@@ -34,7 +34,7 @@ export function addHistory(word) {
 export function getAllHistory(asc = false) {
   let historyList = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");
 
-  historyList.sort(function(a, b) {
+  historyList.sort(function (a, b) {
     if (asc) {
       return Date.parse(a.time) - Date.parse(b.time);
     } else {
@@ -88,10 +88,23 @@ export async function deleteSavedWord(word_id) {
 
 // lists
 
-export async function getAllLists() {}
+export async function getAllLists() { }
 
-export async function getList(list) {}
+export async function getList(list) { }
 
-export async function saveList(list) {}
+export async function saveList(list) {
+  try {
+    const response = await fetch("http://localhost:5000/api/list", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      body: JSON.stringify({ title: list })
+    });
+    return await response.json();
+  } catch (e) {
+    // console.log(e);
+  }
+}
 
-export async function deleteList(list) {}
+export async function deleteList(list) { }
