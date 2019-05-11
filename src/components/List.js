@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 
-import { saveList } from "../actions/actions";
+import { saveList, getAllLists } from "../actions/actions";
 
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
-import { Row, Button } from "../toolbox/components";
+import Loading from "./_common/Loading/Loading";
+
+import { Row, Button, Col, Alert } from "../toolbox/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SavedTitle = styled.h1`
@@ -68,23 +70,58 @@ class List extends Component {
     this.state = {
       visible: false,
       inputValue: "",
-      message: {}
+      message: {},
+      isLoading: true,
+      isEmpty: true,
+      connectionError: true
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleAddList = this.handleAddList.bind(this);
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
+  }
+
+  componentWillMount() {
+    this.getAllLists();
   }
 
   handleChange(e) {
     this.setState({ inputValue: e.target.value });
   }
 
+  async getAllLists() {
+    let lists = await getAllLists();
+    if (lists.connectionError) {
+      this.setState({
+        lists: [],
+        isLoading: false,
+        isEmpty: true
+      });
+    } else {
+      if (lists.length > 0) {
+        this.setState({
+          lists: lists,
+          isLoading: false,
+          isEmpty: false,
+          connectionError: false
+        });
+      } else {
+        this.setState({
+          lists: [],
+          isLoading: false,
+          isEmpty: true,
+          connectionError: false
+        });
+      }
+    }
+  }
+
   async handleSubmit(e) {
     e.preventDefault();
     const list = this.state.inputValue;
     let saveListResponse = await saveList(list);
+    this.handleTogglePopup();
+
     if (saveListResponse.isSaved) {
       this.setState({
         isExist: true,
@@ -114,7 +151,14 @@ class List extends Component {
   }
 
   render() {
-    const { visible, inputValue, message } = this.state;
+    const {
+      visible,
+      inputValue,
+      message,
+      isLoading,
+      isEmpty,
+      connectionError
+    } = this.state;
 
     return (
       <div>
@@ -125,13 +169,40 @@ class List extends Component {
         <FlashMessages message={message} />
         <Row fluid={true}>
           <SavedTitle>
-            <Button onClick={this.handleTogglePopup}>
-              <FontAwesomeIcon icon="plus" /> Add List
-            </Button>
+            {!connectionError && (
+              <Button onClick={this.handleTogglePopup}>
+                <FontAwesomeIcon icon="plus" /> Add List
+              </Button>
+            )}
             List
           </SavedTitle>
         </Row>
         <br />
+        {isLoading && <Loading />}
+
+        {!isLoading && connectionError && (
+          <Row>
+            <Col>
+              <Alert bg="danger">
+                <h3 className="text-center">Can't connect to server</h3>
+              </Alert>
+            </Col>
+          </Row>
+        )}
+
+        {!isLoading &&
+          !connectionError &&
+          (isEmpty ? (
+            <Row>
+              <Col>
+                <Alert bg="warning">
+                  <h3 className="text-center">List is empty</h3>
+                </Alert>
+              </Col>
+            </Row>
+          ) : (
+            <div />
+          ))}
 
         {visible && (
           <ModalHolder>
