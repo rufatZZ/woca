@@ -27,6 +27,13 @@ export function addHistory(word) {
     value: word,
     time: new Date().toLocaleString()
   };
+
+  let index = wordHistoryArray.map(word => word.value).indexOf(word);
+
+  if (index !== -1) {
+    wordHistoryArray[index] = wordHistoryArray[wordHistoryArray.length - 1];
+    wordHistoryArray.pop();
+  }
   wordHistoryArray.push(wordObj);
   sessionStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
 }
