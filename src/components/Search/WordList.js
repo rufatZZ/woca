@@ -16,13 +16,18 @@ const ShordefListHolder = styled.ul`
 `;
 
 const SuggestedWordLink = styled(Link)`
-  margin-bottom: 10px !important;
+  color: black;
+  font-size: 1.25rem;
+  padding: 15px 20px;
+  display: block;
+  margin: 5px 0px;
   transition: 0.15s ease-in-out;
-  box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
+  border: 1px solid #e0e0e0;
   border-radius: 0.35rem;
 
   &:hover {
-    box-shadow: -10px 10px 20px 0px #994ed361;
+    box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
+      0 3px 3px 2px rgba(60, 64, 67, 0.149);
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -41,7 +46,8 @@ const WordCard = styled.div`
   border: 1px solid #e0e0e0;
   transition: all 0.2s ease-in-out;
   &:hover {
-    box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
+    box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
+      0 3px 3px 2px rgba(60, 64, 67, 0.149);
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -94,10 +100,7 @@ class WordList extends Component {
         if (typeof word === "string") {
           return (
             <div key={word}>
-              <SuggestedWordLink
-                className="list-group-item"
-                to={`/search?word=${word}`}
-              >
+              <SuggestedWordLink to={`/search?word=${word}`}>
                 {word}
               </SuggestedWordLink>
             </div>
