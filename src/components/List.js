@@ -7,13 +7,8 @@ import { saveList, getAllLists } from "../actions/actions";
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
-import { Row, Button, Col, Alert } from "../toolbox/components";
+import { Row, Button, Col, Alert, Title } from "../toolbox/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const SavedTitle = styled.h1`
-  font-family: "MS-Bold";
-  font-size: 2.5rem;
-`;
 
 const ModalHolder = styled.div`
   position: fixed;
@@ -168,14 +163,14 @@ class List extends Component {
         </Helmet>
         <FlashMessages message={message} />
         <Row fluid={true}>
-          <SavedTitle>
+          <Title>
             {!connectionError && (
               <Button onClick={this.handleTogglePopup}>
                 <FontAwesomeIcon icon="plus" /> Add List
               </Button>
             )}
             List
-          </SavedTitle>
+          </Title>
         </Row>
         <br />
         {isLoading && <Loading />}

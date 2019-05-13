@@ -9,12 +9,8 @@ import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
-import { Row, Col, Alert } from "../toolbox/components";
+import { Row, Col, Alert, Title } from "../toolbox/components";
 
-const SavedTitle = styled.h1`
-  font-family: "MS-Bold";
-  font-size: 2.5rem;
-`;
 
 const SavedWordBox = styled.div`
   display: flex;
@@ -24,12 +20,11 @@ const SavedWordBox = styled.div`
   padding: 20px;
   margin: 0px 25px 30px 0px;
   border-radius: 0.35rem;
+  border: 1px solid #e0e0e0;
   box-sizing: border-box;
-  box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
   transition: all 0.2s ease-in-out;
   &:hover {
-    ${"" /* cursor: pointer; */}
-    box-shadow: -10px 10px 20px 0px #994ed361;
+    box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -144,7 +139,7 @@ class Saved extends Component {
         </Helmet>
         <FlashMessages message={message} />
         <Row fluid={true}>
-          <SavedTitle>Saved</SavedTitle>
+          <Title>Saved</Title>
         </Row>
         <br />
         {isLoading && <Loading />}
