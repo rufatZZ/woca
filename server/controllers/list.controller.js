@@ -3,12 +3,12 @@ const List = require("../models/List");
 
 module.exports = {
   addList: (req, res, next) => {
-    let { title } = req.body;
+    let { title, color } = req.body;
+    let createdAt = new Date(Date.now());
 
-    saveList({ title });
+    saveList({ title, color, createdAt });
 
     function saveList(obj) {
-      obj.createdAt = new Date(Date.now());
       List.findOneAndUpdate(
         { title: obj.title }, // find a document with that filter
         { $setOnInsert: obj }, // document to insert when nothing was found
