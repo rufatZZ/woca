@@ -1,24 +1,24 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { Row } from "../../toolbox/components";
+import { Row, Col } from "../../toolbox/components";
 
 const SearchBarHolder = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
-  width: 60%;
-  max-width: 650px;
+  width: 100%;
   margin: 0 0 1rem;
   border: none;
   padding: 0px 15px;
   border: 1px solid rgb(222, 221, 221);
+  box-sizing: border-box;
   border-radius: 0.35rem;
   &:hover,
   &:active,
   &:focus {
     border: 1px solid transparent;
-    box-shadow: -1px 1px 10px 1px rgb(222, 221, 221);
+    box-shadow: 0 2px 3px 0 rgba(60,64,67,0.302), 0 2px 3px 2px rgba(60,64,67,0.149);
   }
 `;
 
@@ -81,22 +81,24 @@ export class Searchbar extends Component {
     let { inputValue } = this.state;
     return (
       <div>
-        <Row fluid={true}>
-          <SearchBarHolder>
-            <SearchBarInput
-              type="text"
-              id="entryInput"
-              placeholder="Enter the word"
-              value={inputValue}
-              onChange={this.handleChange}
-              autoComplete="off"
-              onKeyPress={e => (e.key === "Enter" ? this.handleClick() : "")}
-            />
-            <ClearIcon inputvalue={inputValue}>
-              <InputIcon icon="times" onClick={this.handleClear} />
-            </ClearIcon>
-            <InputIcon icon="search" onClick={this.handleClick} />
-          </SearchBarHolder>
+        <Row>
+          <Col grid="8">
+            <SearchBarHolder>
+              <SearchBarInput
+                type="text"
+                id="entryInput"
+                placeholder="Enter the word"
+                value={inputValue}
+                onChange={this.handleChange}
+                autoComplete="off"
+                onKeyPress={e => (e.key === "Enter" ? this.handleClick() : "")}
+              />
+              <ClearIcon inputvalue={inputValue}>
+                <InputIcon icon="times" onClick={this.handleClear} />
+              </ClearIcon>
+              <InputIcon icon="search" onClick={this.handleClick} />
+            </SearchBarHolder>
+          </Col>
         </Row>
         <hr />
       </div>

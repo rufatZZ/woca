@@ -4,13 +4,8 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Row, Button } from "../toolbox/components";
+import { Row, Button, Title } from "../toolbox/components";
 import { getAllHistory } from "../actions/actions";
-
-const SavedTitle = styled.h1`
-  font-family: "MS-Bold";
-  font-size: 2.5rem;
-`;
 
 const SavedWordBox = styled.div`
   display: flex;
@@ -20,12 +15,14 @@ const SavedWordBox = styled.div`
   padding: 20px;
   margin: 0px 25px 30px 0px;
   border-radius: 0.35rem;
+  border: 1px solid #e0e0e0;
   box-sizing: border-box;
-  box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
+  ${'' /* box-shadow: -10px 10px 20px 0px rgb(222, 221, 221); */}
   transition: all 0.2s ease-in-out;
   &:hover {
     ${"" /* cursor: pointer; */}
-    box-shadow: -10px 10px 20px 0px #994ed361;
+    ${'' /* box-shadow: -10px 10px 20px 0px #994ed361; */}
+    box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -99,12 +96,12 @@ class History extends Component {
           <title>Recently searched</title>
         </Helmet>
         <Row>
-          <SavedTitle>
+          <Title>
             <Button bg="danger" onClick={this.handleFlush}>
               <FontAwesomeIcon icon="trash" /> Flush
             </Button>
             History <small>(*session based history)</small>
-          </SavedTitle>
+          </Title>
         </Row>
         <br />
         <Row>

@@ -35,13 +35,13 @@ const WordCard = styled.div`
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  margin: 0px 25px 30px 0px;
+  margin: 0px 0px 30px 0px;
   border-radius: 0.35rem;
   box-sizing: border-box;
-  box-shadow: -10px 10px 20px 0px rgb(222, 221, 221);
+  border: 1px solid #e0e0e0;
   transition: all 0.2s ease-in-out;
   &:hover {
-    box-shadow: -10px 10px 20px 0px #994ed361;
+    box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
     transition: all 0.2s ease-in-out;
   }
 `;
