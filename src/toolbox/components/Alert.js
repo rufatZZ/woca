@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-
+import { theme } from "../constants/Theme";
+ 
 const WAlert = styled.div`
   font-size: 1rem;
   padding: 0.75rem 1.25rem;
@@ -61,16 +62,6 @@ const WAlert = styled.div`
     }
   }};
 `;
-
-const theme = {
-  primary: "#007bff",
-  success: "#28a745",
-  danger: "#dc3545",
-  warning: "#ffc107",
-  light: "#f8f9fa",
-  secondary: "#6c757d",
-  default: "#852dc8"
-};
 
 export const Alert = ({ children, ...props }) => {
   return (
