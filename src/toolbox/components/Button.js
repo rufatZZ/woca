@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
+import { theme } from "../constants/Theme";
 
 const WButton = styled.button`
   display: ${props => (props.block ? `block` : ``)};
@@ -120,17 +121,6 @@ const WButton = styled.button`
     cursor: not-allowed;
   }
 `;
-
-const theme = {
-  primary: "#007bff",
-  success: "#28a745",
-  danger: "#dc3545",
-  warning: "#ffc107",
-  light: "#f8f9fa",
-  secondary: "#6c757d",
-  default: "#852dc8",
-  glass: "transparent"
-};
 
 export const Button = ({ as: tag = "button", children, ...props }) => {
   let _tag = tag === "Link" ? Link : tag;

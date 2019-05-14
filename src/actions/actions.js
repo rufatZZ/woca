@@ -1,4 +1,6 @@
-import { apiKeys, apiUri, apiTypes } from "../constants/";
+import { apiKeys, apiUri, apiTypes } from "../toolbox/constants/API";
+
+/* Search a word */
 
 export async function getDefinitionByWord(word) {
   const response = await fetch(
@@ -6,6 +8,8 @@ export async function getDefinitionByWord(word) {
   );
   return await response.json();
 }
+
+/* Saved Words */
 
 export async function getAllSavedWords() {
   try {
@@ -17,39 +21,6 @@ export async function getAllSavedWords() {
       connectionError: true
     };
   }
-}
-
-export function addHistory(word) {
-  let wordHistoryArray = JSON.parse(
-    sessionStorage.getItem("wordHistory") || "[]"
-  );
-  let wordObj = {
-    value: word,
-    time: new Date().toLocaleString()
-  };
-
-  let index = wordHistoryArray.map(word => word.value).indexOf(word);
-
-  if (index !== -1) {
-    wordHistoryArray[index] = wordHistoryArray[wordHistoryArray.length - 1];
-    wordHistoryArray.pop();
-  }
-  wordHistoryArray.push(wordObj);
-  sessionStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
-}
-
-export function getAllHistory(asc = false) {
-  let historyList = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");
-
-  historyList.sort(function(a, b) {
-    if (asc) {
-      return Date.parse(a.time) - Date.parse(b.time);
-    } else {
-      return Date.parse(b.time) - Date.parse(a.time);
-    }
-  });
-
-  return historyList;
 }
 
 export async function saveWord(entry) {
@@ -93,7 +64,42 @@ export async function deleteSavedWord(word_id) {
   return await response.json();
 }
 
-// lists
+/* History */
+
+export function addHistory(word) {
+  let wordHistoryArray = JSON.parse(
+    sessionStorage.getItem("wordHistory") || "[]"
+  );
+  let wordObj = {
+    value: word,
+    time: new Date().toLocaleString()
+  };
+
+  let index = wordHistoryArray.map(word => word.value).indexOf(word);
+
+  if (index !== -1) {
+    wordHistoryArray[index] = wordHistoryArray[wordHistoryArray.length - 1];
+    wordHistoryArray.pop();
+  }
+  wordHistoryArray.push(wordObj);
+  sessionStorage.setItem("wordHistory", JSON.stringify(wordHistoryArray));
+}
+
+export function getAllHistory(asc = false) {
+  let historyList = JSON.parse(sessionStorage.getItem("wordHistory") || "[]");
+
+  historyList.sort(function(a, b) {
+    if (asc) {
+      return Date.parse(a.time) - Date.parse(b.time);
+    } else {
+      return Date.parse(b.time) - Date.parse(a.time);
+    }
+  });
+
+  return historyList;
+}
+
+/* Lists */
 
 export async function getAllLists() {
   try {
