@@ -5,10 +5,11 @@
 
 [![CircleCI](https://circleci.com/gh/rufatZZ/woca.svg?style=svg)](https://circleci.com/gh/rufatZZ/woca)
 
-Woca is a api-based, React/Node powered vocabulary app.
+Woca is a API-based, React/Node/Express/MongoDB powered vocabulary app.
   - Search some words from Merriam-Webster Dictionary
   - See your search history
   - Save your words to MongoDB via Express/Mongoose
+  - Add some custom listi for your word collections
 
 
 ### Tech
