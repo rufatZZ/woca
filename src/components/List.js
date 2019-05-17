@@ -9,6 +9,7 @@ import Loading from "./_common/Loading/Loading";
 
 import { Row, Button, Col, Alert, Title } from "../toolbox/components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { listColors } from "../toolbox/constants/Theme";
 
 const ModalHolder = styled.div`
   position: fixed;
@@ -56,6 +57,33 @@ const Input = styled.input`
   box-sizing: border-box;
   outline: none;
   font-size: 1rem;
+`;
+
+const Label = styled.h5`
+  color: #5a5858;
+  margin: 15px 0px 5px;
+`;
+
+const ListColorHolder = styled.div`
+  margin: 5px 0px;
+  width: 136px;
+`;
+const ListColorContent = styled.div`
+  display: inline-block;
+`;
+const ListColorItem = styled.div`
+  border: 2px solid ${props => props.borderColor};
+  margin: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 26px;
+  box-sizing:border-box
+  background-color: #${props => props.bgColor};
+
+  &:hover {
+    cursor: pointer;
+    border: 2px solid rgba(0,0,0,0.4)!important;
+  }
 `;
 
 class List extends Component {
@@ -209,12 +237,34 @@ class List extends Component {
                   </ModalHeader>
                   <ModalBody>
                     <div>
+                      <Label>List title</Label>
                       <Input
                         type="text"
                         value={inputValue}
                         placeholder="Add list title"
                         onChange={this.handleChange}
                       />
+                    </div>
+                    <div>
+                      <Label>List colour</Label>
+                      <ListColorHolder>
+                        {listColors.map(color => (
+                          <ListColorContent
+                            key={color.value}
+                            data-value={color.value}
+                          >
+                            <ListColorItem
+                              role="button"
+                              tabindex="0"
+                              bgColor={color.value}
+                              borderColor={color.border}
+                              title={color.name.replace(/./, x =>
+                                x.toUpperCase()
+                              )}
+                            />
+                          </ListColorContent>
+                        ))}
+                      </ListColorHolder>
                     </div>
                   </ModalBody>
                   <ModalFooter>
