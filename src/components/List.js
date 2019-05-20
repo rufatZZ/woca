@@ -65,6 +65,7 @@ const Label = styled.h5`
 `;
 
 const ListColorHolder = styled.div`
+  display: ${props => props.inputValue ? `` : `none`};
   margin: 5px 0px;
   width: 136px;
 `;
@@ -102,6 +103,7 @@ class List extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
+    this.handleChangeListColor = this.handleChangeListColor.bind(this);
   }
 
   componentWillMount() {
@@ -171,6 +173,10 @@ class List extends Component {
         this.setState({ inputValue: "" });
       }
     });
+  }
+
+  handleChangeListColor(e) {
+    console.log(JSON.parse(JSON.stringify(e.target.dataset)));
   }
 
   render() {
@@ -246,19 +252,18 @@ class List extends Component {
                       />
                     </div>
                     <div>
-                      <Label>List colour</Label>
-                      <ListColorHolder>
+                      <ListColorHolder inputValue={inputValue}>
+                        <Label>List colour</Label>
                         {listColors.map(color => (
-                          <ListColorContent
-                            key={color.value}
-                            data-value={color.value}
-                          >
+                          <ListColorContent key={color.value}>
                             <ListColorItem
+                              data-value={color.name}
                               role="button"
                               tabindex="0"
                               bgColor={color.value}
                               borderColor={color.border}
-                              title={color.name.replace(/./, x =>
+                              onClick={this.handleChangeListColor}
+                              title={color.title.replace(/./, x =>
                                 x.toUpperCase()
                               )}
                             />
