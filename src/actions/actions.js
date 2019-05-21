@@ -122,7 +122,7 @@ export async function saveList(list) {
       headers: {
         "Content-Type": "application/json;charset=UTF-8"
       },
-      body: JSON.stringify({ title: list })
+      body: JSON.stringify(list)
     });
     return await response.json();
   } catch (e) {

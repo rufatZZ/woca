@@ -94,6 +94,7 @@ class List extends Component {
     this.state = {
       visible: false,
       inputValue: "",
+      colorValue: 'DEFAULT',
       message: {},
       isLoading: true,
       isEmpty: true,
@@ -143,7 +144,12 @@ class List extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    const list = this.state.inputValue;
+    
+    const list = {
+      title: this.state.inputValue,
+      color: this.state.colorValue
+    };
+
     let saveListResponse = await saveList(list);
     this.handleTogglePopup();
 
@@ -176,13 +182,15 @@ class List extends Component {
   }
 
   handleChangeListColor(e) {
-    console.log(JSON.parse(JSON.stringify(e.target.dataset)));
+    const checkedListColor = JSON.parse(JSON.stringify(e.target.dataset)).value || 'DEFAULT';
+    this.setState({colorValue: checkedListColor});
   }
 
   render() {
     const {
       visible,
       inputValue,
+      colorValue,
       message,
       isLoading,
       isEmpty,
@@ -238,6 +246,7 @@ class List extends Component {
             <ModalDialog>
               <ModalContent>
                 <form method="POST" onSubmit={this.handleSubmit}>
+                  <input type="hidden" value={colorValue}/>
                   <ModalHeader>
                     <h5 style={{ marginBottom: "0" }}>Add new List</h5>
                   </ModalHeader>
