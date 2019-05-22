@@ -87,6 +87,49 @@ const ListColorItem = styled.div`
   }
 `;
 
+const SavedWordBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 100px;
+  padding: 20px;
+  margin: 0px 25px 30px 0px;
+  border-radius: 0.35rem;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  background-color: #${props => props.bgColor};
+  &:hover {
+    box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
+    transition: all 0.2s ease-in-out;
+  }
+`;
+
+const SavedWordBoxTitle = styled.h2`
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  font-family: "MS-Bold";
+  opacity: 0.6;
+`;
+
+const SavedWordBoxBody = styled.div`
+  height: 90%;
+`;
+
+const SavedWordBoxFooter = styled.div`
+  height: 10%;
+  font-size: 1rem;
+`;
+
+const SavedWordBoxFooterIcon = styled(FontAwesomeIcon)`
+  margin-right: 10px;
+  opacity: 0.6;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+`;
+
 class List extends Component {
   constructor(props) {
     super(props);
@@ -188,6 +231,7 @@ class List extends Component {
 
   render() {
     const {
+      lists,
       visible,
       inputValue,
       colorValue,
@@ -238,7 +282,25 @@ class List extends Component {
               </Col>
             </Row>
           ) : (
-            <div />
+            <Row>
+            {lists.map(list => {
+                return (
+                  <SavedWordBox key={list._id} bgColor={listColors.find(color => color.name === list.color).value}>
+                    <SavedWordBoxBody>
+                      <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
+                    </SavedWordBoxBody>
+                    <SavedWordBoxFooter>
+                      <SavedWordBoxFooterIcon
+                        icon="trash-alt"
+                        title="Delete"
+                        onClick={e => this.handleDeleteSavedWord(list._id)}
+                      />
+                    </SavedWordBoxFooter>
+                  </SavedWordBox>
+                );
+              })}
+
+            </Row>
           ))}
 
         {visible && (
