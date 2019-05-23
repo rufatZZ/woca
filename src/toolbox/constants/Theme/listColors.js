@@ -3,7 +3,7 @@ export const listColors = [
     title: "default",
     name: "DEFAULT",
     value: "fff",
-    border: "rgba(0,0,0,.3)"
+    border: "rgba(0,0,0,.1)"
   },
   {
     title: "red",

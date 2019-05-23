@@ -17,7 +17,7 @@ const SavedWordBox = styled.div`
   flex-direction: column;
   width: 300px;
   height: 200px;
-  padding: 20px;
+  padding: 10px 20px 20px;
   margin: 0px 25px 30px 0px;
   border-radius: 0.35rem;
   border: 1px solid #e0e0e0;

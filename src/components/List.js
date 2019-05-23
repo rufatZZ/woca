@@ -92,14 +92,15 @@ const SavedWordBox = styled.div`
   flex-direction: column;
   width: 200px;
   height: 100px;
-  padding: 20px;
+  padding: 10px 20px 20px;
   margin: 0px 25px 30px 0px;
   border-radius: 0.35rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid ${props => props.borderColor};
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
   background-color: #${props => props.bgColor};
   &:hover {
+    border: 1px solid ${props => props.bgColor};
     box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
     transition: all 0.2s ease-in-out;
   }
@@ -285,7 +286,7 @@ class List extends Component {
             <Row>
             {lists.map(list => {
                 return (
-                  <SavedWordBox key={list._id} bgColor={listColors.find(color => color.name === list.color).value}>
+                  <SavedWordBox key={list._id} borderColor={listColors.find(color => color.name === list.color).border} bgColor={listColors.find(color => color.name === list.color).value}>
                     <SavedWordBoxBody>
                       <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
                     </SavedWordBoxBody>
