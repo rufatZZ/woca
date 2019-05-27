@@ -77,7 +77,7 @@ const ListColorItem = styled.div`
   margin: 2px;
   width: 26px;
   height: 26px;
-  border-radius: 26px;
+  border-radius: .35rem;
   box-sizing:border-box
   background-color: #${props => props.bgColor};
 
@@ -249,7 +249,7 @@ class List extends Component {
           <title>List</title>
         </Helmet>
         <FlashMessages message={message} />
-        <Row fluid={true}>
+        <Row>
           <Title>
             {!connectionError && (
               <Button onClick={this.handleTogglePopup}>
