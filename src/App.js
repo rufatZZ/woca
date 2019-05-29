@@ -58,6 +58,24 @@ const GlobalStyle = createGlobalStyle`
   .text-center{
     text-align:center;
   }
+
+
+  ::-webkit-scrollbar-track
+  {
+      border: 1px solid #e5e5e5;
+      background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar
+  {
+      width: 10px;
+      background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar-thumb
+  {
+      background-color: #a7a7a7;  
+  }
 `;
 
 class App extends Component {

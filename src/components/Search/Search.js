@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from "styled-components";
+
 //components
 import Searchbar from "./Searchbar";
 import WordList from "./WordList";
@@ -15,9 +18,20 @@ import {
   saveWord,
   getSavedWord,
   getDefinitionByWord,
-  addHistory
+  addHistory,
+  getAllLists
 } from "../../actions/actions";
 import FlashMessages from "../_common/FlashMessages/FlashMessages";
+
+const DropdownHolder = styled.div`
+  max-height: 200px;
+  overflow-y: scroll;
+  padding: 10px 15px;
+  border-radius: 0.35rem;
+  box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
+    0 3px 3px 2px rgba(60, 64, 67, 0.149);
+    font-size: 
+`;
 
 class Search extends Component {
   constructor(props) {
@@ -25,13 +39,15 @@ class Search extends Component {
     this.state = {
       entry: "",
       wordList: [],
+      lists: [],
       errorType: 0,
       isExist: false,
       isLoading: true,
       isInvalid: false,
       isEmpty: true,
       connectionError: false,
-      message: {}
+      message: {},
+      dropdownVisible: false
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -39,6 +55,11 @@ class Search extends Component {
     this.findWord = this.findWord.bind(this);
     this.setParams = this.setParams.bind(this);
     this.getParams = this.getParams.bind(this);
+    this.handleTogglePopup = this.handleTogglePopup.bind(this);
+  }
+
+  componentWillMount() {
+    this.getAllLists();
   }
 
   componentDidMount() {
@@ -79,6 +100,29 @@ class Search extends Component {
       const url = this.setParams({ query: this.state.entry });
       this.props.history.push(`?${url}`);
     });
+  }
+
+  handleTogglePopup() {
+    this.setState({ dropdownVisible: !this.state.dropdownVisible });
+  }
+
+  async getAllLists() {
+    let lists = await getAllLists();
+    if (lists.connectionError) {
+      this.setState({
+        lists: []
+      });
+    } else {
+      if (lists.length > 0) {
+        this.setState({
+          lists: lists
+        });
+      } else {
+        this.setState({
+          lists: []
+        });
+      }
+    }
   }
 
   async handleSaveWord() {
@@ -158,7 +202,9 @@ class Search extends Component {
       isInvalid,
       isExist,
       message,
-      connectionError
+      connectionError,
+      lists,
+      dropdownVisible
     } = this.state;
 
     const displayLoading = isLoading && entry.length > 0;
@@ -187,22 +233,59 @@ class Search extends Component {
               <Alert bg="danger">Can't connect to server</Alert>
             ) : (
               displayResults &&
-              !isInvalid &&
-              (!isExist ? (
-                <Button
-                  bg="success"
-                  size="lg"
-                  block={true}
-                  onClick={this.handleSaveWord}
-                >
-                  Save Word
-                </Button>
-              ) : (
-                <Alert bg="success">
-                  Word already saved. <br />
-                  Go to <Link to={"/saved"}>Saved words</Link>
-                </Alert>
-              ))
+              !isInvalid && [
+                !isExist ? (
+                  <Button
+                    key="saveWordBtn"
+                    bg="success"
+                    size="lg"
+                    block={true}
+                    onClick={this.handleSaveWord}
+                  >
+                    Save Word
+                  </Button>
+                ) : (
+                  <Alert bg="success" key="saveWordAlert">
+                    Word already saved. <br />
+                    Go to <Link to={"/saved"}>Saved words</Link>
+                  </Alert>
+                ),
+                <div key="addListBtn">
+                  <Button
+                    size="lg"
+                    block={true}
+                    onClick={this.handleTogglePopup}
+                  >
+                    Add to the list
+                    <FontAwesomeIcon icon="chevron-down" style={{marginLeft: '5px'}}/>
+                  </Button>
+                  {dropdownVisible && (
+                    <DropdownHolder>
+                      {lists.map(list => {
+                        return (
+                          <div key={list._id} style={{margin: "5px 0"}}>
+                            <input
+                              type="checkbox"
+                              id={`list_${list.title}`}
+                              name={list.title}
+                              className="checkbox__flag"
+                              onChange={(e)=>{console.log(e.target.checked)}}
+                            />
+                            <label className="checkbox__trigger" htmlFor={`list_${list.title}`} >
+                              <svg className="checkbox" viewBox="0 0 24 24">
+                                  <rect className="checkbox__rect" x="3" y="3" rx="3" ry="3" width="20" height="20" />
+                                  <polyline className="checkbox__line" points="9 11 12 14 23 3"/>
+                              </svg>
+                              {list.title}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </DropdownHolder>
+                  )}
+                  <div />
+                </div>
+              ]
             )}
           </Col>
         </Row>

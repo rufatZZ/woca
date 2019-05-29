@@ -23,3 +23,78 @@
   src: local("MS-Bold"),
     url("./toolbox/assets/fonts/Montserrat-Bold.ttf") format("truetype");
 }
+
+
+/*  */
+
+.checkbox {
+  display: block;
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: 0.5rem;
+  border: none;
+  -webkit-transform: translateY(-0.11em);
+          transform: translateY(-0.11em);
+}
+.checkbox__rect,
+.checkbox__line {
+  fill: none;
+}
+.checkbox__rect {
+  stroke: #e5e5e5;
+  border-radius: 3px;
+  transition: stroke 0.3s;
+  stroke-width: 2;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+.checkbox__line {
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+.checkbox__flag:checked + .checkbox__trigger .checkbox__rect {
+  stroke: #e5e5e5;
+  stroke-dashoffset: -8px;
+  -webkit-animation: open 0.3s ease forwards;
+          animation: open 0.3s ease forwards;
+}
+.checkbox__flag:checked + .checkbox__trigger .checkbox__line {
+  stroke: hsl(150, 50%, 70%);
+  -webkit-animation: checked 0.3s 0.2s ease forwards;
+          animation: checked 0.3s 0.2s ease forwards;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+}
+.checkbox__flag {
+  display: none;
+}
+.checkbox__trigger {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+.checkbox__caption {
+  display: block;
+}
+@-webkit-keyframes checked {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes checked {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@-webkit-keyframes open {
+  to {
+    stroke-dasharray: 57;
+  }
+}
+@keyframes open {
+  to {
+    stroke-dasharray: 57;
+  }
+}
