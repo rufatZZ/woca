@@ -136,6 +136,7 @@ class List extends Component {
     super(props);
 
     this.state = {
+      lists: [],
       visible: false,
       inputValue: "",
       colorValue: 'DEFAULT',
