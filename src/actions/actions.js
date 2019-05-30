@@ -130,4 +130,14 @@ export async function saveList(list) {
   }
 }
 
-export async function deleteList(list) {}
+export async function deleteList(list_id) {
+  const response = await fetch(`http://localhost:5000/api/list/${list_id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8"
+    },
+    body: JSON.stringify({ id: list_id })
+  });
+
+  return await response.json();
+}

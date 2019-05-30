@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 
-import { saveList, getAllLists } from "../actions/actions";
+import { saveList, getAllLists, deleteList } from "../actions/actions";
 
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
@@ -65,7 +65,7 @@ const Label = styled.h5`
 `;
 
 const ListColorHolder = styled.div`
-  display: ${props => props.inputValue ? `` : `none`};
+  display: ${props => (props.inputValue ? `` : `none`)};
   margin: 5px 0px;
   width: 136px;
 `;
@@ -101,7 +101,8 @@ const SavedWordBox = styled.div`
   background-color: #${props => props.bgColor};
   &:hover {
     border: 1px solid ${props => props.bgColor};
-    box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
+    box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
+      0 3px 3px 2px rgba(60, 64, 67, 0.149);
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -139,7 +140,7 @@ class List extends Component {
       lists: [],
       visible: false,
       inputValue: "",
-      colorValue: 'DEFAULT',
+      colorValue: "DEFAULT",
       message: {},
       isLoading: true,
       isEmpty: true,
@@ -150,6 +151,7 @@ class List extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
     this.handleChangeListColor = this.handleChangeListColor.bind(this);
+    this.handleDeleteList = this.handleDeleteList.bind(this);
   }
 
   componentWillMount() {
@@ -189,7 +191,7 @@ class List extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    
+
     const list = {
       title: this.state.inputValue,
       color: this.state.colorValue
@@ -199,14 +201,19 @@ class List extends Component {
     this.handleTogglePopup();
 
     if (saveListResponse.isSaved) {
-      this.setState({
-        isExist: true,
-        message: {
-          type: "success",
-          id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
-          text: "List successfully saved"
+      this.setState(
+        {
+          isExist: true,
+          message: {
+            type: "success",
+            id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
+            text: "List successfully saved"
+          }
+        },
+        () => {
+          this.getAllLists();
         }
-      });
+      );
     } else {
       this.setState({
         message: {
@@ -227,8 +234,31 @@ class List extends Component {
   }
 
   handleChangeListColor(e) {
-    const checkedListColor = JSON.parse(JSON.stringify(e.target.dataset)).value || 'DEFAULT';
-    this.setState({colorValue: checkedListColor});
+    const checkedListColor =
+      JSON.parse(JSON.stringify(e.target.dataset)).value || "DEFAULT";
+    this.setState({ colorValue: checkedListColor });
+  }
+
+  async handleDeleteList(list_id) {
+    let deleteResponse = await deleteList(list_id);
+    if (deleteResponse.isDeleted) {
+      this.getAllLists();
+      this.setState({
+        message: {
+          type: "error",
+          id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
+          text: "List deleted"
+        }
+      });
+    } else {
+      this.setState({
+        message: {
+          type: "alert",
+          id: Math.round(Math.random().toFixed(5) * 123456789 * 100000),
+          text: "Cant delete list"
+        }
+      });
+    }
   }
 
   render() {
@@ -285,9 +315,17 @@ class List extends Component {
             </Row>
           ) : (
             <Row>
-            {lists.map(list => {
+              {lists.map(list => {
                 return (
-                  <SavedWordBox key={list._id} borderColor={listColors.find(color => color.name === list.color).border} bgColor={listColors.find(color => color.name === list.color).value}>
+                  <SavedWordBox
+                    key={list._id}
+                    borderColor={
+                      listColors.find(color => color.name === list.color).border
+                    }
+                    bgColor={
+                      listColors.find(color => color.name === list.color).value
+                    }
+                  >
                     <SavedWordBoxBody>
                       <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
                     </SavedWordBoxBody>
@@ -295,13 +333,12 @@ class List extends Component {
                       <SavedWordBoxFooterIcon
                         icon="trash-alt"
                         title="Delete"
-                        onClick={e => this.handleDeleteSavedWord(list._id)}
+                        onClick={e => this.handleDeleteList(list._id)}
                       />
                     </SavedWordBoxFooter>
                   </SavedWordBox>
                 );
               })}
-
             </Row>
           ))}
 
@@ -310,7 +347,7 @@ class List extends Component {
             <ModalDialog>
               <ModalContent>
                 <form method="POST" onSubmit={this.handleSubmit}>
-                  <input type="hidden" value={colorValue}/>
+                  <input type="hidden" value={colorValue} />
                   <ModalHeader>
                     <h5 style={{ marginBottom: "0" }}>Add new List</h5>
                   </ModalHeader>
