@@ -64,6 +64,21 @@ export async function deleteSavedWord(word_id) {
   return await response.json();
 }
 
+export async function addWordToList(params){
+  try {
+    const response = await fetch(`http://localhost:5000/api/wordlist/${params.title}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      body: JSON.stringify(params)
+    });
+    return await response.json();
+  } catch (e) {
+    // console.log(e);
+  }
+}
+
 /* History */
 
 export function addHistory(word) {
