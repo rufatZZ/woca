@@ -19,7 +19,8 @@ import {
   getSavedWord,
   getDefinitionByWord,
   addHistory,
-  getAllLists
+  getAllLists,
+  addWordToList
 } from "../../actions/actions";
 import FlashMessages from "../_common/FlashMessages/FlashMessages";
 
@@ -30,7 +31,7 @@ const DropdownHolder = styled.div`
   border-radius: 0.35rem;
   box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
     0 3px 3px 2px rgba(60, 64, 67, 0.149);
-    font-size: 
+  font-size: ;
 `;
 
 class Search extends Component {
@@ -56,6 +57,7 @@ class Search extends Component {
     this.setParams = this.setParams.bind(this);
     this.getParams = this.getParams.bind(this);
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
+    this.handleAddToList = this.handleAddToList.bind(this);
   }
 
   componentWillMount() {
@@ -104,6 +106,15 @@ class Search extends Component {
 
   handleTogglePopup() {
     this.setState({ dropdownVisible: !this.state.dropdownVisible });
+  }
+
+  async handleAddToList(e) {
+    const params = {
+      title: this.state.entry,
+      listId: e.target.value
+    };
+    let response = await addWordToList(params);
+    console.log(response);
   }
 
   async getAllLists() {
@@ -257,24 +268,42 @@ class Search extends Component {
                     onClick={this.handleTogglePopup}
                   >
                     Add to the list
-                    <FontAwesomeIcon icon="chevron-down" style={{marginLeft: '5px'}}/>
+                    <FontAwesomeIcon
+                      icon="chevron-down"
+                      style={{ marginLeft: "5px" }}
+                    />
                   </Button>
                   {dropdownVisible && (
                     <DropdownHolder>
                       {lists.map(list => {
                         return (
-                          <div key={list._id} style={{margin: "5px 0"}}>
+                          <div key={list._id} style={{ margin: "5px 0" }}>
                             <input
                               type="checkbox"
                               id={`list_${list.title}`}
                               name={list.title}
+                              value={list._id}
                               className="checkbox__flag"
-                              onChange={(e)=>{console.log(e.target.checked)}}
+                              onChange={this.handleAddToList}
                             />
-                            <label className="checkbox__trigger" htmlFor={`list_${list.title}`} >
+                            <label
+                              className="checkbox__trigger"
+                              htmlFor={`list_${list.title}`}
+                            >
                               <svg className="checkbox" viewBox="0 0 24 24">
-                                  <rect className="checkbox__rect" x="3" y="3" rx="3" ry="3" width="20" height="20" />
-                                  <polyline className="checkbox__line" points="9 11 12 14 23 3"/>
+                                <rect
+                                  className="checkbox__rect"
+                                  x="3"
+                                  y="3"
+                                  rx="3"
+                                  ry="3"
+                                  width="20"
+                                  height="20"
+                                />
+                                <polyline
+                                  className="checkbox__line"
+                                  points="9 11 12 14 23 3"
+                                />
                               </svg>
                               {list.title}
                             </label>

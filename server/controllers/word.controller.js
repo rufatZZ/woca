@@ -26,6 +26,30 @@ module.exports = {
       });
     }
   },
+  addListToWord: (req, res, next) => {
+    let { title, listId } = req.body;
+
+    addList({ title, listId });
+
+    function addList(obj) {
+      Word.findOneAndUpdate(
+        { title: obj.title }, // find a document with that filter
+        { $push: {lists: obj.listId}  }
+        // , // document to insert when nothing was found
+        // { upsert: true, new: true, runValidators: true }
+      ).exec((err, word) => {
+        if (err) {
+          res.send({ status: "error", isSaved: false, response: err });
+        } else if (!word) {
+          res.send({ status: "ok", isSaved: false, response: "No result" });
+        } else {
+          return res.send({ status: "ok", isSaved: true, response: word });
+        }
+
+        next();
+      });
+    }
+  },
   getAll: (req, res, next) => {
     Word.find(req.params.id)
       .sort({ createdAt: -1 })

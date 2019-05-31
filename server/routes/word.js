@@ -5,4 +5,5 @@ module.exports = router => {
   router.route("/word").post(wordController.addWord);
   router.route("/word/:id").delete(wordController.deleteWord);
   router.route("/word/:word").get(wordController.getWord);
+  router.route("/wordlist/:word").post(wordController.addListToWord);
 };
