@@ -79,6 +79,23 @@ export async function addWordToList(params){
   }
 }
 
+
+export async function removeWordToList(params) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/wordremovelist/${params.title}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      body: JSON.stringify(params)
+    });
+    return await response.json();
+  } catch (e) {
+    // console.log(e);
+  }
+}
+
+
 /* History */
 
 export function addHistory(word) {
