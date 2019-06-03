@@ -20,7 +20,8 @@ import {
   getDefinitionByWord,
   addHistory,
   getAllLists,
-  addWordToList
+  addWordToList,
+  removeWordToList
 } from "../../actions/actions";
 import FlashMessages from "../_common/FlashMessages/FlashMessages";
 
@@ -113,7 +114,12 @@ class Search extends Component {
       title: this.state.entry,
       listId: e.target.value
     };
-    let response = await addWordToList(params);
+
+    const checked = e.target.checked;
+
+    let response = checked ? await addWordToList(params) : await removeWordToList(params);
+
+    //
     console.log(response);
   }
 

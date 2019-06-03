@@ -6,4 +6,5 @@ module.exports = router => {
   router.route("/word/:id").delete(wordController.deleteWord);
   router.route("/word/:word").get(wordController.getWord);
   router.route("/wordlist/:word").post(wordController.addListToWord);
+  router.route("/wordremovelist/:word").delete(wordController.removeListToWord);
 };
