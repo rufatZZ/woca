@@ -42,6 +42,7 @@ class Search extends Component {
       entry: "",
       wordList: [],
       lists: [],
+      savedWord: {},
       errorType: 0,
       isExist: false,
       isLoading: true,
@@ -120,7 +121,7 @@ class Search extends Component {
     let response = checked ? await addWordToList(params) : await removeWordToList(params);
 
     //
-    console.log(response);
+    // console.log(response);
   }
 
   async getAllLists() {
@@ -177,7 +178,7 @@ class Search extends Component {
           isInvalid: false
         });
       } else {
-        const checkWordExist = await getSavedWord(this.state.entry);
+        const savedWord = await getSavedWord(this.state.entry);
         const checkTypeOf = typeof wordListJSON[0];
         if (checkTypeOf === "string") {
           this.setState({
@@ -194,8 +195,9 @@ class Search extends Component {
             errorType: 0,
             isLoading: false,
             isInvalid: false,
-            isExist: checkWordExist.isExist ? true : false,
-            connectionError: checkWordExist.connectionError ? true : false
+            savedWord: savedWord.isExist ? savedWord : {},
+            isExist: savedWord.isExist ? true : false,
+            connectionError: savedWord.connectionError ? true : false
           });
         }
       }
@@ -221,7 +223,8 @@ class Search extends Component {
       message,
       connectionError,
       lists,
-      dropdownVisible
+      dropdownVisible,
+      savedWord
     } = this.state;
 
     const displayLoading = isLoading && entry.length > 0;
@@ -290,6 +293,7 @@ class Search extends Component {
                               name={list.title}
                               value={list._id}
                               className="checkbox__flag"
+                              defaultChecked={savedWord.response.lists.includes(list._id)}
                               onChange={this.handleAddToList}
                             />
                             <label
