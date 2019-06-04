@@ -87,11 +87,24 @@ const ListColorItem = styled.div`
   }
 `;
 
+const SavedWordBoxTitle = styled.h2`
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  font-family: "MS-Bold";
+  opacity: 0.6;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  position: relative;
+`;
+
 const SavedWordBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 200px;
-  height: 100px;
+  height: 130px;
   padding: 10px 20px 20px;
   margin: 0px 25px 30px 0px;
   border-radius: 0.35rem;
@@ -104,15 +117,15 @@ const SavedWordBox = styled.div`
     box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
       0 3px 3px 2px rgba(60, 64, 67, 0.149);
     transition: all 0.2s ease-in-out;
+    height: auto;
+
+    ${SavedWordBoxTitle} {
+      display: block;
+    }
+
   }
 `;
 
-const SavedWordBoxTitle = styled.h2`
-  text-transform: capitalize;
-  font-size: 1.5rem;
-  font-family: "MS-Bold";
-  opacity: 0.6;
-`;
 
 const SavedWordBoxBody = styled.div`
   height: 90%;
