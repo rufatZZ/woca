@@ -68,7 +68,7 @@ const Sidebar = () => {
 
       <SidebarLinkListHolder>
         <SidebarLinkList>
-          <SidebarLink to="/search" title="Search" activeClassName="active">
+          <SidebarLink to="/" title="Search" activeClassName="active">
             <FontAwesomeIcon icon="search" />
           </SidebarLink>
           <SidebarLink to="/history" title="History" activeClassName="active">

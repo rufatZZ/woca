@@ -34,7 +34,7 @@ module.exports = {
     function addList(obj) {
       Word.findOneAndUpdate(
         { title: obj.title }, // find a document with that filter
-        { $push: {lists: obj.listId}  }
+        { $push: { lists: obj.listId } }
         // , // document to insert when nothing was found
         // { upsert: true, new: true, runValidators: true }
       ).exec((err, word) => {
@@ -58,7 +58,7 @@ module.exports = {
     function removeList(obj) {
       Word.findOneAndUpdate(
         { title: obj.title }, // find a document with that filter
-        { $pull: {lists: { $in: [obj.listId]} }  }
+        { $pull: { lists: { $in: [obj.listId] } } }
       ).exec((err, word) => {
         if (err) {
           res.send({ status: "error", isSaved: false, response: err });
@@ -74,6 +74,7 @@ module.exports = {
   },
   getAll: (req, res, next) => {
     Word.find(req.params.id)
+      .populate({ path: "lists", model: "List" })
       .sort({ createdAt: -1 })
       .exec((err, word) => {
         if (err) {
