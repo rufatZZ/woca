@@ -10,7 +10,7 @@ import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
 import { Row, Col, Alert, Title } from "../toolbox/components";
-
+import { listColors } from "../toolbox/constants/Theme";
 
 const SavedWordBox = styled.div`
   display: flex;
@@ -24,7 +24,8 @@ const SavedWordBox = styled.div`
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
   &:hover {
-    box-shadow: 0 3px 3px 0 rgba(60,64,67,0.302), 0 3px 3px 2px rgba(60,64,67,0.149);
+    box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
+      0 3px 3px 2px rgba(60, 64, 67, 0.149);
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -37,6 +38,7 @@ const SavedWordBoxTitle = styled.h2`
 `;
 
 const SavedWordBoxBody = styled.div`
+  position: relative;
   height: 90%;
 `;
 
@@ -52,6 +54,17 @@ const SavedWordBoxFooterIcon = styled(FontAwesomeIcon)`
     cursor: pointer;
     opacity: 0.9;
   }
+`;
+
+const SavedWordListItem = styled.span`
+  font-size: 12px;
+  display: inline-block;
+  color: #5a5858;
+  border-radius: 0.35rem;
+  margin: 2px;
+  padding: 3px;
+  background-color: #${props => props.bgColor};
+  border: 1px solid ${props => props.borderColor};
 `;
 
 class Saved extends Component {
@@ -171,6 +184,27 @@ class Saved extends Component {
                   <SavedWordBox key={word._id}>
                     <SavedWordBoxBody>
                       <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
+                      <div style={{position: "absolute", bottom: "10%"}}>
+                        {word.lists.map(list => {
+                          return (
+                            <SavedWordListItem
+                              key={list._id}
+                              bgColor={
+                                listColors.find(
+                                  color => color.name === list.color
+                                ).value
+                              }
+                              borderColor={
+                                listColors.find(
+                                  color => color.name === list.color
+                                ).border
+                              }
+                            >
+                              {list.title}
+                            </SavedWordListItem>
+                          );
+                        })}
+                      </div>
                     </SavedWordBoxBody>
                     <SavedWordBoxFooter>
                       <SavedWordBoxFooterIcon
