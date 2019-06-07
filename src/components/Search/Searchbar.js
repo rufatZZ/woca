@@ -71,7 +71,7 @@ export class Searchbar extends Component {
   }
 
   handleClick() {
-    let entry = this.state.inputValue;
+    let entry = this.state.inputValue.trim();
     if (entry !== undefined && entry) {
       this.props.onSearchEntry(entry);
     }
