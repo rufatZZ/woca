@@ -147,6 +147,7 @@ class Search extends Component {
     let entry = this.state.entry;
     let saveWordReponse = await saveWord(entry);
     if (saveWordReponse.isSaved) {
+      this.handleGetSavedWord(this.state.entry);
       this.setState({
         isExist: true,
         message: {
@@ -166,6 +167,15 @@ class Search extends Component {
     }
   }
 
+  async handleGetSavedWord(word){
+    const savedWord = await getSavedWord(word);
+    this.setState({
+      savedWord: savedWord.isExist ? savedWord : {},
+      isExist: savedWord.isExist ? true : false,
+      connectionError: savedWord.connectionError ? true : false
+    });
+  }
+
   async findWord(word) {
     this.setState({ isLoading: true, isInvalid: false, isExist: false });
     try {
@@ -178,7 +188,6 @@ class Search extends Component {
           isInvalid: false
         });
       } else {
-        const savedWord = await getSavedWord(this.state.entry);
         const checkTypeOf = typeof wordListJSON[0];
         if (checkTypeOf === "string") {
           this.setState({
@@ -189,15 +198,13 @@ class Search extends Component {
             isInvalid: true
           });
         } else {
+          this.handleGetSavedWord(this.state.entry);
           this.setState({
             wordList: wordListJSON,
             isEmpty: false,
             errorType: 0,
             isLoading: false,
-            isInvalid: false,
-            savedWord: savedWord.isExist ? savedWord : {},
-            isExist: savedWord.isExist ? true : false,
-            connectionError: savedWord.connectionError ? true : false
+            isInvalid: false
           });
         }
       }
