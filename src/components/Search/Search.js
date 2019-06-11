@@ -12,6 +12,7 @@ import Loading from "../_common/Loading/Loading";
 import Error from "../_common/Error/Error";
 
 import { Row, Col, Button, Alert } from "../../toolbox/components";
+import { getParams, setParams } from "../../toolbox/helpers";
 
 //actions
 import {
@@ -56,8 +57,6 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSaveWord = this.handleSaveWord.bind(this);
     this.findWord = this.findWord.bind(this);
-    this.setParams = this.setParams.bind(this);
-    this.getParams = this.getParams.bind(this);
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
     this.handleAddToList = this.handleAddToList.bind(this);
   }
@@ -67,7 +66,7 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    let getEntry = this.getParams("word");
+    let getEntry = getParams("word");
     if (getEntry !== undefined && getEntry !== null) {
       this.setState({ entry: getEntry }, () => {
         this.findWord(getEntry);
@@ -78,7 +77,7 @@ class Search extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location.search !== prevProps.location.search) {
-      let getEntry = this.getParams("word");
+      let getEntry = getParams("word");
       this.setState({ entry: getEntry }, () => {
         this.findWord(getEntry);
         addHistory(getEntry);
@@ -86,22 +85,10 @@ class Search extends Component {
     }
   }
 
-  getParams(word) {
-    let search = window.location.search;
-    let url = new URLSearchParams(search);
-    return word !== undefined ? url.get(word) : false;
-  }
-
-  setParams({ query = "" }) {
-    const searchParam = new URLSearchParams();
-    searchParam.set("word", query);
-    return searchParam.toString();
-  }
-
   handleSearch(word) {
     this.setState({ entry: word }, () => {
       addHistory(this.state.entry);
-      const url = this.setParams({ query: this.state.entry });
+      const url = setParams({ query: this.state.entry });
       this.props.history.push(`?${url}`);
     });
   }
