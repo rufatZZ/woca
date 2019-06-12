@@ -73,7 +73,11 @@ module.exports = {
     }
   },
   getAll: (req, res, next) => {
-    Word.find(req.params.id)
+    const searchParams = req.params.list
+      ? { lists: { $in: [req.params.list] } }
+      : {};
+
+    Word.find(searchParams)
       .populate({ path: "lists", model: "List" })
       .sort({ createdAt: -1 })
       .exec((err, word) => {
