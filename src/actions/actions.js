@@ -11,9 +11,9 @@ export async function getDefinitionByWord(word) {
 
 /* Saved Words */
 
-export async function getAllSavedWords() {
+export async function getAllSavedWords(list) {
   try {
-    const response = await fetch("http://localhost:5000/api/words");
+    const response = await fetch(`http://localhost:5000/api/words/${list}`);
     return await response.json();
   } catch (e) {
     return {

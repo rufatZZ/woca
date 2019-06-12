@@ -9,7 +9,8 @@ import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
 
-import { Row, Col, Alert, Title } from "../toolbox/components";
+import { getParams } from "../toolbox/helpers";
+import { Row, Col, Alert, Title, Button } from "../toolbox/components";
 import { listColors } from "../toolbox/constants/Theme";
 
 const SavedWordBox = styled.div`
@@ -56,15 +57,15 @@ const SavedWordBoxFooterIcon = styled(FontAwesomeIcon)`
   }
 `;
 
-const SavedWordListItem = styled.span`
+const SavedWordListItem = styled(Link)`
   font-size: 12px;
   display: inline-block;
   color: #5a5858;
   border-radius: 0.35rem;
   margin: 2px;
   padding: 3px;
-  background-color: #${props => props.bgColor};
-  border: 1px solid ${props => props.borderColor};
+  background-color: #${props => props.bgcolor};
+  border: 1px solid ${props => props.bordercolor};
 `;
 
 class Saved extends Component {
@@ -81,10 +82,27 @@ class Saved extends Component {
 
     this.getAllSavedWords = this.getAllSavedWords.bind(this);
     this.handleDeleteSavedWord = this.handleDeleteSavedWord.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   componentWillMount() {
     this.getAllSavedWords();
+  }
+
+  componentDidUpdate(prevProps) {
+    let getEntry = getParams("list");
+
+    if (this.props.location.search !== prevProps.location.search) {
+      if (getEntry !== undefined && getEntry !== null) {
+        this.getAllSavedWords(getEntry);
+      } else {
+        this.getAllSavedWords();
+      }
+    }
+  }
+
+  handleReset() {
+    this.props.history.push("/saved");
   }
 
   async handleDeleteSavedWord(word_id) {
@@ -109,8 +127,8 @@ class Saved extends Component {
     }
   }
 
-  async getAllSavedWords() {
-    let savedList = await getAllSavedWords();
+  async getAllSavedWords(list = "") {
+    let savedList = await getAllSavedWords(list);
     if (savedList.connectionError) {
       this.setState({
         savedList: [],
@@ -152,7 +170,14 @@ class Saved extends Component {
         </Helmet>
         <FlashMessages message={message} />
         <Row fluid={true}>
-          <Title>Saved</Title>
+          <Title>
+            {!connectionError && (
+              <Button bg="danger" onClick={this.handleReset}>
+                <FontAwesomeIcon icon="undo" /> Reset
+              </Button>
+            )}
+            Saved
+          </Title>
         </Row>
         <br />
         {isLoading && <Loading />}
@@ -184,17 +209,18 @@ class Saved extends Component {
                   <SavedWordBox key={word._id}>
                     <SavedWordBoxBody>
                       <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
-                      <div style={{position: "absolute", bottom: "10%"}}>
+                      <div style={{ position: "absolute", bottom: "10%" }}>
                         {word.lists.map(list => {
                           return (
                             <SavedWordListItem
+                              to={`?list=${list._id}`}
                               key={list._id}
-                              bgColor={
+                              bgcolor={
                                 listColors.find(
                                   color => color.name === list.color
                                 ).value
                               }
-                              borderColor={
+                              bordercolor={
                                 listColors.find(
                                   color => color.name === list.color
                                 ).border
