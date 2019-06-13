@@ -76,12 +76,21 @@ class Search extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    let getEntry = getParams("word");
     if (this.props.location.search !== prevProps.location.search) {
-      let getEntry = getParams("word");
-      this.setState({ entry: getEntry }, () => {
-        this.findWord(getEntry);
-        addHistory(getEntry);
-      });
+      if (getEntry !== undefined && getEntry !== null) {
+        this.setState({ entry: getEntry }, () => {
+          this.findWord(getEntry);
+          addHistory(getEntry);
+        });
+      } else {
+        this.setState({
+          entry: "",
+          wordList: [],
+          isLoading: true,
+          isEmpty: true
+        });
+      }
     }
   }
 
@@ -98,17 +107,13 @@ class Search extends Component {
   }
 
   async handleAddToList(e) {
+    const checked = e.target.checked;
     const params = {
       title: this.state.entry,
       listId: e.target.value
     };
 
-    const checked = e.target.checked;
-
-    let response = checked ? await addWordToList(params) : await removeWordToList(params);
-
-    //
-    // console.log(response);
+    checked ? await addWordToList(params) : await removeWordToList(params);
   }
 
   async getAllLists() {
@@ -154,7 +159,7 @@ class Search extends Component {
     }
   }
 
-  async handleGetSavedWord(word){
+  async handleGetSavedWord(word) {
     const savedWord = await getSavedWord(word);
     this.setState({
       savedWord: savedWord.isExist ? savedWord : {},
@@ -259,65 +264,69 @@ class Search extends Component {
                     Save Word
                   </Button>
                 ) : (
-                  <Alert bg="success" key="saveWordAlert">
-                    Word already saved. <br />
-                    Go to <Link to={"/saved"}>Saved words</Link>
-                  </Alert>
-                ),
-                <div key="addListBtn">
-                  <Button
-                    size="lg"
-                    block={true}
-                    onClick={this.handleTogglePopup}
-                  >
-                    Add to the list
-                    <FontAwesomeIcon
-                      icon="chevron-down"
-                      style={{ marginLeft: "5px" }}
-                    />
-                  </Button>
-                  {dropdownVisible && (
-                    <DropdownHolder>
-                      {lists.map(list => {
-                        return (
-                          <div key={list._id} style={{ margin: "5px 0" }}>
-                            <input
-                              type="checkbox"
-                              id={`list_${list.title}`}
-                              name={list.title}
-                              value={list._id}
-                              className="checkbox__flag"
-                              defaultChecked={savedWord.response.lists.includes(list._id)}
-                              onChange={this.handleAddToList}
-                            />
-                            <label
-                              className="checkbox__trigger"
-                              htmlFor={`list_${list.title}`}
-                            >
-                              <svg className="checkbox" viewBox="0 0 24 24">
-                                <rect
-                                  className="checkbox__rect"
-                                  x="3"
-                                  y="3"
-                                  rx="3"
-                                  ry="3"
-                                  width="20"
-                                  height="20"
+                  [
+                    <Alert bg="success" key="saveWordAlert">
+                      Word already saved. <br />
+                      Go to <Link to={"/saved"}>Saved words</Link>
+                    </Alert>,
+                    <div key="addListBtn">
+                      <Button
+                        size="lg"
+                        block={true}
+                        onClick={this.handleTogglePopup}
+                      >
+                        Add to the list
+                        <FontAwesomeIcon
+                          icon="chevron-down"
+                          style={{ marginLeft: "5px" }}
+                        />
+                      </Button>
+                      {dropdownVisible && (
+                        <DropdownHolder>
+                          {lists.map(list => {
+                            return (
+                              <div key={list._id} style={{ margin: "5px 0" }}>
+                                <input
+                                  type="checkbox"
+                                  id={`list_${list.title}`}
+                                  name={list.title}
+                                  value={list._id}
+                                  className="checkbox__flag"
+                                  defaultChecked={savedWord.response.lists.includes(
+                                    list._id
+                                  )}
+                                  onChange={this.handleAddToList}
                                 />
-                                <polyline
-                                  className="checkbox__line"
-                                  points="9 11 12 14 23 3"
-                                />
-                              </svg>
-                              {list.title}
-                            </label>
-                          </div>
-                        );
-                      })}
-                    </DropdownHolder>
-                  )}
-                  <div />
-                </div>
+                                <label
+                                  className="checkbox__trigger"
+                                  htmlFor={`list_${list.title}`}
+                                >
+                                  <svg className="checkbox" viewBox="0 0 24 24">
+                                    <rect
+                                      className="checkbox__rect"
+                                      x="3"
+                                      y="3"
+                                      rx="3"
+                                      ry="3"
+                                      width="20"
+                                      height="20"
+                                    />
+                                    <polyline
+                                      className="checkbox__line"
+                                      points="9 11 12 14 23 3"
+                                    />
+                                  </svg>
+                                  {list.title}
+                                </label>
+                              </div>
+                            );
+                          })}
+                        </DropdownHolder>
+                      )}
+                      <div />
+                    </div>
+                  ]
+                )
               ]
             )}
           </Col>
