@@ -104,6 +104,7 @@ const SavedWordBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 200px;
+  min-height: 130px;
   height: 130px;
   padding: 10px 20px 20px;
   margin: 0px 25px 30px 0px;
@@ -122,10 +123,8 @@ const SavedWordBox = styled.div`
     ${SavedWordBoxTitle} {
       display: block;
     }
-
   }
 `;
-
 
 const SavedWordBoxBody = styled.div`
   height: 90%;
@@ -152,6 +151,7 @@ class List extends Component {
     this.state = {
       lists: [],
       visible: false,
+      colorVisible: false,
       inputValue: "",
       colorValue: "DEFAULT",
       message: {},
@@ -165,6 +165,7 @@ class List extends Component {
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
     this.handleChangeListColor = this.handleChangeListColor.bind(this);
     this.handleDeleteList = this.handleDeleteList.bind(this);
+    this.handleToggleColorPopUp = this.handleToggleColorPopUp.bind(this);
   }
 
   componentWillMount() {
@@ -244,6 +245,10 @@ class List extends Component {
         this.setState({ inputValue: "" });
       }
     });
+  }
+
+  handleToggleColorPopUp() {
+    this.setState({ colorVisible: !this.state.colorVisible });
   }
 
   handleChangeListColor(e) {
@@ -343,6 +348,11 @@ class List extends Component {
                       <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
                     </SavedWordBoxBody>
                     <SavedWordBoxFooter>
+                      <SavedWordBoxFooterIcon
+                        icon="palette"
+                        title="Change color"
+                        onClick={e => this.handleToggleColorPopUp()}
+                      />
                       <SavedWordBoxFooterIcon
                         icon="trash-alt"
                         title="Delete"
