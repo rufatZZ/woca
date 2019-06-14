@@ -12,6 +12,12 @@ export const listColors = [
     border: "rgba(0,0,0,0)"
   },
   {
+    title: "orange",
+    name: "ORANGE",
+    value: "fbbc04",
+    border: "rgba(0,0,0,0)"
+  },
+  {
     title: "yellow",
     name: "YELLOW",
     value: "fff475",
