@@ -78,7 +78,7 @@ const ListColorItem = styled.div`
   width: 26px;
   height: 26px;
   border-radius: .35rem;
-  box-sizing:border-box
+  box-sizing: border-box;
   background-color: #${props => props.bgColor};
 
   &:hover {
@@ -143,6 +143,31 @@ const SavedWordBoxFooterIcon = styled(FontAwesomeIcon)`
     opacity: 0.9;
   }
 `;
+
+const ListColor = ({ inputValue, handleChangeListColor }) => {
+
+
+  return (
+    <ListColorHolder inputValue={inputValue}>
+      <Label>List colour</Label>
+      {listColors.map(color => (
+        <ListColorContent key={color.value}>
+          <ListColorItem
+            data-value={color.name}
+            role="button"
+            tabindex="0"
+            bgColor={color.value}
+            borderColor={color.border}
+            onClick={handleChangeListColor}
+            title={color.title.replace(/./, x =>
+              x.toUpperCase()
+            )}
+          />
+        </ListColorContent>
+      ))}
+    </ListColorHolder>
+  );
+}
 
 class List extends Component {
   constructor(props) {
@@ -332,38 +357,38 @@ class List extends Component {
               </Col>
             </Row>
           ) : (
-            <Row>
-              {lists.map(list => {
-                return (
-                  <SavedWordBox
-                    key={list._id}
-                    borderColor={
-                      listColors.find(color => color.name === list.color).border
-                    }
-                    bgColor={
-                      listColors.find(color => color.name === list.color).value
-                    }
-                  >
-                    <SavedWordBoxBody>
-                      <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
-                    </SavedWordBoxBody>
-                    <SavedWordBoxFooter>
-                      <SavedWordBoxFooterIcon
-                        icon="palette"
-                        title="Change color"
-                        onClick={e => this.handleToggleColorPopUp()}
-                      />
-                      <SavedWordBoxFooterIcon
-                        icon="trash-alt"
-                        title="Delete"
-                        onClick={e => this.handleDeleteList(list._id)}
-                      />
-                    </SavedWordBoxFooter>
-                  </SavedWordBox>
-                );
-              })}
-            </Row>
-          ))}
+              <Row>
+                {lists.map(list => {
+                  return (
+                    <SavedWordBox
+                      key={list._id}
+                      borderColor={
+                        listColors.find(color => color.name === list.color).border
+                      }
+                      bgColor={
+                        listColors.find(color => color.name === list.color).value
+                      }
+                    >
+                      <SavedWordBoxBody>
+                        <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
+                      </SavedWordBoxBody>
+                      <SavedWordBoxFooter>
+                        <SavedWordBoxFooterIcon
+                          icon="palette"
+                          title="Change color"
+                          onClick={e => this.handleToggleColorPopUp()}
+                        />
+                        <SavedWordBoxFooterIcon
+                          icon="trash-alt"
+                          title="Delete"
+                          onClick={e => this.handleDeleteList(list._id)}
+                        />
+                      </SavedWordBoxFooter>
+                    </SavedWordBox>
+                  );
+                })}
+              </Row>
+            ))}
 
         {visible && (
           <ModalHolder>
@@ -385,24 +410,7 @@ class List extends Component {
                       />
                     </div>
                     <div>
-                      <ListColorHolder inputValue={inputValue}>
-                        <Label>List colour</Label>
-                        {listColors.map(color => (
-                          <ListColorContent key={color.value}>
-                            <ListColorItem
-                              data-value={color.name}
-                              role="button"
-                              tabindex="0"
-                              bgColor={color.value}
-                              borderColor={color.border}
-                              onClick={this.handleChangeListColor}
-                              title={color.title.replace(/./, x =>
-                                x.toUpperCase()
-                              )}
-                            />
-                          </ListColorContent>
-                        ))}
-                      </ListColorHolder>
+                      <ListColor inputValue={inputValue} handleChangeListColor={this.handleChangeListColor} />
                     </div>
                   </ModalBody>
                   <ModalFooter>
