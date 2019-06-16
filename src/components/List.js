@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Helmet from "react-helmet";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { saveList, getAllLists, deleteList } from "../actions/actions";
 
@@ -65,9 +65,19 @@ const Label = styled.h5`
 `;
 
 const ListColorHolder = styled.div`
-  display: ${props => (props.inputValue ? `` : `none`)};
+  display: ${props => (!props.pos && props.inputValue ? `` : (props.pos === "abs" ? `` : `none`))};
   margin: 5px 0px;
   width: 136px;
+  position: ${props => (props.pos === "abs" ? "absolute" : "")};
+  top: ${props => (props.pos === "abs" ? props.top : "")};
+  left: ${props => (props.pos === "abs" ? props.left : "")};
+  z-index: 999;
+  ${props => props.pos === "abs" &&
+    css`box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302), 0 3px 3px 2px rgba(60, 64, 67, 0.149);
+      background-color: white;
+      border-radius: .35rem;
+      padding: 0px 0px 10px 15px;`
+  }}
 `;
 const ListColorContent = styled.div`
   display: inline-block;
@@ -77,13 +87,13 @@ const ListColorItem = styled.div`
   margin: 2px;
   width: 26px;
   height: 26px;
-  border-radius: .35rem;
+  border-radius: 0.35rem;
   box-sizing: border-box;
   background-color: #${props => props.bgColor};
 
   &:hover {
     cursor: pointer;
-    border: 2px solid rgba(0,0,0,0.4)!important;
+    border: 2px solid rgba(0, 0, 0, 0.4) !important;
   }
 `;
 
@@ -144,11 +154,14 @@ const SavedWordBoxFooterIcon = styled(FontAwesomeIcon)`
   }
 `;
 
-const ListColor = ({ inputValue, handleChangeListColor }) => {
-
-
+const ListColor = ({ ...props }) => {
   return (
-    <ListColorHolder inputValue={inputValue}>
+    <ListColorHolder
+      inputValue={props.inputValue}
+      pos={props.pos}
+      top={props.top}
+      left={props.left}
+    >
       <Label>List colour</Label>
       {listColors.map(color => (
         <ListColorContent key={color.value}>
@@ -158,16 +171,14 @@ const ListColor = ({ inputValue, handleChangeListColor }) => {
             tabindex="0"
             bgColor={color.value}
             borderColor={color.border}
-            onClick={handleChangeListColor}
-            title={color.title.replace(/./, x =>
-              x.toUpperCase()
-            )}
+            onClick={props.handleChangeListColor}
+            title={color.title.replace(/./, x => x.toUpperCase())}
           />
         </ListColorContent>
       ))}
     </ListColorHolder>
   );
-}
+};
 
 class List extends Component {
   constructor(props) {
@@ -176,7 +187,9 @@ class List extends Component {
     this.state = {
       lists: [],
       visible: false,
-      colorVisible: false,
+      hoverStates: {},
+      itemX: 0,
+      itemY: 0,
       inputValue: "",
       colorValue: "DEFAULT",
       message: {},
@@ -190,7 +203,8 @@ class List extends Component {
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
     this.handleChangeListColor = this.handleChangeListColor.bind(this);
     this.handleDeleteList = this.handleDeleteList.bind(this);
-    this.handleToggleColorPopUp = this.handleToggleColorPopUp.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
   }
 
   componentWillMount() {
@@ -272,9 +286,33 @@ class List extends Component {
     });
   }
 
-  handleToggleColorPopUp() {
-    this.setState({ colorVisible: !this.state.colorVisible });
+  // handleToggleColorPopUp(e) {
+  //   console.log(e.target.getBoundingClientRect());
+  //   this.setState({ colorVisible: !this.state.colorVisible });
+  // }
+
+  handleMouseOver(e) {
+    if (!this.state.hoverStates[e.target.id]) {
+      this.setState({
+        hoverStates: {
+          [e.target.id]: true,
+        },
+        itemX: e.target.getBoundingClientRect().left,
+        itemY: e.target.getBoundingClientRect().top - 150
+      });
+    }
   }
+
+  handleMouseLeave(e) {
+    if (this.state.hoverStates[e.target.id]) {
+      this.setState({
+        hoverStates: {
+          [e.target.id]: false,
+
+        }
+      });
+    }
+  };
 
   handleChangeListColor(e) {
     const checkedListColor =
@@ -308,6 +346,9 @@ class List extends Component {
     const {
       lists,
       visible,
+      hoverStates,
+      itemX,
+      itemY,
       inputValue,
       colorValue,
       message,
@@ -373,10 +414,22 @@ class List extends Component {
                         <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
                       </SavedWordBoxBody>
                       <SavedWordBoxFooter>
+                        {hoverStates[list._id] && (
+                          <ListColor
+                            pos={"abs"}
+                            top={`${itemY}px`}
+                            left={`${itemX}px`}
+                            inputValue={inputValue}
+                            handleChangeListColor={this.handleChangeListColor}
+                          />
+                        )}
                         <SavedWordBoxFooterIcon
                           icon="palette"
                           title="Change color"
-                          onClick={e => this.handleToggleColorPopUp()}
+                          id={list._id}
+                          onMouseOver={this.handleMouseOver}
+                        // onMouseLeave={this.handleMouseLeave}
+                        // onClick={this.handleToggleColorPopUp}
                         />
                         <SavedWordBoxFooterIcon
                           icon="trash-alt"
@@ -410,7 +463,10 @@ class List extends Component {
                       />
                     </div>
                     <div>
-                      <ListColor inputValue={inputValue} handleChangeListColor={this.handleChangeListColor} />
+                      <ListColor
+                        inputValue={inputValue}
+                        handleChangeListColor={this.handleChangeListColor}
+                      />
                     </div>
                   </ModalBody>
                   <ModalFooter>
@@ -421,9 +477,7 @@ class List extends Component {
                       type="button"
                       bg="danger"
                       onClick={this.handleTogglePopup}
-                    >
-                      Cancel
-                    </Button>
+                    >Cancel</Button>
                   </ModalFooter>
                 </form>
               </ModalContent>
