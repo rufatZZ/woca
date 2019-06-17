@@ -161,6 +161,8 @@ const ListColor = ({ ...props }) => {
       pos={props.pos}
       top={props.top}
       left={props.left}
+      onMouseOver={props.handleColorMouseOver}
+      onMouseLeave={props.handleColorMouseLeave}
     >
       <Label>List colour</Label>
       {listColors.map(color => (
@@ -187,7 +189,9 @@ class List extends Component {
     this.state = {
       lists: [],
       visible: false,
+      listId: '',
       hoverStates: {},
+      isColorViewOpen: false,
       itemX: 0,
       itemY: 0,
       inputValue: "",
@@ -203,8 +207,12 @@ class List extends Component {
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
     this.handleChangeListColor = this.handleChangeListColor.bind(this);
     this.handleDeleteList = this.handleDeleteList.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+
+    this.handleColorMouseOver = this.handleColorMouseOver.bind(this);
+    this.handleColorMouseLeave = this.handleColorMouseLeave.bind(this);
+
   }
 
   componentWillMount() {
@@ -286,33 +294,42 @@ class List extends Component {
     });
   }
 
-  // handleToggleColorPopUp(e) {
-  //   console.log(e.target.getBoundingClientRect());
-  //   this.setState({ colorVisible: !this.state.colorVisible });
-  // }
-
   handleMouseOver(e) {
     if (!this.state.hoverStates[e.target.id]) {
       this.setState({
+        listId: e.target.id,
         hoverStates: {
           [e.target.id]: true,
         },
-        itemX: e.target.getBoundingClientRect().left,
-        itemY: e.target.getBoundingClientRect().top - 150
+        itemX: e.target.getBoundingClientRect().left - 10,
+        itemY: e.target.getBoundingClientRect().top - 165
       });
     }
   }
 
-  handleMouseLeave(e) {
-    if (this.state.hoverStates[e.target.id]) {
-      this.setState({
-        hoverStates: {
-          [e.target.id]: false,
+  handleMouseLeave(target_id) {
+    setTimeout(() => {
+      if (this.state.hoverStates[target_id] && !this.state.isColorViewOpen) {
+        this.setState({
+          hoverStates: {
+            [target_id]: false,
+          }
+        });
+      };
+    }, 500);
+  }
 
-        }
-      });
-    }
-  };
+  handleColorMouseOver(e) {
+    this.setState({
+      isColorViewOpen: true
+    });
+  }
+
+  handleColorMouseLeave(e) {
+    this.setState({ isColorViewOpen: false }, () => {
+      this.handleMouseLeave(this.state.listId);
+    });
+  }
 
   handleChangeListColor(e) {
     const checkedListColor =
@@ -421,6 +438,8 @@ class List extends Component {
                             left={`${itemX}px`}
                             inputValue={inputValue}
                             handleChangeListColor={this.handleChangeListColor}
+                            handleColorMouseOver={this.handleColorMouseOver}
+                            handleColorMouseLeave={this.handleColorMouseLeave}
                           />
                         )}
                         <SavedWordBoxFooterIcon
@@ -428,8 +447,7 @@ class List extends Component {
                           title="Change color"
                           id={list._id}
                           onMouseOver={this.handleMouseOver}
-                        // onMouseLeave={this.handleMouseLeave}
-                        // onClick={this.handleToggleColorPopUp}
+                          onMouseLeave={e => this.handleMouseLeave(e.target.id)}
                         />
                         <SavedWordBoxFooterIcon
                           icon="trash-alt"
