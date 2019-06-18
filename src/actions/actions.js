@@ -79,7 +79,6 @@ export async function addWordToList(params){
   }
 }
 
-
 export async function removeWordToList(params) {
   try {
     const response = await fetch(`http://localhost:5000/api/wordremovelist/${params.title}`, {
@@ -145,7 +144,20 @@ export async function getAllLists() {
   }
 }
 
-export async function getList(list) {}
+export async function updateList(params) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/updatelist/${params.list}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      body: JSON.stringify(params)
+    });
+    return await response.json();
+  } catch (e) {
+    // console.log(e);
+  }
+}
 
 export async function saveList(list) {
   try {
