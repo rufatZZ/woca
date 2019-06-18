@@ -347,17 +347,18 @@ class List extends Component {
       JSON.parse(JSON.stringify(e.target.dataset)).value || "DEFAULT";
     this.setState({ colorValue: checkedListColor }, async () => {
       if (listId && isColorViewOpen) {
-        let response = await updateList({
+        await updateList({
           list: listId,
           color: this.state.colorValue
         });
 
         const listItem = document.getElementById(listId).parentNode.parentNode;
         const listUpdatedColor = listColors.find(
-          color => color.name === this.state.colorValue
-        ).value;
+          ({ name }) => name === this.state.colorValue
+        );
 
-        listItem.style.backgroundColor = "#" + listUpdatedColor;
+        listItem.style.backgroundColor = "#" + listUpdatedColor.value;
+        listItem.style.borderColor = listUpdatedColor.border;
       }
     });
   }
