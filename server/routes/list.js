@@ -5,4 +5,5 @@ module.exports = router => {
   router.route("/list").post(listController.addList);
   router.route("/list/:id").delete(listController.deleteList);
   router.route("/list/:word").get(listController.getList);
+  router.route("/updatelist/:id").post(listController.updateList);
 };

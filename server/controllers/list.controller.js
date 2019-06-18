@@ -26,6 +26,28 @@ module.exports = {
       });
     }
   },
+  updateList: (req, res, next) => {
+    let { list, color } = req.body;
+
+    updateList({ list, color });
+
+    function updateList(obj) {
+      List.findOneAndUpdate(
+        { _id: obj.list }, // find a document with that filter
+        { color: obj.color }
+      ).exec((err, list) => {
+        if (err) {
+          res.send({ status: "error", isSaved: false, response: err });
+        } else if (!list) {
+          res.send({ status: "ok", isSaved: false, response: "No result" });
+        } else {
+          return res.send({ status: "ok", isSaved: true, response: list });
+        }
+
+        next();
+      });
+    }
+  },
   getAll: (req, res, next) => {
     List.find(req.params.id)
       .sort({ createdAt: -1 })

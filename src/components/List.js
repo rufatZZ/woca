@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import Helmet from "react-helmet";
 import styled, { css } from "styled-components";
 
-import { saveList, getAllLists, deleteList } from "../actions/actions";
+import {
+  saveList,
+  updateList,
+  getAllLists,
+  deleteList
+} from "../actions/actions";
 
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
@@ -65,19 +70,23 @@ const Label = styled.h5`
 `;
 
 const ListColorHolder = styled.div`
-  display: ${props => (!props.pos && props.inputValue ? `` : (props.pos === "abs" ? `` : `none`))};
+  display: ${props =>
+    !props.pos && props.inputValue ? `` : props.pos === "abs" ? `` : `none`};
   margin: 5px 0px;
   width: 136px;
   position: ${props => (props.pos === "abs" ? "absolute" : "")};
   top: ${props => (props.pos === "abs" ? props.top : "")};
   left: ${props => (props.pos === "abs" ? props.left : "")};
   z-index: 999;
-  ${props => props.pos === "abs" &&
-    css`box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302), 0 3px 3px 2px rgba(60, 64, 67, 0.149);
+  ${props =>
+    props.pos === "abs" &&
+    css`
+      box-shadow: 0 3px 3px 0 rgba(60, 64, 67, 0.302),
+        0 3px 3px 2px rgba(60, 64, 67, 0.149);
       background-color: white;
-      border-radius: .35rem;
-      padding: 0px 0px 10px 15px;`
-  }}
+      border-radius: 0.35rem;
+      padding: 0px 0px 10px 15px;
+    `}}
 `;
 const ListColorContent = styled.div`
   display: inline-block;
@@ -189,7 +198,7 @@ class List extends Component {
     this.state = {
       lists: [],
       visible: false,
-      listId: '',
+      listId: "",
       hoverStates: {},
       isColorViewOpen: false,
       itemX: 0,
@@ -207,12 +216,12 @@ class List extends Component {
     this.handleTogglePopup = this.handleTogglePopup.bind(this);
     this.handleChangeListColor = this.handleChangeListColor.bind(this);
     this.handleDeleteList = this.handleDeleteList.bind(this);
+
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
 
     this.handleColorMouseOver = this.handleColorMouseOver.bind(this);
     this.handleColorMouseLeave = this.handleColorMouseLeave.bind(this);
-
   }
 
   componentWillMount() {
@@ -299,7 +308,7 @@ class List extends Component {
       this.setState({
         listId: e.target.id,
         hoverStates: {
-          [e.target.id]: true,
+          [e.target.id]: true
         },
         itemX: e.target.getBoundingClientRect().left - 10,
         itemY: e.target.getBoundingClientRect().top - 165
@@ -312,10 +321,10 @@ class List extends Component {
       if (this.state.hoverStates[target_id] && !this.state.isColorViewOpen) {
         this.setState({
           hoverStates: {
-            [target_id]: false,
+            [target_id]: false
           }
         });
-      };
+      }
     }, 500);
   }
 
@@ -332,9 +341,25 @@ class List extends Component {
   }
 
   handleChangeListColor(e) {
+    const { listId, isColorViewOpen } = this.state;
+
     const checkedListColor =
       JSON.parse(JSON.stringify(e.target.dataset)).value || "DEFAULT";
-    this.setState({ colorValue: checkedListColor });
+    this.setState({ colorValue: checkedListColor }, async () => {
+      if (listId && isColorViewOpen) {
+        let response = await updateList({
+          list: listId,
+          color: this.state.colorValue
+        });
+
+        const listItem = document.getElementById(listId).parentNode.parentNode;
+        const listUpdatedColor = listColors.find(
+          color => color.name === this.state.colorValue
+        ).value;
+
+        listItem.style.backgroundColor = "#" + listUpdatedColor;
+      }
+    });
   }
 
   async handleDeleteList(list_id) {
@@ -415,51 +440,51 @@ class List extends Component {
               </Col>
             </Row>
           ) : (
-              <Row>
-                {lists.map(list => {
-                  return (
-                    <SavedWordBox
-                      key={list._id}
-                      borderColor={
-                        listColors.find(color => color.name === list.color).border
-                      }
-                      bgColor={
-                        listColors.find(color => color.name === list.color).value
-                      }
-                    >
-                      <SavedWordBoxBody>
-                        <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
-                      </SavedWordBoxBody>
-                      <SavedWordBoxFooter>
-                        {hoverStates[list._id] && (
-                          <ListColor
-                            pos={"abs"}
-                            top={`${itemY}px`}
-                            left={`${itemX}px`}
-                            inputValue={inputValue}
-                            handleChangeListColor={this.handleChangeListColor}
-                            handleColorMouseOver={this.handleColorMouseOver}
-                            handleColorMouseLeave={this.handleColorMouseLeave}
-                          />
-                        )}
-                        <SavedWordBoxFooterIcon
-                          icon="palette"
-                          title="Change color"
-                          id={list._id}
-                          onMouseOver={this.handleMouseOver}
-                          onMouseLeave={e => this.handleMouseLeave(e.target.id)}
+            <Row>
+              {lists.map(list => {
+                return (
+                  <SavedWordBox
+                    key={list._id}
+                    borderColor={
+                      listColors.find(color => color.name === list.color).border
+                    }
+                    bgColor={
+                      listColors.find(color => color.name === list.color).value
+                    }
+                  >
+                    <SavedWordBoxBody>
+                      <SavedWordBoxTitle>{list.title}</SavedWordBoxTitle>
+                    </SavedWordBoxBody>
+                    <SavedWordBoxFooter>
+                      {hoverStates[list._id] && (
+                        <ListColor
+                          pos={"abs"}
+                          top={`${itemY}px`}
+                          left={`${itemX}px`}
+                          inputValue={inputValue}
+                          handleChangeListColor={this.handleChangeListColor}
+                          handleColorMouseOver={this.handleColorMouseOver}
+                          handleColorMouseLeave={this.handleColorMouseLeave}
                         />
-                        <SavedWordBoxFooterIcon
-                          icon="trash-alt"
-                          title="Delete"
-                          onClick={e => this.handleDeleteList(list._id)}
-                        />
-                      </SavedWordBoxFooter>
-                    </SavedWordBox>
-                  );
-                })}
-              </Row>
-            ))}
+                      )}
+                      <SavedWordBoxFooterIcon
+                        icon="palette"
+                        title="Change color"
+                        id={list._id}
+                        onMouseOver={this.handleMouseOver}
+                        onMouseLeave={e => this.handleMouseLeave(e.target.id)}
+                      />
+                      <SavedWordBoxFooterIcon
+                        icon="trash-alt"
+                        title="Delete"
+                        onClick={e => this.handleDeleteList(list._id)}
+                      />
+                    </SavedWordBoxFooter>
+                  </SavedWordBox>
+                );
+              })}
+            </Row>
+          ))}
 
         {visible && (
           <ModalHolder>
@@ -495,7 +520,9 @@ class List extends Component {
                       type="button"
                       bg="danger"
                       onClick={this.handleTogglePopup}
-                    >Cancel</Button>
+                    >
+                      Cancel
+                    </Button>
                   </ModalFooter>
                 </form>
               </ModalContent>
