@@ -4,11 +4,12 @@ const Word = require("../models/Word");
 module.exports = {
   addWord: (req, res, next) => {
     let { title } = req.body;
+    let createdAt = new Date(Date.now());
 
-    saveWord({ title });
+    saveWord({ title, createdAt });
 
     function saveWord(obj) {
-      obj.createdAt = new Date(Date.now());
+      
       Word.findOneAndUpdate(
         { title: obj.title }, // find a document with that filter
         { $setOnInsert: obj }, // document to insert when nothing was found
@@ -35,8 +36,6 @@ module.exports = {
       Word.findOneAndUpdate(
         { title: obj.title }, // find a document with that filter
         { $push: { lists: obj.listId } }
-        // , // document to insert when nothing was found
-        // { upsert: true, new: true, runValidators: true }
       ).exec((err, word) => {
         if (err) {
           res.send({ status: "error", isSaved: false, response: err });
