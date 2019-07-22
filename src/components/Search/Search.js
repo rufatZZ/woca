@@ -22,7 +22,7 @@ import {
   addHistory,
   getAllLists,
   addWordToList,
-  removeWordToList
+  removeWordFromList
 } from "../../actions/actions";
 import FlashMessages from "../_common/FlashMessages/FlashMessages";
 
@@ -113,7 +113,7 @@ class Search extends Component {
       listId: e.target.value
     };
 
-    checked ? await addWordToList(params) : await removeWordToList(params);
+    checked ? await addWordToList(params) : await removeWordFromList(params);
   }
 
   async getAllLists() {
@@ -323,7 +323,6 @@ class Search extends Component {
                           })}
                         </DropdownHolder>
                       )}
-                      <div />
                     </div>
                   ]
                 )
