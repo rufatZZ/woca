@@ -79,7 +79,7 @@ export async function addWordToList(params){
   }
 }
 
-export async function removeWordToList(params) {
+export async function removeWordFromList(params) {
   try {
     const response = await fetch(`http://localhost:5000/api/wordremovelist/${params.title}`, {
       method: "DELETE",

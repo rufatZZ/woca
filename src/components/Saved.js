@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { getAllSavedWords, deleteSavedWord } from "../actions/actions";
+import { getAllSavedWords, deleteSavedWord, removeWordFromList } from "../actions/actions";
 
 import FlashMessages from "./_common/FlashMessages/FlashMessages";
 import Loading from "./_common/Loading/Loading";
@@ -57,6 +57,18 @@ const SavedWordBoxFooterIcon = styled(FontAwesomeIcon)`
   }
 `;
 
+const SavedWordListItemRemoveIcon = styled.div`
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE4cHgiIHdpZHRoPSIxOHB4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0iIzAwMDAwMCI+CiA8cGF0aCBkPSJtMCAwaDE4djE4aC0xOHpoMTh2MThoLTE4eiIgZmlsbD0ibm9uZSIvPgogPHBhdGggZD0ibTE0LjUzIDQuNTNsLTEuMDYtMS4wNi00LjQ3IDQuNDctNC40Ny00LjQ3LTEuMDYgMS4wNiA0LjQ3IDQuNDctNC40NyA0LjQ3IDEuMDYgMS4wNiA0LjQ3LTQuNDcgNC40NyA0LjQ3IDEuMDYtMS4wNi00LjQ3LTQuNDd6Ii8+Cjwvc3ZnPgo=);
+  display: none;
+  width: 14px;
+  height: 12px;
+  position: relative;
+  top: 2px;
+  margin-left: 5px;
+  background-repeat: no-repeat;
+  background-size: 12px 13px;
+`;
+
 const SavedWordListItem = styled(Link)`
   font-size: 12px;
   display: inline-block;
@@ -66,7 +78,12 @@ const SavedWordListItem = styled(Link)`
   padding: 3px;
   background-color: #${props => props.bgcolor};
   border: 1px solid ${props => props.bordercolor};
+
+  &:hover ${SavedWordListItemRemoveIcon}{
+    display: inline-block;    
+  }
 `;
+
 
 class Saved extends Component {
   constructor(props) {
@@ -82,6 +99,7 @@ class Saved extends Component {
 
     this.getAllSavedWords = this.getAllSavedWords.bind(this);
     this.handleDeleteSavedWord = this.handleDeleteSavedWord.bind(this);
+    this.handleDeleteSavedWordList = this.handleDeleteSavedWordList.bind(this);
     this.handleReset = this.handleReset.bind(this);
   }
 
@@ -127,6 +145,17 @@ class Saved extends Component {
     }
   }
 
+  async handleDeleteSavedWordList(e, title, listId) {
+    e.preventDefault();
+    if (title !== undefined && listId !== undefined) {
+      const params = {
+        title,
+        listId
+      };
+      const response = await removeWordFromList(params);
+    }
+  }
+
   async getAllSavedWords(list = "") {
     let savedList = await getAllSavedWords(list);
     if (savedList.connectionError) {
@@ -158,7 +187,7 @@ class Saved extends Component {
       connectionError
     } = this.state;
 
-    savedList.sort(function(a, b) {
+    savedList.sort(function (a, b) {
       return Date.parse(b.time) - Date.parse(a.time);
     });
 
@@ -203,57 +232,59 @@ class Saved extends Component {
               </Col>
             </Row>
           ) : (
-            <Row>
-              {savedList.map(word => {
-                return (
-                  <SavedWordBox key={word._id}>
-                    <SavedWordBoxBody>
-                      <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
-                      <div style={{ position: "absolute", bottom: "10%" }}>
-                        {word.lists.map(list => {
-                          return (
-                            <SavedWordListItem
-                              to={`?list=${list._id}`}
-                              key={list._id}
-                              bgcolor={
-                                listColors.find(
-                                  color => color.name === list.color
-                                ).value
-                              }
-                              bordercolor={
-                                listColors.find(
-                                  color => color.name === list.color
-                                ).border
-                              }
-                            >
-                              {list.title}
-                            </SavedWordListItem>
-                          );
-                        })}
-                      </div>
-                    </SavedWordBoxBody>
-                    <SavedWordBoxFooter>
-                      <SavedWordBoxFooterIcon
-                        icon="trash-alt"
-                        title="Delete"
-                        onClick={e => this.handleDeleteSavedWord(word._id)}
-                      />
-                      <Link
-                        to={`/search?word=${word.title}`}
-                        style={{ color: "black" }}
-                      >
+              <Row>
+                {savedList.map(word => {
+                  return (
+                    <SavedWordBox key={word._id}>
+                      <SavedWordBoxBody>
+                        <SavedWordBoxTitle>{word.title}</SavedWordBoxTitle>
+                        <div style={{ position: "absolute", bottom: "10%" }}>
+                          {word.lists.map(list => {
+                            return (
+                              <SavedWordListItem
+                                to={`?list=${list._id}`}
+                                key={list._id}
+                                bgcolor={
+                                  listColors.find(
+                                    color => color.name === list.color
+                                  ).value
+                                }
+                                bordercolor={
+                                  listColors.find(
+                                    color => color.name === list.color
+                                  ).border
+                                }
+                              >
+                                {list.title}
+
+                                <SavedWordListItemRemoveIcon onClick={(e) => this.handleDeleteSavedWordList(e, word.title, list._id)} />
+                              </SavedWordListItem>
+                            );
+                          })}
+                        </div>
+                      </SavedWordBoxBody>
+                      <SavedWordBoxFooter>
                         <SavedWordBoxFooterIcon
-                          icon="external-link-square-alt"
-                          title="Get definition"
-                          style={{ transform: "translateY(8%)" }}
+                          icon="trash-alt"
+                          title="Delete"
+                          onClick={e => this.handleDeleteSavedWord(word._id)}
                         />
-                      </Link>
-                    </SavedWordBoxFooter>
-                  </SavedWordBox>
-                );
-              })}
-            </Row>
-          ))}
+                        <Link
+                          to={`/search?word=${word.title}`}
+                          style={{ color: "black" }}
+                        >
+                          <SavedWordBoxFooterIcon
+                            icon="external-link-square-alt"
+                            title="Get definition"
+                            style={{ transform: "translateY(8%)" }}
+                          />
+                        </Link>
+                      </SavedWordBoxFooter>
+                    </SavedWordBox>
+                  );
+                })}
+              </Row>
+            ))}
       </div>
     );
   }
