@@ -146,6 +146,7 @@ class Saved extends Component {
   }
 
   async handleDeleteSavedWordList(e, title, listId) {
+    const target = e.currentTarget;
     e.preventDefault();
     if (title !== undefined && listId !== undefined) {
       const params = {
@@ -153,6 +154,10 @@ class Saved extends Component {
         listId
       };
       const response = await removeWordFromList(params);
+      if(response.status === 'ok'){
+        const listItem = target.parentNode;
+        listItem.parentNode.removeChild(listItem);
+      }
     }
   }
 
